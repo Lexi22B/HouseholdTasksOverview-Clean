@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/HouseholdTasksOverview.API.props" />
+</Project>
