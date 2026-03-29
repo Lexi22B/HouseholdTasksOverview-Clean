@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HouseholdTasksOverview.Model")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6dc503404297545044b3a062076cdbfedd15ac56")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+34b5b2cf48c8e95d81fff6eba7d15cb4c2d30ff4")]
 [assembly: System.Reflection.AssemblyProductAttribute("HouseholdTasksOverview.Model")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HouseholdTasksOverview.Model")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

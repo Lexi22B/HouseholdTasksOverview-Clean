@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HouseholdTasksOverview.Model
-build_property.ProjectDir = C:\Users\alexx\Documents\GitHub\Household-Tasks-app\HouseholdTasksOverview.Model\
+build_property.ProjectDir = C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

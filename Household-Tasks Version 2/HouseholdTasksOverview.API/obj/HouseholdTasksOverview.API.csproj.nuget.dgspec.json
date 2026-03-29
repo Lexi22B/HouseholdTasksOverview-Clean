@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.API\\HouseholdTasksOverview.API.csproj": {}
+    "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.API\\HouseholdTasksOverview.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.API\\HouseholdTasksOverview.API.csproj": {
+    "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.API\\HouseholdTasksOverview.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.API\\HouseholdTasksOverview.API.csproj",
+        "projectUniqueName": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.API\\HouseholdTasksOverview.API.csproj",
         "projectName": "HouseholdTasksOverview.API",
-        "projectPath": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.API\\HouseholdTasksOverview.API.csproj",
+        "projectPath": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.API\\HouseholdTasksOverview.API.csproj",
         "packagesPath": "C:\\Users\\alexx\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.API\\obj\\",
+        "outputPath": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\alexx\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,8 +26,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj": {
-                "projectPath": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj"
+              "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj": {
+                "projectPath": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj"
               }
             }
           }
@@ -75,14 +75,14 @@
         }
       }
     },
-    "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj": {
+    "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
+        "projectUniqueName": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
         "projectName": "HouseholdTasksOverview.Model",
-        "projectPath": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
+        "projectPath": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
         "packagesPath": "C:\\Users\\alexx\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.Model\\obj\\",
+        "outputPath": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\alexx\\AppData\\Roaming\\NuGet\\NuGet.Config"

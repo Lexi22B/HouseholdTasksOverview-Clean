@@ -10,22 +10,22 @@ export class HouseholdService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Household[]> {
-    return this.http.get<Household[]>(`${this.baseUrl}/household`);
+    return this.http.get<Household[]>(`${this.baseUrl}/households`);
   }
 
   getById(id: number): Observable<Household> {
-    return this.http.get<Household>(`${this.baseUrl}/household/${id}`);
+    return this.http.get<Household>(`${this.baseUrl}/households/${id}`);
   }
 
-  create(assignment: Household): Observable<any> {
-    return this.http.post(`${this.baseUrl}/household`, assignment);
+  create(household: Household): Observable<any> {
+    return this.http.post(`${this.baseUrl}/households`, household);
   }
 
-  update(assignment: Household): Observable<any> {
-    return this.http.put(`${this.baseUrl}/household`, assignment);
+  update(household: Household): Observable<any> {
+    return this.http.put(`${this.baseUrl}/households`, household);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/household/${id}`);
+    return this.http.delete(`${this.baseUrl}/households/${id}`);
   }
 }

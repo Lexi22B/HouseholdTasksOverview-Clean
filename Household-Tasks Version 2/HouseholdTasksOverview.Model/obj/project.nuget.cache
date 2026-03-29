@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zbgCRL/pIr0=",
+  "dgSpecHash": "w/qAQXDGHNQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
+  "projectFilePath": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alexx\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.5\\microsoft.extensions.configuration.10.0.5.nupkg.sha512",
     "C:\\Users\\alexx\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.5\\microsoft.extensions.configuration.abstractions.10.0.5.nupkg.sha512",

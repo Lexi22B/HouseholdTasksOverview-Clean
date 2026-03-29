@@ -379,11 +379,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
+      "projectUniqueName": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
       "projectName": "HouseholdTasksOverview.Model",
-      "projectPath": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
+      "projectPath": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
       "packagesPath": "C:\\Users\\alexx\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alexx\\Documents\\GitHub\\Household-Tasks-app\\HouseholdTasksOverview.Model\\obj\\",
+      "outputPath": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\alexx\\AppData\\Roaming\\NuGet\\NuGet.Config"
