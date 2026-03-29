@@ -1,6 +1,31 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Household } from '../../Interfaces/model/household';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class HouseholdService {}
+@Injectable({ providedIn: 'root' })
+export class HouseholdService {
+  baseUrl: string = 'http://localhost:<YOUR_PORT>/api';
+
+  constructor(private http: HttpClient) { }
+
+  getAll(): Observable<Household[]> {
+    return this.http.get<Household[]>(`${this.baseUrl}/household`);
+  }
+
+  getById(id: number): Observable<Household> {
+    return this.http.get<Household>(`${this.baseUrl}/household/${id}`);
+  }
+
+  create(assignment: Household): Observable<any> {
+    return this.http.post(`${this.baseUrl}/household`, assignment);
+  }
+
+  update(assignment: Household): Observable<any> {
+    return this.http.put(`${this.baseUrl}/household`, assignment);
+  }
+
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/household/${id}`);
+  }
+}
