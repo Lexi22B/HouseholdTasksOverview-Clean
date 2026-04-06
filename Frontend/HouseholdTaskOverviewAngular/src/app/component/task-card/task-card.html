@@ -1,1 +1,21 @@
 <p>task-card works!</p>
+
+<table border="1" cellpadding="8">
+  <tr><td>ID</td><td>{{task.id}}</td></tr>
+  <tr><td>Title</td><td>{{task.title}}</td></tr>
+  <tr><td>Description</td><td>{{task.description}}</td></tr>
+  <tr><td>Household ID</td><td>{{task.householdId}}</td></tr>
+  <tr><td>Room ID</td><td>{{task.roomId}}</td></tr>
+  <tr><td>Frequency ID</td><td>{{task.taskFrequencyId}}</td></tr>
+  <tr><td>Recurrence</td><td>{{task.recurrencePattern}}</td></tr>
+  <tr><td>Difficulty</td><td>{{task.difficultyLevelId}}</td></tr>
+  <tr><td>Priority</td><td>{{task.priorityLevelId}}</td></tr>
+  <tr><td>Duration</td><td>{{task.durationLevelId}}</td></tr>
+  <tr><td>Active</td><td>{{task.isActive}}</td></tr>
+  <tr><td>Created At</td><td>{{task.createdAt}}</td></tr>
+  <tr>
+    <td colspan="2">
+      <button (click)="delete()">Delete</button>
+    </td>
+  </tr>
+</table>

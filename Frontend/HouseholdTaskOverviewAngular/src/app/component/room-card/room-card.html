@@ -1,1 +1,12 @@
 <p>room-card works!</p>
+
+<table border="1" cellpadding="8">
+  <tr><td>ID</td><td>{{room.id}}</td></tr>
+  <tr><td>Household ID</td><td>{{room.householdId}}</td></tr>
+  <tr><td>Room Name</td><td>{{room.roomName}}</td></tr>
+  <tr>
+    <td colspan="2">
+      <button (click)="delete()">Delete</button>
+    </td>
+  </tr>
+</table>

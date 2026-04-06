@@ -1,1 +1,15 @@
 <p>task-assignment-card works!</p>
+
+<table border="1" cellpadding="8">
+  <tr><td>ID</td><td>{{assignment.id}}</td></tr>
+  <tr><td>Task ID</td><td>{{assignment.taskId}}</td></tr>
+  <tr><td>Housemate ID</td><td>{{assignment.housemateId}}</td></tr>
+  <tr><td>Assigned Date</td><td>{{assignment.assignedDate}}</td></tr>
+  <tr><td>Due Date</td><td>{{assignment.dueDate}}</td></tr>
+  <tr><td>Status</td><td>{{assignment.status}}</td></tr>
+  <tr>
+    <td colspan="2">
+      <button (click)="delete()">Delete</button>
+    </td>
+  </tr>
+</table>

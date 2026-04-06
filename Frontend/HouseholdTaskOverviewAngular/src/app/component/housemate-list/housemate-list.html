@@ -1,1 +1,6 @@
 <p>housemate-list works!</p>
+
+<h2>Housemates</h2>
+@for (housemate of housemates; track $index) {
+  <app-housemate-card [housemate]="housemate"></app-housemate-card>
+}

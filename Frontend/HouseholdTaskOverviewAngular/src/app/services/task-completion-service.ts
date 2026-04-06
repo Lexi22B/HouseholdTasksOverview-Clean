@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TaskCompletion } from '../../Interfaces/model/task-completion';
+import { TaskCompletion } from '../model/task-completion';
 
 @Injectable({ providedIn: 'root' })
 export class TaskCompletionService {

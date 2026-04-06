@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Housemate } from '../../Interfaces/model/housemate';
+import { Housemate } from '../model/housemate';
 
 @Injectable({ providedIn: 'root' })
 export class HousemateService {

@@ -1,1 +1,6 @@
 <p>task-assignment-list works!</p>
+
+<h2>Task Assignments</h2>
+@for (assignment of assignments; track $index) {
+  <app-task-assignment-card [assignment]="assignment"></app-task-assignment-card>
+}

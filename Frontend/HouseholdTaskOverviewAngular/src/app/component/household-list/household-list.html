@@ -1,1 +1,6 @@
 <p>household-list works!</p>
+
+<h2>Households</h2>
+@for (household of households; track $index) {
+  <app-household-card [household]="household"></app-household-card>
+}

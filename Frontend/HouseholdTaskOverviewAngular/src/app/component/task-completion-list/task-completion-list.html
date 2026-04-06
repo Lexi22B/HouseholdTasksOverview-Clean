@@ -1,1 +1,7 @@
 <p>task-completion-list works!</p>
+
+
+<h2>Task Completions</h2>
+@for (completion of completions; track $index) {
+  <app-task-completion-card [completion]="completion"></app-task-completion-card>
+} 

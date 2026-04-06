@@ -1,1 +1,14 @@
 <p>housemate-card works!</p>
+
+<table border="1" cellpadding="8">
+  <tr><td>ID</td><td>{{housemate.id}}</td></tr>
+  <tr><td>Household ID</td><td>{{housemate.householdId}}</td></tr>
+  <tr><td>Name</td><td>{{housemate.name}}</td></tr>
+  <tr><td>Email</td><td>{{housemate.email}}</td></tr>
+  <tr><td>Active</td><td>{{housemate.isActive}}</td></tr>
+  <tr>
+    <td colspan="2">
+      <button (click)="delete()">Delete</button>
+    </td>
+  </tr>
+</table>

@@ -374,19 +374,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\alexx\\.nuget\\packages\\": {}
+    "C:\\Users\\sirig\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
+      "projectUniqueName": "C:\\Users\\sirig\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
       "projectName": "HouseholdTasksOverview.Model",
-      "projectPath": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
-      "packagesPath": "C:\\Users\\alexx\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alexx\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\obj\\",
+      "projectPath": "C:\\Users\\sirig\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\HouseholdTasksOverview.Model.csproj",
+      "packagesPath": "C:\\Users\\sirig\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sirig\\Documents\\GitHub\\HouseholdTasksOverview-Clean\\Household-Tasks Version 2\\HouseholdTasksOverview.Model\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\alexx\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\sirig\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -440,7 +440,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.316/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

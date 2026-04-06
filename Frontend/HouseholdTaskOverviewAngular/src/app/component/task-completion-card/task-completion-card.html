@@ -1,1 +1,12 @@
 <p>task-completion-card works!</p>
+
+<table border="1" cellpadding="8">
+  <tr><td>ID</td><td>{{completion.id}}</td></tr>
+  <tr><td>Assignment ID</td><td>{{completion.assignmentId}}</td></tr>
+  <tr><td>Completed At</td><td>{{completion.completedAt}}</td></tr>
+  <tr>
+    <td colspan="2">
+      <button (click)="delete()">Delete</button>
+    </td>
+  </tr>
+</table>

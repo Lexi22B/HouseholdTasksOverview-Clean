@@ -1,1 +1,6 @@
 <p>room-list works!</p>
+
+<h2>Rooms</h2>
+@for (room of rooms; track $index) {
+  <app-room-card [room]="room"></app-room-card>
+}
