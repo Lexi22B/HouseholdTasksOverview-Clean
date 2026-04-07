@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HouseholdTasksOverview.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79ec629c08195cb27e9b6f46e139428acdf28bdc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+04c8d3534d4e5a639fc49499a947f23bcf28d9f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("HouseholdTasksOverview.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HouseholdTasksOverview.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -31,3 +31,6 @@
 /Users/ivanaandrade/Documents/GitHub/Household-Tasks-app/HouseholdTasksOverview.API/obj/Debug/net8.0/HouseholdTasksOverview.API.pdb
 /Users/ivanaandrade/Documents/GitHub/Household-Tasks-app/HouseholdTasksOverview.API/obj/Debug/net8.0/HouseholdTasksOverview.API.genruntimeconfig.cache
 /Users/ivanaandrade/Documents/GitHub/Household-Tasks-app/HouseholdTasksOverview.API/obj/Debug/net8.0/ref/HouseholdTasksOverview.API.dll
+C:\Users\sirig\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.API\obj\Debug\net8.0\HouseholdTasksOverview.API.dll
+C:\Users\sirig\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.API\obj\Debug\net8.0\refint\HouseholdTasksOverview.API.dll
+C:\Users\sirig\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.API\obj\Debug\net8.0\HouseholdTasksOverview.API.pdb

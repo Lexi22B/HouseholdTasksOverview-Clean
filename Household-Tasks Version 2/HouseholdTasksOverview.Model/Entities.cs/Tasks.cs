@@ -1,6 +1,6 @@
 namespace HouseholdTasksOverview.Model.Entities.cs;
 
-public class TaskItem 
+public class Tasks
 {
     public int Id { get; set; }
     public int HouseholdId { get; set; }
