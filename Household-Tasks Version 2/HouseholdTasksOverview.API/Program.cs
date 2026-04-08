@@ -1,3 +1,5 @@
+using HouseholdTasksOverview.Model.Repository.cs;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,7 +13,7 @@ builder.Services.AddScoped<HouseholdsRepository, HouseholdsRepository>();
 builder.Services.AddScoped<HousematesRepository, HousematesRepository>();
 builder.Services.AddScoped<RoomsRepository, RoomsRepository>();
 builder.Services.AddScoped<TaskAssignmentsRepository, TaskAssignmentsRepository>();
-builder.Services.AddScoped<TasksCompletionsRepository, TasksCompletionsRepository>();
+builder.Services.AddScoped<TaskCompletionsRepository, TaskCompletionsRepository>();
 builder.Services.AddScoped<TasksRepository, TasksRepository>(); //dependency injection
 
 

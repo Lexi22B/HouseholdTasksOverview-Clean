@@ -1,11 +1,13 @@
 
 using HouseholdTasksOverview.Model.Entities;
+using HouseholdTasksOverview.Model.Entities.cs;
 using HouseholdTasksOverview.Model.Repository;
+using HouseholdTasksOverview.Model.Repository.cs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouseholdTasksOverview.API.Controllers;
-{
+
     [Route("api/[controller]")]
     [ApiController]
     public class RoomController : ControllerBase
@@ -89,4 +91,3 @@ namespace HouseholdTasksOverview.API.Controllers;
             return BadRequest($"Unable to delete room with id {id}");
         }
     }
-}

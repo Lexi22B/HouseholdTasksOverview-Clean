@@ -1,91 +1,85 @@
-
-using HouseholdTasksOverview.Model.Entities;
 using HouseholdTasksOverview.Model.Entities.cs;
-using HouseholdTasksOverview.Model.Repository;
-using Microsoft.AspNetCore.Http;
+using HouseholdTasksOverview.Model.Repository.cs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouseholdTasksOverview.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class TasksController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TasksController : ControllerBase
+    protected TasksRepository Repository { get; }
+
+    public TasksController(TasksRepository repository)
     {
-        protected TasksRepository Repository { get; }
-        public TasksController(TasksRepository repository)
+        Repository = repository;
+    }
 
+    [HttpGet("{id}")]
+    public ActionResult<Tasks> GetTask([FromRoute] int id)
+    {
+        Tasks task = Repository.GetTaskById(id);
+        if (task == null)
         {
-            Repository = repository;
+            return NotFound($"Task with id {id} not found");
         }
+        return Ok(task);
+    }
 
-        [HttpGet("{id}")]
-        public ActionResult<TaskItem> GetTask([FromRoute] int id)
+    [HttpGet]
+    public ActionResult<IEnumerable<Tasks>> GetAllTasks()
+    {
+        return Ok(Repository.GetAllTasks());
+    }
+
+    [HttpPost]
+    public ActionResult Post([FromBody] Tasks task)
+    {
+        if (task == null)
         {
-            TaskItem taskItem= Repository.GetStudentById(id);
-            if (taskItem == null)
-            {
-                return NotFound();
-            }
-            return Ok(taskItem);
+            return BadRequest("Task info not correct");
         }
-
-        [HttpGet]
-        public ActionResult<IEnumerable<TaskItem>> GetTasks()
+        bool status = Repository.InsertTask(task);
+        if (status)
         {
-            return Ok(Repository.GetStudents());
+            return Ok();
         }
+        return BadRequest("Failed to create task");
+    }
 
-        [HttpPost]
-        public ActionResult Post([FromBody] TaskItem taskItem)
+    [HttpPut]
+    public ActionResult UpdateTask([FromBody] Tasks task)
+    {
+        if (task == null)
         {
-            if (taskItem == null)
-            {
-                return BadRequest("Task info not correct");
-            }
-            bool status = Repository.InsertTask(taskItem);
-
-            if (status)
-            {
-                return Ok();
-            }
-            return BadRequest("Failed to create the task in the database."); //choose a message
+            return BadRequest("Task info not correct");
         }
-
-        [HttpPut]
-
-        public ActionResult UpdateTask([FromBody] TaskItem taskItem)
+        Tasks existingTask = Repository.GetTaskById(task.Id);
+        if (existingTask == null)
         {
-            if (taskItem == null)
-            {
-                return BadRequest("Task info not correct");
-            }
-            TaskItem existinTask = Repository.GetStudentById(student.Id);
-            if (existinTask == null)
-            {
-                return NotFound($"Task with id {taskItem.Id} not found");
-            }
-            bool status = Repository.UpdateStudent(taskItem);
-            if (status)
-            {
-                return Ok();
-            }
-            return BadRequest("Something went wrong");
+            return NotFound($"Task with id {task.Id} not found");
         }
-        [HttpDelete("{id}")]
-        public ActionResult DeleteTask([FromRoute] int id)
+        bool status = Repository.UpdateTask(task);
+        if (status)
         {
-            TaskItem existingTask  = Repository.GetStudentById(id);
-            if (existingTask == null)
-            {
-                return NotFound($"Task with id {id} not found");
-            }
-            bool status = Repository.DeleteTask(id);
-            if (status)
-            {
-                return NoContent();
-            }
-            return BadRequest($"Unable to delete task with id {id}");
+            return Ok();
         }
+        return BadRequest("Something went wrong");
+    }
+
+    [HttpDelete("{id}")]
+    public ActionResult DeleteTask([FromRoute] int id)
+    {
+        Tasks existingTask = Repository.GetTaskById(id);
+        if (existingTask == null)
+        {
+            return NotFound($"Task with id {id} not found");
+        }
+        bool status = Repository.DeleteTask(id);
+        if (status)
+        {
+            return NoContent();
+        }
+        return BadRequest($"Unable to delete task with id {id}");
     }
 }
-
