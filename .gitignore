@@ -1,1 +1,16 @@
-Household-Tasks Version 2/HouseholdTasksOverview.API/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+# --- .NET / C# ---
+[Bb]in/
+[Oo]bj/
+*.user
+*.cache
+*.suo
+.vs/
+
+# --- Angular / Node ---
+node_modules/
+.angular/
+dist/
+.npm/
+
+# --- Mac Specific ---
+.DS_Store
