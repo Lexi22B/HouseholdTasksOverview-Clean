@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Household } from '../model/household';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class HouseholdService {
-  baseUrl: string = 'http://localhost:<YOUR_PORT>/api';
+  baseUrl: string = environment.apiUrl; //only this port number is changed, not the other baseURL
 
   constructor(private http: HttpClient) { }
 

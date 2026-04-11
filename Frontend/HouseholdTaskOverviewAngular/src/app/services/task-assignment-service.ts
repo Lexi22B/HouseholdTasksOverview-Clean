@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TaskAssignment } from '../model/task-assignment';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class TaskAssignmentService {
-  baseUrl: string = 'http://localhost:<YOUR_PORT>/api';
+  baseUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
