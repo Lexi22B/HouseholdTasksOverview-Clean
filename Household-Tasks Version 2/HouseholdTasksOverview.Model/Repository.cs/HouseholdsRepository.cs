@@ -28,7 +28,8 @@ using NpgsqlTypes;
                 {
                     return new Households(Convert.ToInt32(data["id"]))
                     {
-                        Address = data["address"].ToString()
+                        Address = data["address"].ToString(),
+                        PasswordHash = data["password_hash"].ToString()
                     };
                 }
 
@@ -59,7 +60,8 @@ using NpgsqlTypes;
                     {
                         Households h = new Households(Convert.ToInt32(data["id"]))
                         {
-                            Address = data["address"].ToString()
+                            Address = data["address"].ToString(),
+                            PasswordHash = data["password_hash"].ToString()
                         };
 
                         households.Add(h);
@@ -89,6 +91,7 @@ using NpgsqlTypes;
                 ";
 
                 cmd.Parameters.AddWithValue("@address", NpgsqlDbType.Text, h.Address);
+                cmd.Parameters.AddWithValue("@password_hash", NpgsqlDbType.Text, h.PasswordHash ?? "");
 
                 bool result = InsertData(dbConn, cmd);
                 return result;
@@ -115,6 +118,7 @@ using NpgsqlTypes;
                 ";
 
                 cmd.Parameters.AddWithValue("@address", NpgsqlDbType.Text, h.Address);
+                cmd.Parameters.AddWithValue("@password_hash", NpgsqlDbType.Text, h.PasswordHash ?? "");
                 cmd.Parameters.AddWithValue("@id", NpgsqlDbType.Integer, h.Id);
 
                 bool result = UpdateData(dbConn, cmd);
