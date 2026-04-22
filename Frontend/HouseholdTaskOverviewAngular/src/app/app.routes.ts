@@ -7,6 +7,7 @@ import { TaskList } from './component/task-list/task-list';
 import { TaskAssignmentList } from './component/task-assignment-list/task-assignment-list';
 import { TaskCompletionList } from './component/task-completion-list/task-completion-list';
 import { WelcomeComponent } from './component/welcome/welcome';
+import { RegisterComponent } from './component/register/register';
 
 export const routes: Routes = 
 [
@@ -17,6 +18,7 @@ export const routes: Routes =
     { path: 'taskassignments', component: TaskAssignmentList },
     { path: 'taskcompletions', component: TaskCompletionList },
     { path: '', component: WelcomeComponent },
+    { path: 'register', component: RegisterComponent }
     //join button on the welcome page
     //register button on the welcome page
 ];
