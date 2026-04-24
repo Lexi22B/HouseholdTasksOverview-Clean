@@ -1,7 +1,7 @@
 export interface Household 
 {
-id: number;
+id?: number;
 address: string;
 passwordHash: string;
-
+houseCode: string;
 }

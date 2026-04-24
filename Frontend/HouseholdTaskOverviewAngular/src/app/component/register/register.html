@@ -9,17 +9,24 @@
   <p class="subtitle">Fill out your access information</p>
 
   <form class="form-card" (ngSubmit)="onCreateAccount()">
+
+    <!-- HOUSE CODE -->
     <div class="form-group">
-      <label for="houseId">House ID</label>
+      <label for="houseCode">House ID</label>
       <input
-        id="houseId"
+        id="houseCode"
         type="text"
         placeholder="Provide a house name ID"
-        [(ngModel)]="houseId"
-        name="houseId"
+        [(ngModel)]="houseCode"
+        name="houseCode"
       />
+
+      <p class="error" *ngIf="houseCode.trim().length === 0">
+        Please provide a House ID
+      </p>
     </div>
 
+    <!-- PASSWORD -->
     <div class="form-group">
       <label for="password">Password</label>
       <input
@@ -29,8 +36,13 @@
         [(ngModel)]="password"
         name="password"
       />
+
+      <p class="error" *ngIf="password.length > 0 && password.length < 8">
+        Please include at least 8 characters
+      </p>
     </div>
 
+    <!-- CONFIRM PASSWORD -->
     <div class="form-group">
       <label for="confirmPassword">Confirm Password</label>
       <input
@@ -40,6 +52,10 @@
         [(ngModel)]="confirmPassword"
         name="confirmPassword"
       />
+
+      <p class="error" *ngIf="confirmPassword.length > 0 && password !== confirmPassword">
+        Passwords do not match
+      </p>
     </div>
 
     <button type="submit" class="create-btn">Create Account</button>

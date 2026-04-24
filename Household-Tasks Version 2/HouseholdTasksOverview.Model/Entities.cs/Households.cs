@@ -13,4 +13,6 @@ public string Address { get; set; }
 
  public string PasswordHash { get; set; } 
 
+ public string HouseCode { get; set; }
+
 }
