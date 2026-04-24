@@ -18,6 +18,9 @@ export class RegisterComponent {
   password: string = '';
   confirmPassword: string = '';
 
+  // 🔴 needed for showing validation messages
+  showErrors: boolean = false;
+
   constructor(
     private householdService: HouseholdService,
     private router: Router
@@ -25,16 +28,20 @@ export class RegisterComponent {
 
   onCreateAccount(): void {
 
+    // turn on validation messages
+    this.showErrors = true;
+
+    // password length check
     if (this.password.length < 8) {
-      console.log('Password too short');
       return;
     }
 
+    // password match check
     if (this.password !== this.confirmPassword) {
-      console.log('Passwords do not match');
       return;
     }
 
+    // create object to send to backend
     const newHousehold: Household = {
       address: this.houseCode,
       houseCode: this.houseCode,
