@@ -86,8 +86,8 @@ using NpgsqlTypes;
                 var cmd = dbConn.CreateCommand();
 
                 cmd.CommandText = @"
-                    insert into households (address)
-                    values (@address)
+                    insert into households (address,password_hash)
+                    values (@address, @password_hash)
                 ";
 
                 cmd.Parameters.AddWithValue("@address", NpgsqlDbType.Text, h.Address);
@@ -114,6 +114,7 @@ using NpgsqlTypes;
                 cmd.CommandText = @"
                     update households
                     set address = @address
+                        password_hash = @password_hash
                     where id = @id
                 ";
 
