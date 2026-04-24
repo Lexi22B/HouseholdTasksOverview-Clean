@@ -11,9 +11,20 @@ import { HouseholdService } from '../../services/household-service';
 export class HouseholdCard {
   @Input() household!: Household;
 
-  constructor(private householdService: HouseholdService) { }
+  constructor(private householdService: HouseholdService) {}
 
-  delete(): void {
-    this.householdService.delete(this.household.id).subscribe();
+  deleteHousehold(): void {
+    if (this.household.id === undefined) {
+      return;
+    }
+
+    this.householdService.delete(this.household.id).subscribe({
+      next: () => {
+        console.log('Household deleted');
+      },
+      error: (err) => {
+        console.error('Error deleting household', err);
+      }
+    });
   }
 }

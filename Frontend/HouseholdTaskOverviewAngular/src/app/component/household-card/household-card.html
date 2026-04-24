@@ -1,12 +1,24 @@
 <p>household-card works!</p>
 
-
 <table border="1" cellpadding="8">
-  <tr><td>ID</td><td>{{household.id}}</td></tr>
-  <tr><td>Address</td><td>{{household.address}}</td></tr>
+  <tr>
+    <td>ID</td>
+    <td>{{ household.id }}</td>
+  </tr>
+
+  <tr>
+    <td>Address</td>
+    <td>{{ household.address }}</td>
+  </tr>
+
+  <tr>
+    <td>House Code</td>
+    <td>{{ household.houseCode }}</td>
+  </tr>
+
   <tr>
     <td colspan="2">
-      <button (click)="delete()">Delete</button>
+      <button (click)="deleteHousehold()">Delete</button>
     </td>
   </tr>
 </table>
