@@ -20,3 +20,7 @@ Household-Tasks Version 2/HouseholdTasksOverview.API/Controllers/TasksController
 Household-Tasks Version 2/HouseholdTasksOverview.API/Program.cs
 Household-Tasks Version 2/HouseholdTasksOverview.Model/obj/Debug/net8.0/HouseholdTasksOverview.Model.csproj.FileListAbsolute.txt
 Household-Tasks Version 2/HouseholdTasksOverview.Model/obj/Debug/net8.0/HouseholdTasksOverview.Model.sourcelink.json
+
+
+# --- Database Connection string  ---
+appsettings.Development.json

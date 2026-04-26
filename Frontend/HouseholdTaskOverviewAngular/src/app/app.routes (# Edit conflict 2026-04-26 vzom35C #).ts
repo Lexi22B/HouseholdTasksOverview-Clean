@@ -20,7 +20,7 @@ export const routes: Routes =
     { path: 'taskcompletions', component: TaskCompletionList },
     { path: '', component: WelcomeComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'home', component: HomeComponent },
+    { path: 'home', component: HomeComponent }
     //{ path: 'house-profile', component: ... },  // later
     //{ path: 'roommates', component: ... },       // later
     //{ path: 'create-room', component: ... },     // later

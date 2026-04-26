@@ -1,0 +1,44 @@
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <button class="profile-btn" (click)="goToHouseProfile()">
+      <div class="avatar avatar-yellow">
+        <img src="assets/house-profile.png" alt="Home Profile" />
+      </div>
+      <span class="profile-label">Home Profile</span>
+    </button>
+
+    <button class="profile-btn" (click)="goToRoommates()">
+      <div class="avatar avatar-blue"></div>
+      <span class="profile-label">Roommates</span>
+    </button>
+  </header>
+
+  <!-- BODY -->
+  <main class="body">
+
+    <h1 class="title">Your Home</h1>
+    <p class="subtitle">Click below to add rooms to your house</p>
+
+    <!-- ROOM CARDS -->
+    <div class="rooms-list">
+
+      <div
+        class="room-card"
+        *ngFor="let room of rooms"
+        (click)="openRoom(room.id)"
+      >
+        <img [src]="room.image" alt="Room" class="room-img" />
+      </div>
+
+      <!-- ADD ROOM BUTTON — always last -->
+      <button class="add-room-btn" (click)="addRoom()">
+        <span class="plus">+</span>
+      </button>
+
+    </div>
+
+  </main>
+
+</div>
