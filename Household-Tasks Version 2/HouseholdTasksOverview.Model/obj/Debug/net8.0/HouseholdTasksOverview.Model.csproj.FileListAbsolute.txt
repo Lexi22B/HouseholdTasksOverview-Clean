@@ -11,3 +11,16 @@ C:\Users\sirig\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Ver
 C:\Users\sirig\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\refint\HouseholdTasksOverview.Model.dll
 C:\Users\sirig\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\HouseholdTasksOverview.Model.pdb
 C:\Users\sirig\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\ref\HouseholdTasksOverview.Model.dll
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\bin\Debug\net8.0\HouseholdTasksOverview.Model.deps.json
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\bin\Debug\net8.0\HouseholdTasksOverview.Model.dll
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\bin\Debug\net8.0\HouseholdTasksOverview.Model.pdb
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\HouseholdTasksOverview.Model.csproj.AssemblyReference.cache
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\HouseholdTasksOverview.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\HouseholdTasksOverview.Model.AssemblyInfoInputs.cache
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\HouseholdTasksOverview.Model.AssemblyInfo.cs
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\HouseholdTasksOverview.Model.csproj.CoreCompileInputs.cache
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\HouseholdTasksOverview.Model.sourcelink.json
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\HouseholdTasksOverview.Model.dll
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\refint\HouseholdTasksOverview.Model.dll
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\HouseholdTasksOverview.Model.pdb
+C:\Users\alexx\Documents\GitHub\HouseholdTasksOverview-Clean\Household-Tasks Version 2\HouseholdTasksOverview.Model\obj\Debug\net8.0\ref\HouseholdTasksOverview.Model.dll
