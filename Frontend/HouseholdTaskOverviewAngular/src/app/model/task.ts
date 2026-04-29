@@ -1,16 +1,14 @@
-export interface Task 
-{
-    id: number;
+export interface Task {
+  id: number;
   householdId: number;
   roomId: number;
-  taskFrequencyId: number;
-  recurrencePattern: string;
   title: string;
   description: string;
-  difficultyLevelId: number;
-  priorityLevelId: number;
-  durationLevelId: number;
+  difficulty: number;
+  priority: number;
+  estimatedDurationMinutes: number;
+  isRecurring: boolean;
+  recurrencePattern: string;
   isActive: boolean;
   createdAt: Date;
-
 }

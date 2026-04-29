@@ -1,18 +1,15 @@
 <div class="page">
 
   <!-- HEADER -->
-  <header class="header">
-    <button class="profile-btn" (click)="goToHouseProfile()">
-      <div class="avatar avatar-yellow">
-        <img src="assets/house-profile.png" alt="Home Profile" />
-      </div>
-      <span class="profile-label">Home Profile</span>
-    </button>
+ <header class="header">
+    <div class="header-right">
 
-    <button class="profile-btn" (click)="goToRoommates()">
-      <div class="avatar avatar-blue"></div>
-      <span class="profile-label">Roommates</span>
-    </button>
+      <span class="header-label">Housemates</span>
+      <button class="icon-btn">👥</button>
+
+      <span class="header-label">Home Info</span>
+      <button class="icon-btn">🔑</button>
+    </div>
   </header>
 
   <!-- BODY -->
@@ -27,7 +24,7 @@
       <div
         class="room-card"
         *ngFor="let room of rooms"
-        (click)="openRoom(room.id)"
+        (click)="openRoom(room)"
       >
         <img [src]="room.image" alt="Room" class="room-img" />
       </div>

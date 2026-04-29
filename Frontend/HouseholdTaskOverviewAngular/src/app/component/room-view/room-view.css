@@ -1,0 +1,238 @@
+:host { display: block; min-height: 100vh; }
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #faf6f0;
+}
+
+/* ── HEADER ── */
+.header {
+  background-color: #F56E00;
+  padding: 8px 24px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 56px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: white;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: white;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  transition: opacity 0.2s;
+}
+
+.icon-btn:hover { opacity: 0.85; }
+
+/* ── ROOM BANNER ── */
+.banner-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 24px 32px 0;
+}
+
+.room-banner {
+  width: 100%;
+  max-width: 796px;
+  height: 160px;
+  background: #b8d4f0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* ── COLUMN HEADERS ── */
+.column-headers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 24px 32px 0;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.column-title {
+  font-family: 'Baloo Chettan 2', cursive;
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+  color: #F56E00;
+}
+
+/* ── TASK GRID ── */
+.task-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 16px 32px 40px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+  align-items: start;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── TASK CARD ── */
+.task-card {
+  background: #c8dff0;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.task-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #2D2C2B;
+}
+
+.priority-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+.card-middle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.difficulty-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: #2D2C2B;
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+.dot.faded  { background: #c8a882; }
+.dot.medium { background: #b07840; }
+.dot.filled { background: #F56E00; }
+
+.duration-badge {
+  background: white;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #2D2C2B;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.housemate-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.housemate-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #FFD485;
+}
+
+.housemate-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: #2D2C2B;
+}
+
+.done-btn {
+  background: #1A6552;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.done-btn:hover { opacity: 0.85; }
+
+.undo-btn {
+  background: white;
+  color: #2D2C2B;
+  border: 1.5px solid #ccc;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.undo-btn:hover { opacity: 0.75; }
+
+/* ── ADD TASK BUTTON ── */
+.add-task-btn {
+  background: #b8d4f0;
+  border: none;
+  border-radius: 16px;
+  height: 60px;
+  width: 100%;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.add-task-btn:hover { background: #a0c4e8; }

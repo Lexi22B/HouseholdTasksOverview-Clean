@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouseholdTasksOverview.API.Controllers;
 
-     public class HousematesController : ControllerBase
+[Route("api/[controller]")]
+[ApiController]
+public class HousematesController : ControllerBase
     {
         protected HousematesRepository Repository { get; }
 

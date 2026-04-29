@@ -1,41 +1,34 @@
-
 namespace HouseholdTasksOverview.Model.Repository.cs;
 using System;
 using HouseholdTasksOverview.Model.Entities.cs;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using NpgsqlTypes;
-public class TaskAssignmentsRepository : BaseRepository
-//change student to taskassignment
-{
-public TaskAssignmentsRepository(IConfiguration configuration) : base(configuration)
-{ }
 
-//GET ONE ASSIGNMENT BY ID
- public TaskAssignments GetTaskAssignmentById(int id)
+public class TaskAssignmentsRepository : BaseRepository
+{
+    public TaskAssignmentsRepository(IConfiguration configuration) : base(configuration)
+    { }
+
+    public TaskAssignments GetTaskAssignmentById(int id)
     {
         NpgsqlConnection dbConn = null;
         try
         {
             dbConn = new NpgsqlConnection(ConnectionString);
             var cmd = dbConn.CreateCommand();
-            cmd.CommandText = "select * from taskassignments where id = @id";
+            cmd.CommandText = "select * from task_assignments where id = @id";
             cmd.Parameters.Add("@id", NpgsqlDbType.Integer).Value = id;
 
             var data = GetData(dbConn, cmd);
-            if (data != null)
+            if (data != null && data.Read())
             {
-                if (data.Read())
+                return new TaskAssignments(Convert.ToInt32(data["id"]))
                 {
-                    return new TaskAssignments(Convert.ToInt32(data["id"]))
-                    {
-                        TaskId       = Convert.ToInt32(data["task_id"]),
-                        HousemateId  = Convert.ToInt32(data["housemate_id"]),
-                        AssignedDate = DateOnly.FromDateTime(Convert.ToDateTime(data["assigned_date"])),
-                        DueDate      = DateOnly.FromDateTime(Convert.ToDateTime(data["due_date"])),
-                        Status       = data["status"].ToString()
-                    };
-                }
+                    TaskId      = Convert.ToInt32(data["task_id"]),
+                    HousemateId = Convert.ToInt32(data["housemate_id"]),
+                    Status      = data["status"].ToString()
+                };
             }
             return null;
         }
@@ -45,8 +38,7 @@ public TaskAssignmentsRepository(IConfiguration configuration) : base(configurat
         }
     }
 
-//GET ALL TASK ASSIGNMENTS
-public List<TaskAssignments> GetAllTaskAssignments()
+    public List<TaskAssignments> GetAllTaskAssignments()
     {
         NpgsqlConnection dbConn = null;
         var assignments = new List<TaskAssignments>();
@@ -54,22 +46,19 @@ public List<TaskAssignments> GetAllTaskAssignments()
         {
             dbConn = new NpgsqlConnection(ConnectionString);
             var cmd = dbConn.CreateCommand();
-            cmd.CommandText = "select * from taskassignments";
+            cmd.CommandText = "select * from task_assignments";
 
             var data = GetData(dbConn, cmd);
             if (data != null)
             {
                 while (data.Read())
                 {
-                    TaskAssignments a = new TaskAssignments(Convert.ToInt32(data["id"]))
+                    assignments.Add(new TaskAssignments(Convert.ToInt32(data["id"]))
                     {
-                        TaskId       = Convert.ToInt32(data["task_id"]),
-                        HousemateId  = Convert.ToInt32(data["housemate_id"]),
-                        AssignedDate = DateOnly.FromDateTime(Convert.ToDateTime(data["assigned_date"])),
-                        DueDate      = DateOnly.FromDateTime(Convert.ToDateTime(data["due_date"])),
-                        Status       = data["status"].ToString() 
-                    };
-                    assignments.Add(a);
+                        TaskId      = Convert.ToInt32(data["task_id"]),
+                        HousemateId = Convert.ToInt32(data["housemate_id"]),
+                        Status      = data["status"].ToString()
+                    });
                 }
             }
             return assignments;
@@ -80,9 +69,7 @@ public List<TaskAssignments> GetAllTaskAssignments()
         }
     }
 
-
-//INSERT TASK ASSIGNMENT
-public bool InsertTaskAssignment(TaskAssignments a)
+    public bool InsertTaskAssignment(TaskAssignments a)
     {
         NpgsqlConnection dbConn = null;
         try
@@ -90,18 +77,13 @@ public bool InsertTaskAssignment(TaskAssignments a)
             dbConn = new NpgsqlConnection(ConnectionString);
             var cmd = dbConn.CreateCommand();
             cmd.CommandText = @"
-                insert into taskassignments
-                    (task_id, housemate_id, assigned_date, due_date)
-                values
-                    (@task_id, @housemate_id, @assigned_date, @due_date)
+                insert into task_assignments (task_id, housemate_id, status)
+                values (@task_id, @housemate_id, @status)
             ";
 
-
-            cmd.Parameters.AddWithValue("@task_id",       NpgsqlDbType.Integer, a.TaskId);
-            cmd.Parameters.AddWithValue("@housemate_id",  NpgsqlDbType.Integer, a.HousemateId);
-            cmd.Parameters.AddWithValue("@assigned_date", NpgsqlDbType.Date,    a.AssignedDate);
-            cmd.Parameters.AddWithValue("@due_date",      NpgsqlDbType.Date,    a.DueDate);
-            cmd.Parameters.AddWithValue("@status",        NpgsqlDbType.Varchar, a.Status);
+            cmd.Parameters.AddWithValue("@task_id",      NpgsqlDbType.Integer, a.TaskId);
+            cmd.Parameters.AddWithValue("@housemate_id", NpgsqlDbType.Integer, a.HousemateId);
+            cmd.Parameters.AddWithValue("@status",       NpgsqlDbType.Varchar, a.Status);
 
             return InsertData(dbConn, cmd);
         }
@@ -111,48 +93,32 @@ public bool InsertTaskAssignment(TaskAssignments a)
         }
     }
 
-//UPDATE TASK ASSIGNMENT
- public bool UpdateTaskAssignment(TaskAssignments a)
+    public bool UpdateTaskAssignment(TaskAssignments a)
     {
         var dbConn = new NpgsqlConnection(ConnectionString);
         var cmd = dbConn.CreateCommand();
         cmd.CommandText = @"
-            update taskassignments set
-                task_id       = @task_id,
-                housemate_id  = @housemate_id,
-                assigned_date = @assigned_date,
-                due_date      = @due_date
-            where
-                id = @id
+            update task_assignments set
+                task_id      = @task_id,
+                housemate_id = @housemate_id,
+                status       = @status
+            where id = @id
         ";
 
-        cmd.Parameters.AddWithValue("@task_id",       NpgsqlDbType.Integer, a.TaskId);
-        cmd.Parameters.AddWithValue("@housemate_id",  NpgsqlDbType.Integer, a.HousemateId);
-        cmd.Parameters.AddWithValue("@assigned_date", NpgsqlDbType.Date,    a.AssignedDate);
-        cmd.Parameters.AddWithValue("@due_date",      NpgsqlDbType.Date,    a.DueDate);
-        cmd.Parameters.AddWithValue("@id",            NpgsqlDbType.Integer, a.Id);
-        cmd.Parameters.AddWithValue("@status", NpgsqlDbType.Varchar, a.Status);
+        cmd.Parameters.AddWithValue("@task_id",      NpgsqlDbType.Integer, a.TaskId);
+        cmd.Parameters.AddWithValue("@housemate_id", NpgsqlDbType.Integer, a.HousemateId);
+        cmd.Parameters.AddWithValue("@status",       NpgsqlDbType.Varchar, a.Status);
+        cmd.Parameters.AddWithValue("@id",           NpgsqlDbType.Integer, a.Id);
 
         return UpdateData(dbConn, cmd);
     }
 
-
-//DELETE TASK ASSIGNMENT
-public bool DeleteTaskAssignment(int id)
+    public bool DeleteTaskAssignment(int id)
     {
         var dbConn = new NpgsqlConnection(ConnectionString);
         var cmd = dbConn.CreateCommand();
-        cmd.CommandText = @"
-            delete from taskassignments
-            where id = @id
-        ";
-        //adding parameters in a better way
+        cmd.CommandText = "delete from task_assignments where id = @id";
         cmd.Parameters.AddWithValue("@id", NpgsqlDbType.Integer, id);
-        
-        //will return true if all goes well
         return DeleteData(dbConn, cmd);
     }
-
-
 }
-

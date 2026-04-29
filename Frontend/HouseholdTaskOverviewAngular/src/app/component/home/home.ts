@@ -11,10 +11,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  rooms = [
-    { id: 1, image: 'assets/room1.png' },
-    { id: 2, image: 'assets/room2.png' },
-  ];
+
 
   constructor(private router: Router) {}
 
@@ -30,7 +27,21 @@ export class HomeComponent {
     this.router.navigate(['/create-room']);
   }
 
-  openRoom(id: number) {
-    this.router.navigate(['/room', id]);
-  }
+ //rooms: any[] = [];
+
+rooms = [
+  { id: 1, name: 'Kitchen', image: 'assets/rooms/default.png' }
+];
+
+/*openRoom(id: number) {
+  this.router.navigate(['/room', id], {
+    state: { roomName: 'Room', roomImage: 'assets/rooms/default.png' }
+  });
+}*/
+
+openRoom(room: any) {
+  this.router.navigate(['/room', room.id], {
+    state: { roomName: room.name, roomImage: room.image }
+  });
+}
 }

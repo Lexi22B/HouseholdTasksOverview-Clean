@@ -1,0 +1,93 @@
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-right">
+      <span class="header-label">Home</span>
+      <button class="icon-btn" (click)="goBack()">🏠</button>
+      <span class="header-label">Housemates</span>
+      <button class="icon-btn">👥</button>
+      <span class="header-label">Home Info</span>
+      <button class="icon-btn">🔑</button>
+    </div>
+  </header>
+
+  <!-- ROOM BANNER -->
+  <div class="banner-wrapper">
+    <div class="room-banner"></div>
+  </div>
+
+  <!-- COLUMN HEADERS -->
+  <div class="column-headers">
+    <h2 class="column-title todo-title">To Do</h2>
+    <h2 class="column-title done-title">Done</h2>
+  </div>
+
+  <!-- TASK GRID -->
+  <main class="task-grid">
+
+    <!-- TO DO COLUMN -->
+    <div class="column">
+      <div class="task-card" *ngFor="let task of todoTasks">
+        <div class="card-top">
+          <span class="task-title">{{ task.title }}</span>
+          <span class="priority-badge" [style.background]="getPriorityColor(task.priority)">
+            {{ getPriorityLabel(task.priority) }}
+          </span>
+        </div>
+
+        <div class="card-middle">
+          <div class="difficulty-row">
+            <span class="meta-label">Hard</span>
+            <span class="dot faded"></span>
+            <span class="dot medium" *ngIf="(task.difficulty || 0) >= 2"></span>
+            <span class="dot filled" *ngIf="(task.difficulty || 0) >= 3"></span>
+          </div>
+          <span class="duration-badge">{{ task.estimatedDurationMinutes }} min</span>
+        </div>
+
+        <div class="card-bottom">
+          <div class="housemate-row" *ngIf="task.housemate">
+            <div class="housemate-avatar"></div>
+            <span class="housemate-name">{{ task.housemate.name }}</span>
+          </div>
+          <button class="done-btn" (click)="markDone(task)">Done</button>
+        </div>
+      </div>
+
+      <button class="add-task-btn" (click)="goToCreateTask()">+</button>
+    </div>
+
+    <!-- DONE COLUMN -->
+    <div class="column">
+      <div class="task-card" *ngFor="let task of doneTasks">
+        <div class="card-top">
+          <span class="task-title">{{ task.title }}</span>
+          <span class="priority-badge" [style.background]="getPriorityColor(task.priority)">
+            {{ getPriorityLabel(task.priority) }}
+          </span>
+        </div>
+
+        <div class="card-middle">
+          <div class="difficulty-row">
+            <span class="meta-label">Hard</span>
+            <span class="dot faded"></span>
+            <span class="dot medium" *ngIf="(task.difficulty || 0) >= 2"></span>
+            <span class="dot filled" *ngIf="(task.difficulty || 0) >= 3"></span>
+          </div>
+          <span class="duration-badge">{{ task.estimatedDurationMinutes }} min</span>
+        </div>
+
+        <div class="card-bottom">
+          <div class="housemate-row" *ngIf="task.housemate">
+            <div class="housemate-avatar"></div>
+            <span class="housemate-name">{{ task.housemate.name }}</span>
+          </div>
+          <button class="undo-btn" (click)="markUndone(task)">Undo</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+</div>
