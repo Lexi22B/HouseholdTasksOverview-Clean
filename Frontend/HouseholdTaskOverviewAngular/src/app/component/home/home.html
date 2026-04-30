@@ -1,12 +1,10 @@
 <div class="page">
 
   <!-- HEADER -->
- <header class="header">
+  <header class="header">
     <div class="header-right">
-
       <span class="header-label">Housemates</span>
       <button class="icon-btn">👥</button>
-
       <span class="header-label">Home Info</span>
       <button class="icon-btn">🔑</button>
     </div>
@@ -26,16 +24,49 @@
         *ngFor="let room of rooms"
         (click)="openRoom(room)"
       >
-        <img [src]="room.image" alt="Room" class="room-img" />
+        <span class="room-card-name">{{ room.roomName }}</span>
       </div>
 
-      <!-- ADD ROOM BUTTON — always last -->
-      <button class="add-room-btn" (click)="addRoom()">
+      <!-- ADD ROOM BUTTON -->
+      <button class="add-room-btn" (click)="openPopup()">
         <span class="plus">+</span>
       </button>
 
     </div>
 
   </main>
+
+  <!-- POPUP OVERLAY -->
+  <div class="overlay" *ngIf="showPopup" (click)="closePopup()"></div>
+
+  <!-- POPUP -->
+  <div class="popup" *ngIf="showPopup">
+
+    <!-- ROOM NAME INPUT -->
+    <div class="popup-input-row">
+      <input
+        class="popup-input"
+        placeholder="Add room name..."
+        [(ngModel)]="newRoom.name"
+      />
+      <span class="popup-edit-icon">✏️</span>
+    </div>
+
+    <!-- IMAGE SELECTION -->
+    <div class="popup-images">
+      <div
+        class="popup-image-card"
+        *ngFor="let img of roomImageOptions"
+        [class.selected]="newRoom.selectedImage === img"
+        (click)="newRoom.selectedImage = img"
+      ></div>
+    </div>
+
+    <!-- CREATE BUTTON -->
+    <button class="popup-create-btn" [disabled]="!newRoom.name" (click)="createRoom()">
+      Create
+    </button>
+
+  </div>
 
 </div>
