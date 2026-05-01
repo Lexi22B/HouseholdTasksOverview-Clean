@@ -1,7 +1,5 @@
-export interface TaskCompletion 
-{
-     id: number;
+export interface TaskCompletion {
+  id: number;
   assignmentId: number;
-  completedAt: Date;
-
+  completedAt: any;
 }

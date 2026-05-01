@@ -74,6 +74,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  deleteRoom(room: Room) {
+    this.roomService.delete(room.id).subscribe(() => {
+      this.loadRooms();
+    });
+  }
+
   openRoom(room: Room) {
     this.router.navigate(['/room', room.id], {
       state: { roomName: room.roomName }

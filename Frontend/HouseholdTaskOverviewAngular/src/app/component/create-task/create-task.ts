@@ -30,6 +30,12 @@ export class CreateTaskComponent implements OnInit {
     { label: 'Difficult', value: 3 }
   ];
 
+  durationOptions = [
+    { label: '15 min', value: 1 },
+    { label: '30 min', value: 2 },
+    { label: '60 min', value: 3 }
+  ];
+
   task = {
     title: '',
     priority: null as number | null,
@@ -68,8 +74,8 @@ export class CreateTaskComponent implements OnInit {
     this.filteredHousemates = [];
   }
 
-  selectDuration(min: number) {
-    this.task.estimatedDurationMinutes = min;
+  selectDuration(value: number) {
+    this.task.estimatedDurationMinutes = value;
   }
 
   selectPriority(p: number) {
@@ -89,12 +95,9 @@ export class CreateTaskComponent implements OnInit {
       householdId: 1,
       roomId: this.roomId,
       title: this.task.title,
-      description: '',
       priority: this.task.priority!,
       difficulty: this.task.difficulty,
       estimatedDurationMinutes: this.task.estimatedDurationMinutes!,
-      isRecurring: false,
-      recurrencePattern: '',
       isActive: true,
       createdAt: new Date()
     };
