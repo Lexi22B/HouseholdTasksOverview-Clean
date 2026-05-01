@@ -63,18 +63,17 @@ public class TasksRepository : BaseRepository
             var cmd = dbConn.CreateCommand();
             cmd.CommandText = @"
                 insert into tasks
-                    (household_id, room_id, recurrence_pattern,
+                    (household_id, room_id,
                      title, difficulty_level_id, priority_level_id,
                      duration_level_id, is_active)
                 values
-                    (@household_id, @room_id, @recurrence_pattern,
+                    (@household_id, @room_id,
                      @title, @difficulty_level_id, @priority_level_id,
                      @duration_level_id, @is_active)
             ";
 
             cmd.Parameters.AddWithValue("@household_id",        NpgsqlDbType.Integer, t.HouseholdId);
             cmd.Parameters.AddWithValue("@room_id",             NpgsqlDbType.Integer, (object)t.RoomId ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@recurrence_pattern",  NpgsqlDbType.Varchar, (object)t.RecurrencePattern ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@title",               NpgsqlDbType.Varchar, t.Title);
             cmd.Parameters.AddWithValue("@difficulty_level_id", NpgsqlDbType.Integer, (object)t.Difficulty ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@priority_level_id",   NpgsqlDbType.Integer, (object)t.Priority ?? DBNull.Value);
@@ -95,7 +94,6 @@ public class TasksRepository : BaseRepository
             update tasks set
                 household_id        = @household_id,
                 room_id             = @room_id,
-                recurrence_pattern  = @recurrence_pattern,
                 title               = @title,
                 difficulty_level_id = @difficulty_level_id,
                 priority_level_id   = @priority_level_id,
@@ -106,7 +104,6 @@ public class TasksRepository : BaseRepository
 
         cmd.Parameters.AddWithValue("@household_id",        NpgsqlDbType.Integer, t.HouseholdId);
         cmd.Parameters.AddWithValue("@room_id",             NpgsqlDbType.Integer, (object)t.RoomId ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@recurrence_pattern",  NpgsqlDbType.Varchar, (object)t.RecurrencePattern ?? DBNull.Value);
         cmd.Parameters.AddWithValue("@title",               NpgsqlDbType.Varchar, t.Title);
         cmd.Parameters.AddWithValue("@difficulty_level_id", NpgsqlDbType.Integer, (object)t.Difficulty ?? DBNull.Value);
         cmd.Parameters.AddWithValue("@priority_level_id",   NpgsqlDbType.Integer, (object)t.Priority ?? DBNull.Value);
@@ -136,12 +133,9 @@ public class TasksRepository : BaseRepository
             HouseholdId              = Convert.ToInt32(data["household_id"]),
             RoomId                   = data["room_id"] == DBNull.Value ? null : Convert.ToInt32(data["room_id"]),
             Title                    = data["title"].ToString(),
-            Description              = data["description"] == DBNull.Value ? null : data["description"].ToString(),
             Difficulty               = data["difficulty_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["difficulty_level_id"]),
             Priority                 = data["priority_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["priority_level_id"]),
             EstimatedDurationMinutes = data["duration_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["duration_level_id"]),
-            IsRecurring              = false,
-            RecurrencePattern        = data["recurrence_pattern"] == DBNull.Value ? null : data["recurrence_pattern"].ToString(),
             IsActive                 = Convert.ToBoolean(data["is_active"]),
             CreatedAt                = Convert.ToDateTime(data["created_at"])
         };

@@ -19,18 +19,19 @@
     <!-- ROOM CARDS -->
     <div class="rooms-list">
 
-      <div
-        class="room-card"
-        *ngFor="let room of rooms"
-        (click)="openRoom(room)"
-      >
-        <span class="room-card-name">{{ room.roomName }}</span>
-      </div>
-
       <!-- ADD ROOM BUTTON -->
       <button class="add-room-btn" (click)="openPopup()">
         <span class="plus">+</span>
       </button>
+
+      <div class="room-card-wrapper" *ngFor="let room of rooms">
+        <div class="room-card" (click)="openRoom(room)">
+          <span class="room-card-name">{{ room.roomName }}</span>
+        </div>
+        <button class="room-delete-btn" (click)="deleteRoom(room)">🗑</button>
+      </div>
+
+      
 
     </div>
 

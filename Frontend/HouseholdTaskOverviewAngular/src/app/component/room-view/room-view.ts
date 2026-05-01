@@ -83,21 +83,51 @@ export class RoomViewComponent implements OnInit {
     return this.tasks.filter(t => !!t.completion);
   }
 
-  markDone(task: TaskWithStatus) {
-    if (!task.assignment) return;
-    const completion: TaskCompletion = {
-      id: 0,
-      assignmentId: task.assignment.id,
-      completedAt: new Date()
-    };
-    this.taskCompletionService.create(completion)
-      .subscribe(() => this.loadData());
-  }
+ markDone(task: TaskWithStatus) {
+  if (!task.assignment) return;
+  const completion = {
+    id: 0,
+    assignmentId: task.assignment.id,
+    completedAt: new Date().toISOString()
+  };
+  this.taskCompletionService.create(completion)
+    .subscribe(() => this.loadData());
+}
 
   markUndone(task: TaskWithStatus) {
     if (!task.completion) return;
     this.taskCompletionService.delete(task.completion.id)
       .subscribe(() => this.loadData());
+  }
+
+  deleteTask(task: TaskWithStatus) {
+    // Delete completion first if exists
+    const deleteCompletion = task.completion
+      ? this.taskCompletionService.delete(task.completion.id)
+      : null;
+
+    const proceed = () => {
+      // Delete assignment if exists
+      const deleteAssignment = task.assignment
+        ? this.taskAssignmentService.delete(task.assignment.id)
+        : null;
+
+      const deleteTaskFn = () => {
+        this.taskService.delete(task.id).subscribe(() => this.loadData());
+      };
+
+      if (deleteAssignment) {
+        deleteAssignment.subscribe(() => deleteTaskFn());
+      } else {
+        deleteTaskFn();
+      }
+    };
+
+    if (deleteCompletion) {
+      deleteCompletion.subscribe(() => proceed());
+    } else {
+      proceed();
+    }
   }
 
   goToCreateTask() {
@@ -117,4 +147,16 @@ export class RoomViewComponent implements OnInit {
   getPriorityColor(p?: number): string {
     return p ? this.priorityColors[p] || '#1A6552' : '#1A6552';
   }
+
+  getEffortLabel(d?: number): string {
+    const labels: { [k: number]: string } = { 1: 'Easy', 2: 'Moderate', 3: 'Difficult' };
+    return d ? labels[d] || 'Easy' : 'Easy';
+  }
+
+  getDurationLabel(d?: number): string {
+    const labels: { [k: number]: string } = { 1: '15 min', 2: '30 min', 3: '60 min' };
+    return d ? labels[d] || '' : '';
+  }
+
+  
 }

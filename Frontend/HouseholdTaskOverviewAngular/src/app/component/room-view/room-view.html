@@ -17,9 +17,12 @@
     <div class="room-banner"></div>
   </div>
 
-  <!-- COLUMN HEADERS -->
+  <!-- COLUMN HEADERS + ADD BUTTON -->
   <div class="column-headers">
-    <h2 class="column-title todo-title">To Do</h2>
+    <div class="todo-header">
+      <h2 class="column-title todo-title">To Do</h2>
+      <button class="add-task-btn" (click)="goToCreateTask()">+</button>
+    </div>
     <h2 class="column-title done-title">Done</h2>
   </div>
 
@@ -31,19 +34,22 @@
       <div class="task-card" *ngFor="let task of todoTasks">
         <div class="card-top">
           <span class="task-title">{{ task.title }}</span>
-          <span class="priority-badge" [style.background]="getPriorityColor(task.priority)">
-            {{ getPriorityLabel(task.priority) }}
-          </span>
+          <div class="card-top-right">
+            <span class="priority-badge" [style.background]="getPriorityColor(task.priority)">
+              {{ getPriorityLabel(task.priority) }}
+            </span>
+            <button class="delete-btn" (click)="deleteTask(task)">🗑</button>
+          </div>
         </div>
 
         <div class="card-middle">
           <div class="difficulty-row">
-            <span class="meta-label">Hard</span>
+            <span class="meta-label">{{ getEffortLabel(task.difficulty) }}</span>
             <span class="dot faded"></span>
             <span class="dot medium" *ngIf="(task.difficulty || 0) >= 2"></span>
             <span class="dot filled" *ngIf="(task.difficulty || 0) >= 3"></span>
           </div>
-          <span class="duration-badge">{{ task.estimatedDurationMinutes }} min</span>
+          <span class="duration-badge">{{ getDurationLabel(task.estimatedDurationMinutes) }}</span>
         </div>
 
         <div class="card-bottom">
@@ -54,28 +60,29 @@
           <button class="done-btn" (click)="markDone(task)">Done</button>
         </div>
       </div>
-
-      <button class="add-task-btn" (click)="goToCreateTask()">+</button>
     </div>
 
     <!-- DONE COLUMN -->
     <div class="column">
-      <div class="task-card" *ngFor="let task of doneTasks">
+      <div class="task-card done-card" *ngFor="let task of doneTasks">
         <div class="card-top">
           <span class="task-title">{{ task.title }}</span>
-          <span class="priority-badge" [style.background]="getPriorityColor(task.priority)">
-            {{ getPriorityLabel(task.priority) }}
-          </span>
+          <div class="card-top-right">
+            <span class="priority-badge" [style.background]="getPriorityColor(task.priority)">
+              {{ getPriorityLabel(task.priority) }}
+            </span>
+            <button class="delete-btn" (click)="deleteTask(task)">🗑</button>
+          </div>
         </div>
 
         <div class="card-middle">
           <div class="difficulty-row">
-            <span class="meta-label">Hard</span>
+            <span class="meta-label">{{ getEffortLabel(task.difficulty) }}</span>
             <span class="dot faded"></span>
             <span class="dot medium" *ngIf="(task.difficulty || 0) >= 2"></span>
             <span class="dot filled" *ngIf="(task.difficulty || 0) >= 3"></span>
           </div>
-          <span class="duration-badge">{{ task.estimatedDurationMinutes }} min</span>
+          <span class="duration-badge">{{ getDurationLabel(task.estimatedDurationMinutes) }}</span>
         </div>
 
         <div class="card-bottom">
