@@ -11,22 +11,22 @@ export class RoomService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Room[]> {
-    return this.http.get<Room[]>(`${this.baseUrl}/rooms`);
+    return this.http.get<Room[]>(`${this.baseUrl}/room`);
   }
 
   getById(id: number): Observable<Room> {
-    return this.http.get<Room>(`${this.baseUrl}/rooms/${id}`);
+    return this.http.get<Room>(`${this.baseUrl}/room/${id}`);
   }
 
   create(room: Room): Observable<any> {
-    return this.http.post(`${this.baseUrl}/rooms`, room);
+    return this.http.post(`${this.baseUrl}/room`, room);
   }
 
   update(room: Room): Observable<any> {
-    return this.http.put(`${this.baseUrl}/rooms`, room);
+    return this.http.put(`${this.baseUrl}/room`, room);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/rooms/${id}`);
+    return this.http.delete(`${this.baseUrl}/room/${id}`);
   }
 }

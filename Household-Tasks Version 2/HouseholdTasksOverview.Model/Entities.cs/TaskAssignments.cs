@@ -8,14 +8,7 @@ public class TaskAssignments
     }
 
     public int Id { get; set; }
-
     public int TaskId { get; set; }
-
     public int HousemateId { get; set; }
-
-    public DateOnly AssignedDate { get; set; }
-
-    public DateOnly DueDate { get; set; }
-
     public string Status { get; set; }
 }

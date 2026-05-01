@@ -8,6 +8,7 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: #faf6f0;
+  position: relative;
 }
 
 /* ── HEADER ── */
@@ -49,49 +50,6 @@
 }
 
 .icon-btn:hover { opacity: 0.85; }
-
-.profile-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.profile-btn:hover {
-  opacity: 0.85;
-}
-
-.profile-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: white;
-}
-
-.avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.avatar-yellow {
-  background-color: #FFD485;
-}
-
-.avatar-yellow img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.avatar-blue {
-  background-color: #99D1FF;
-}
 
 /* ── BODY ── */
 .body {
@@ -145,10 +103,11 @@
   box-shadow: 0 6px 18px rgba(100, 150, 200, 0.25);
 }
 
-.room-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.room-card-name {
+  font-family: 'Baloo Chettan 2', cursive;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #3a5a7a;
 }
 
 /* ── ADD ROOM BUTTON ── */
@@ -176,3 +135,98 @@
   font-weight: 300;
   line-height: 1;
 }
+
+/* ── OVERLAY ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+
+/* ── POPUP ── */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+  background: #daeaf7;
+  border-radius: 24px;
+  padding: 28px;
+  width: 90%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+/* POPUP INPUT */
+.popup-input-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.popup-input {
+  width: 100%;
+  padding: 14px 44px 14px 20px;
+  border-radius: 50px;
+  border: none;
+  background: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #2D2C2B;
+  outline: none;
+}
+
+.popup-input::placeholder { color: #aaa; }
+
+.popup-edit-icon {
+  position: absolute;
+  right: 16px;
+  font-size: 1rem;
+}
+
+/* POPUP IMAGE CARDS */
+.popup-images {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.popup-image-card {
+  background: #b8d4f0;
+  border-radius: 16px;
+  height: 100px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.popup-image-card:hover {
+  transform: translateY(-2px);
+}
+
+.popup-image-card.selected {
+  border-color: #F56E00;
+}
+
+/* POPUP CREATE BUTTON */
+.popup-create-btn {
+  align-self: center;
+  background: #F56E00;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 48px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.popup-create-btn:hover { opacity: 0.88; }
+.popup-create-btn:disabled { background: #ccc; cursor: not-allowed; }

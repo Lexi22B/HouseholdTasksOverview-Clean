@@ -106,13 +106,10 @@ export class CreateTaskComponent implements OnInit {
           .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
 
         if (created && this.task.housemateId) {
-          const today = new Date();
           const assignment: TaskAssignment = {
             id: 0,
             taskId: created.id,
             housemateId: this.task.housemateId!,
-            assignedDate: today,
-            dueDate: today,
             status: 'pending'
           };
 
