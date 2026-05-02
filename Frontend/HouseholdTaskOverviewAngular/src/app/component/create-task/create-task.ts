@@ -1,146 +1,207 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { TaskService } from '../../services/task-service';
-import { TaskAssignmentService } from '../../services/task-assignment-service';
-import { HousemateService } from '../../services/housemate-service';
-import { Task } from '../../model/task';
-import { TaskAssignment } from '../../model/task-assignment';
-import { Housemate } from '../../model/housemate';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
+interface Housemate {
+  id: number;
+  name: string;
+  householdId: number;
+}
+
+interface Task {
+  id: number;
+  householdId: number;
+  roomId: number;
+  title: string;
+  description: string;
+  difficultyLevelId: number;
+  priorityLevelId: number;
+  durationLevelId: number;
+  taskFrequencyId: number;
+  isActive: boolean;
+  recurrencePattern: string;
+  createdAt: string;
+}
+
+interface TaskAssignment {
+  id: number;
+  taskId: number;
+  housemateId: number;
+  assignedDate: string;
+  dueDate: string;
+}
 
 @Component({
-  selector: 'app-create-task',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  selector: 'app-create-task',
   templateUrl: './create-task.html',
-  styleUrl: './create-task.css'
+  styleUrl: './create-task.css',
+  imports: [CommonModule, FormsModule]
 })
 export class CreateTaskComponent implements OnInit {
+  private baseUrl = 'http://localhost:5122/api';
 
   roomId!: number;
-  roomName: string = 'Room';
-  housemates: Housemate[] = [];
-  filteredHousemates: Housemate[] = [];
-  searchName: string = '';
+  householdId!: number;
 
-  effortOptions = [
-    { label: 'Easy', value: 1 },
-    { label: 'Moderate', value: 2 },
-    { label: 'Difficult', value: 3 }
+  // Form state
+  taskTitle = '';
+  selectedPriority: number | null = null;   // 1=Low, 2=Medium, 3=High
+  selectedDifficulty: number | null = null; // 1=Easy, 2=Medium, 3=Hard
+  selectedDuration: number | null = null;   // 1=15min, 2=30min, 3=60min
+  selectedHousemate: Housemate | null = null;
+
+  searchName = '';
+  allHousemates: Housemate[] = [];
+  filteredHousemates: Housemate[] = [];
+
+  submitting = false;
+  errorMsg = '';
+
+  priorityOptions = [
+    { value: 1, label: 'Low', color: '#22c55e' },
+    { value: 2, label: 'Medium', color: '#f59e0b' },
+    { value: 3, label: 'High', color: '#ef4444' },
   ];
 
   durationOptions = [
-    { label: '15 min', value: 1 },
-    { label: '30 min', value: 2 },
-    { label: '60 min', value: 3 }
+    { value: 1, label: '15 min' },
+    { value: 2, label: '30 min' },
+    { value: 3, label: '60 min' },
   ];
 
-  task = {
-    title: '',
-    priority: null as number | null,
-    difficulty: 1,
-    estimatedDurationMinutes: null as number | null,
-    housemateId: null as number | null,
-    housemateName: ''
-  };
+  difficultyOptions = [
+    { value: 1, label: 'Easy' },
+    { value: 2, label: 'Medium' },
+    { value: 3, label: 'Hard' },
+  ];
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
-    private taskService: TaskService,
-    private taskAssignmentService: TaskAssignmentService,
-    private housemateService: HousemateService
-  ) {}
+    private http: HttpClient
+  ) { }
 
-  ngOnInit() {
-    this.roomId = history.state?.roomId;
-    this.roomName = history.state?.roomName || 'Room';
-    this.housemateService.getAll().subscribe(h => {
-      this.housemates = h.filter(hm => hm.isActive);
-      this.filteredHousemates = this.housemates;
+  ngOnInit(): void {
+    // Expect route like /create-task/:householdId/:roomId
+    this.householdId = Number(this.route.snapshot.paramMap.get('householdId'));
+    this.roomId = Number(this.route.snapshot.paramMap.get('roomId'));
+
+    this.http.get<Housemate[]>(`${this.baseUrl}/Housemates`).subscribe({
+      next: data => this.allHousemates = data,
+      error: () => { }
     });
   }
 
+  // ── Priority ──
+  selectPriority(value: number) {
+    this.selectedPriority = this.selectedPriority === value ? null : value;
+  }
+
+  getPriorityColor(value: number): string {
+    const opt = this.priorityOptions.find(p => p.value === value);
+    return opt ? opt.color : '#ddd';
+  }
+
+  // ── Duration ──
+  selectDuration(value: number) {
+    this.selectedDuration = this.selectedDuration === value ? null : value;
+  }
+
+  // ── Difficulty ──
+  selectDifficulty(value: number) {
+    this.selectedDifficulty = this.selectedDifficulty === value ? null : value;
+  }
+
+  // ── Housemate search ──
   filterHousemates() {
-    this.filteredHousemates = this.housemates.filter(h =>
-      h.name.toLowerCase().includes(this.searchName.toLowerCase())
-    );
+    const q = this.searchName.toLowerCase().trim();
+    this.filteredHousemates = q
+      ? this.allHousemates.filter(h => h.name.toLowerCase().includes(q))
+      : [];
+    // Clear selection if text changed
+    if (this.selectedHousemate && !this.selectedHousemate.name.toLowerCase().includes(q)) {
+      this.selectedHousemate = null;
+    }
   }
 
   selectHousemate(h: Housemate) {
-    this.task.housemateId = h.id;
-    this.task.housemateName = h.name;
+    this.selectedHousemate = h;
     this.searchName = h.name;
     this.filteredHousemates = [];
   }
 
-  selectDuration(value: number) {
-    this.task.estimatedDurationMinutes = value;
-  }
-
-  selectPriority(p: number) {
-    this.task.priority = p;
-  }
-
+  // ── Validation ──
   isValid(): boolean {
-    return !!this.task.title && !!this.task.priority &&
-           !!this.task.estimatedDurationMinutes && !!this.task.housemateId;
+    return (
+      this.taskTitle.trim().length > 0 &&
+      this.selectedPriority !== null &&
+      this.selectedDifficulty !== null &&
+      this.selectedDuration !== null &&
+      this.selectedHousemate !== null
+    );
   }
 
-  submit() {
-    if (!this.isValid()) return;
 
-    const newTask: Task = {
+
+  // ── Submit: POST Task → POST TaskAssignment ──
+  submit() {
+    if (!this.isValid() || this.submitting) return;
+
+    this.submitting = true;
+    this.errorMsg = '';
+
+    const now = new Date().toISOString();
+
+    const newTask = {
       id: 0,
-      householdId: 1,
+      householdId: this.householdId,
       roomId: this.roomId,
-      title: this.task.title,
-      priority: this.task.priority!,
-      difficulty: this.task.difficulty,
-      estimatedDurationMinutes: this.task.estimatedDurationMinutes!,
+      title: this.taskTitle.trim(),
+      difficulty: this.selectedDifficulty!,
+      priority: this.selectedPriority!,
+      estimatedDurationMinutes: this.selectedDuration!,
       isActive: true,
-      createdAt: new Date()
+      createdAt: now
     };
 
-    this.taskService.create(newTask).subscribe(() => {
-      this.taskService.getAll().subscribe(tasks => {
-        const created = tasks
-          .filter(t => t.roomId === this.roomId && t.title === this.task.title)
-          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+    // Step 1: Create the task
+    this.http.post<any>(`${this.baseUrl}/Tasks`, newTask).subscribe({
+      next: (createdTask) => {
+        // Step 2: Assign it
+        console.log('Created task response:', createdTask); // add this
+        const taskId = createdTask?.id ?? createdTask?.Id;
+        console.log('Task ID extracted:', taskId); // add this
+        const assignment = {
+          id: 0,
+          taskId: taskId,
+          housemateId: this.selectedHousemate!.id,
+          status: 'pending'
+        };
 
-        if (created && this.task.housemateId) {
-          const assignment: TaskAssignment = {
-            id: 0,
-            taskId: created.id,
-            housemateId: this.task.housemateId!,
-            status: 'pending'
-          };
-
-          this.taskAssignmentService.create(assignment).subscribe(() => {
-            this.router.navigate(['/room', this.roomId], {
-              state: { roomName: this.roomName }
-            });
-          });
-        }
-      });
+        this.http.post(`${this.baseUrl}/TaskAssignments`, assignment).subscribe({
+          next: () => {
+            this.submitting = false;
+            this.goBack();
+          },
+          error: (err) => {
+            this.submitting = false;
+            this.errorMsg = 'Task created but assignment failed. Check the console.';
+            console.error('Assignment POST failed:', err);
+          }
+        });
+      },
+      error: (err) => {
+        this.submitting = false;
+        this.errorMsg = 'Could not create task. Check the console.';
+        console.error('Task POST failed:', err);
+      }
     });
   }
 
   goBack() {
-    this.router.navigate(['/room', this.roomId], {
-      state: { roomName: this.roomName }
-    });
-  }
-
-  getPriorityLabel(p: number): string {
-    const labels: { [k: number]: string } = { 1: 'Low', 2: 'Medium', 3: 'High' };
-    return labels[p] || '';
-  }
-
-  getPriorityColor(p: number): string {
-    const colors: { [k: number]: string } = {
-      1: '#1A6552', 2: '#f0a500', 3: '#e85d4a'
-    };
-    return colors[p] || '#ccc';
+    this.router.navigate(['/room', this.householdId, this.roomId]);
   }
 }

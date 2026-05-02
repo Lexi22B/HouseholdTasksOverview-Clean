@@ -1,20 +1,16 @@
 <div class="page">
 
   <!-- HEADER -->
-  <header class="header">
+  <div class="header">
     <div class="header-right">
-      <span class="header-label">Home</span>
-      <button class="icon-btn" (click)="goBack()">🏠</button>
-
-      <span class="header-label">Housemates</span>
-      <button class="icon-btn">👥</button>
-
-      <span class="header-label">Home Info</span>
-      <button class="icon-btn">🔑</button>
+      <span class="header-label">Roommates</span>
+      <button class="icon-btn roommates-btn">👥</button>
+      <span class="header-label">Profile</span>
+      <button class="icon-btn profile-btn">🐶</button>
     </div>
-  </header>
+  </div>
 
-  <!-- ROOM BANNER -->
+  <!-- ROOM BANNER (empty blue block like the mockup) -->
   <div class="banner-wrapper">
     <div class="room-banner"></div>
   </div>
@@ -23,14 +19,15 @@
   <div class="form-wrapper">
     <div class="form-card">
 
-      <!-- TASK NAME -->
+      <!-- TASK TITLE INPUT -->
       <input
         class="task-input"
+        type="text"
         placeholder="Add a task..."
-        [(ngModel)]="task.title"
+        [(ngModel)]="taskTitle"
       />
 
-      <!-- OPTIONS CARD -->
+      <!-- OPTIONS SECTION -->
       <div class="options-card">
 
         <!-- PRIORITY -->
@@ -38,12 +35,25 @@
           <span class="option-label">Priority</span>
           <div class="option-btns">
             <button
-              *ngFor="let p of [1, 2, 3]"
+              *ngFor="let p of priorityOptions"
               class="priority-btn"
-              [style.background]="task.priority === p ? getPriorityColor(p) : '#e0e0e0'"
-              [style.color]="task.priority === p ? 'white' : '#555'"
-              (click)="selectPriority(p)"
-            >{{ getPriorityLabel(p) }}</button>
+              [style.background]="selectedPriority === p.value ? p.color : '#e0e0e0'"
+              [style.color]="selectedPriority === p.value ? 'white' : '#555'"
+              (click)="selectPriority(p.value)"
+            >{{ p.label }}</button>
+          </div>
+        </div>
+
+        <!-- EFFORT / DIFFICULTY -->
+        <div class="option-row">
+          <span class="option-label">Effort</span>
+          <div class="option-btns">
+            <button
+              *ngFor="let d of difficultyOptions"
+              class="duration-btn"
+              [class.selected]="selectedDifficulty === d.value"
+              (click)="selectDifficulty(d.value)"
+            >{{ d.label }}</button>
           </div>
         </div>
 
@@ -52,24 +62,11 @@
           <span class="option-label">Estimated duration</span>
           <div class="option-btns">
             <button
-              *ngFor="let d of [15, 30, 60]"
+              *ngFor="let d of durationOptions"
               class="duration-btn"
-              [class.selected]="task.estimatedDurationMinutes === d"
-              (click)="selectDuration(d)"
-            >{{ d === 15 ? '15 min' : d === 30 ? '30 min' : '60 min' }}</button>
-          </div>
-        </div>
-
-        <!-- EFFORT -->
-        <div class="option-row">
-          <span class="option-label">Effort</span>
-          <div class="option-btns">
-            <button
-              *ngFor="let e of effortOptions"
-              class="duration-btn"
-              [class.selected]="task.difficulty === e.value"
-              (click)="task.difficulty = e.value"
-            >{{ e.label }}</button>
+              [class.selected]="selectedDuration === d.value"
+              (click)="selectDuration(d.value)"
+            >{{ d.label }}</button>
           </div>
         </div>
 
@@ -84,6 +81,8 @@
               (input)="filterHousemates()"
             />
             <span class="assign-icon">👤</span>
+
+            <!-- Dropdown -->
             <div class="dropdown" *ngIf="filteredHousemates.length > 0 && searchName">
               <div
                 class="dropdown-item"
@@ -96,9 +95,16 @@
 
       </div>
 
+      <!-- ERROR MESSAGE -->
+      <p class="error-msg" *ngIf="errorMsg">⚠️ {{ errorMsg }}</p>
+
       <!-- CREATE BUTTON -->
-      <button class="create-btn" [disabled]="!isValid()" (click)="submit()">
-        Create
+      <button
+        class="create-btn"
+        [disabled]="!isValid() || submitting"
+        (click)="submit()"
+      >
+        {{ submitting ? 'Creating...' : 'Create' }}
       </button>
 
     </div>

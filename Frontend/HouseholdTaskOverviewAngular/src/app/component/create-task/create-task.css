@@ -35,20 +35,19 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: white;
+  background: #b8d4f0;
   border: none;
   font-size: 1.1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 8px;
   transition: opacity 0.2s;
 }
 
-.icon-btn:hover { opacity: 0.85; }
+.icon-btn:hover { opacity: 0.8; }
 
-/* ── ROOM BANNER ── */
+/* ── BANNER ── */
 .banner-wrapper {
   display: flex;
   justify-content: center;
@@ -58,7 +57,7 @@
 .room-banner {
   width: 100%;
   max-width: 796px;
-  height: 160px;
+  height: 150px;
   background: #b8d4f0;
   border-radius: 20px;
 }
@@ -67,7 +66,7 @@
 .form-wrapper {
   display: flex;
   justify-content: center;
-  padding: 24px 24px 40px;
+  padding: 24px 24px 60px;
 }
 
 .form-card {
@@ -103,7 +102,7 @@
   padding: 24px 20px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 /* ── OPTION ROW ── */
@@ -118,13 +117,14 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
   color: #2D2C2B;
-  min-width: 130px;
+  min-width: 140px;
 }
 
 /* ── PRIORITY BUTTONS ── */
 .option-btns {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .priority-btn {
@@ -135,12 +135,12 @@
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.15s, color 0.15s;
 }
 
-/* ── DURATION/EFFORT BUTTONS ── */
+/* ── DURATION / EFFORT BUTTONS ── */
 .duration-btn {
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 20px;
   border: none;
   background: white;
@@ -148,7 +148,7 @@
   font-size: 0.9rem;
   color: #2D2C2B;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.15s, color 0.15s;
 }
 
 .duration-btn.selected {
@@ -164,16 +164,18 @@
 .assign-input-wrapper {
   position: relative;
   flex: 1;
+  min-width: 200px;
 }
 
 .assign-input {
   width: 100%;
-  padding: 10px 40px 10px 16px;
+  padding: 10px 44px 10px 16px;
   border-radius: 50px;
   border: none;
   background: white;
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
+  color: #2D2C2B;
   outline: none;
 }
 
@@ -182,9 +184,11 @@
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.1rem;
+  font-size: 1rem;
+  pointer-events: none;
 }
 
+/* ── DROPDOWN ── */
 .dropdown {
   position: absolute;
   top: calc(100% + 4px);
@@ -199,22 +203,31 @@
 
 .dropdown-item {
   padding: 10px 16px;
+  cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
-  cursor: pointer;
   color: #2D2C2B;
+  transition: background 0.1s;
 }
 
 .dropdown-item:hover { background: #f0f0f0; }
 
+/* ── ERROR ── */
+.error-msg {
+  color: #dc2626;
+  font-size: 0.85rem;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+}
+
 /* ── CREATE BUTTON ── */
 .create-btn {
   align-self: center;
+  padding: 14px 48px;
+  border-radius: 50px;
+  border: none;
   background: #F56E00;
   color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 14px 48px;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -222,27 +235,26 @@
   transition: opacity 0.2s;
 }
 
-.create-btn:hover { opacity: 0.88; }
+.create-btn:hover:not(:disabled) { opacity: 0.85; }
 .create-btn:disabled { background: #ccc; cursor: not-allowed; }
 
 /* ── BACK FAB ── */
 .back-fab {
   position: fixed;
-  bottom: 32px;
-  left: 32px;
-  width: 56px;
-  height: 56px;
+  bottom: 24px;
+  left: 24px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: #99D1FF;
+  background: #b8d4f0;
   border: none;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   transition: opacity 0.2s;
 }
 
-.back-fab:hover { opacity: 0.85; }
-
+.back-fab:hover { opacity: 0.8; }
