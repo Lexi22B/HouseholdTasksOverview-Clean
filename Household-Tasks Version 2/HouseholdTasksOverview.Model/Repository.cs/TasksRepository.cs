@@ -54,7 +54,7 @@ public class TasksRepository : BaseRepository
     }
 
     // --- INSERT NEW TASK ---
-    public bool InsertTask(Tasks t)
+    public int InsertTask(Tasks t)
     {
         NpgsqlConnection dbConn = null;
         try
@@ -62,29 +62,31 @@ public class TasksRepository : BaseRepository
             dbConn = new NpgsqlConnection(ConnectionString);
             var cmd = dbConn.CreateCommand();
             cmd.CommandText = @"
-                insert into tasks
-                    (household_id, room_id,
-                     title, difficulty_level_id, priority_level_id,
-                     duration_level_id, is_active)
-                values
-                    (@household_id, @room_id,
-                     @title, @difficulty_level_id, @priority_level_id,
-                     @duration_level_id, @is_active)
-            ";
+            insert into tasks
+                (household_id, room_id,
+                 title, difficulty_level_id, priority_level_id,
+                 duration_level_id, is_active)
+            values
+                (@household_id, @room_id,
+                 @title, @difficulty_level_id, @priority_level_id,
+                 @duration_level_id, @is_active)
+            RETURNING id
+        ";
 
-            cmd.Parameters.AddWithValue("@household_id",        NpgsqlDbType.Integer, t.HouseholdId);
-            cmd.Parameters.AddWithValue("@room_id",             NpgsqlDbType.Integer, (object)t.RoomId ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@title",               NpgsqlDbType.Varchar, t.Title);
+            cmd.Parameters.AddWithValue("@household_id", NpgsqlDbType.Integer, t.HouseholdId);
+            cmd.Parameters.AddWithValue("@room_id", NpgsqlDbType.Integer, (object)t.RoomId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@title", NpgsqlDbType.Varchar, t.Title);
             cmd.Parameters.AddWithValue("@difficulty_level_id", NpgsqlDbType.Integer, (object)t.Difficulty ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@priority_level_id",   NpgsqlDbType.Integer, (object)t.Priority ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@duration_level_id",   NpgsqlDbType.Integer, (object)t.EstimatedDurationMinutes ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@is_active",           NpgsqlDbType.Boolean, t.IsActive);
+            cmd.Parameters.AddWithValue("@priority_level_id", NpgsqlDbType.Integer, (object)t.Priority ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@duration_level_id", NpgsqlDbType.Integer, (object)t.EstimatedDurationMinutes ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@is_active", NpgsqlDbType.Boolean, t.IsActive);
 
-            return InsertData(dbConn, cmd);
+            dbConn.Open();
+            object result = cmd.ExecuteScalar();
+            return Convert.ToInt32(result);
         }
         finally { dbConn?.Close(); }
     }
-
     // --- UPDATE EXISTING TASK ---
     public bool UpdateTask(Tasks t)
     {
@@ -102,14 +104,14 @@ public class TasksRepository : BaseRepository
             where id = @id
         ";
 
-        cmd.Parameters.AddWithValue("@household_id",        NpgsqlDbType.Integer, t.HouseholdId);
-        cmd.Parameters.AddWithValue("@room_id",             NpgsqlDbType.Integer, (object)t.RoomId ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@title",               NpgsqlDbType.Varchar, t.Title);
+        cmd.Parameters.AddWithValue("@household_id", NpgsqlDbType.Integer, t.HouseholdId);
+        cmd.Parameters.AddWithValue("@room_id", NpgsqlDbType.Integer, (object)t.RoomId ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("@title", NpgsqlDbType.Varchar, t.Title);
         cmd.Parameters.AddWithValue("@difficulty_level_id", NpgsqlDbType.Integer, (object)t.Difficulty ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@priority_level_id",   NpgsqlDbType.Integer, (object)t.Priority ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@duration_level_id",   NpgsqlDbType.Integer, (object)t.EstimatedDurationMinutes ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@is_active",           NpgsqlDbType.Boolean, t.IsActive);
-        cmd.Parameters.AddWithValue("@id",                  NpgsqlDbType.Integer, t.Id);
+        cmd.Parameters.AddWithValue("@priority_level_id", NpgsqlDbType.Integer, (object)t.Priority ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("@duration_level_id", NpgsqlDbType.Integer, (object)t.EstimatedDurationMinutes ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("@is_active", NpgsqlDbType.Boolean, t.IsActive);
+        cmd.Parameters.AddWithValue("@id", NpgsqlDbType.Integer, t.Id);
 
         return UpdateData(dbConn, cmd);
     }
@@ -129,15 +131,15 @@ public class TasksRepository : BaseRepository
     {
         return new Tasks
         {
-            Id                       = Convert.ToInt32(data["id"]),
-            HouseholdId              = Convert.ToInt32(data["household_id"]),
-            RoomId                   = data["room_id"] == DBNull.Value ? null : Convert.ToInt32(data["room_id"]),
-            Title                    = data["title"].ToString(),
-            Difficulty               = data["difficulty_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["difficulty_level_id"]),
-            Priority                 = data["priority_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["priority_level_id"]),
+            Id = Convert.ToInt32(data["id"]),
+            HouseholdId = Convert.ToInt32(data["household_id"]),
+            RoomId = data["room_id"] == DBNull.Value ? null : Convert.ToInt32(data["room_id"]),
+            Title = data["title"].ToString(),
+            Difficulty = data["difficulty_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["difficulty_level_id"]),
+            Priority = data["priority_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["priority_level_id"]),
             EstimatedDurationMinutes = data["duration_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["duration_level_id"]),
-            IsActive                 = Convert.ToBoolean(data["is_active"]),
-            CreatedAt                = Convert.ToDateTime(data["created_at"])
+            IsActive = Convert.ToBoolean(data["is_active"]),
+            CreatedAt = Convert.ToDateTime(data["created_at"])
         };
     }
 }

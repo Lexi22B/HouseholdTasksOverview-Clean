@@ -21,7 +21,7 @@ export const routes: Routes =
         //{ path: 'house-profile', component: ... },  // later
         //{ path: 'roommates', component: ... },       // later
         //{ path: 'create-room', component: ... },     // later
-        { path: 'room/:id', component: RoomViewComponent },
-        { path: 'create-task', component: CreateTaskComponent },
+        { path: 'room/:householdId/:id', component: RoomViewComponent },
+        { path: 'create-task/:householdId/:roomId', component: CreateTaskComponent },
 
     ];

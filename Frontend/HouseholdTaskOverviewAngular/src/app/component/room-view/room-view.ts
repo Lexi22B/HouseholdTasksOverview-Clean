@@ -26,6 +26,7 @@ interface TaskWithStatus extends Task {
 export class RoomViewComponent implements OnInit {
 
   roomId!: number;
+  householdId!: number;
   roomName: string = 'Room';
   roomImage: string = 'assets/rooms/default.png';
   tasks: TaskWithStatus[] = [];
@@ -44,10 +45,13 @@ export class RoomViewComponent implements OnInit {
     private taskAssignmentService: TaskAssignmentService,
     private taskCompletionService: TaskCompletionService,
     private housemateService: HousemateService
-  ) {}
+  ) { }
+
+  
 
   ngOnInit() {
     this.roomId = Number(this.route.snapshot.paramMap.get('id'));
+    this.householdId = Number(this.route.snapshot.paramMap.get('householdId')); // add this
     this.roomName = history.state?.roomName || 'Room';
     this.roomImage = history.state?.roomImage || 'assets/rooms/default.png';
     this.loadData();
@@ -83,16 +87,16 @@ export class RoomViewComponent implements OnInit {
     return this.tasks.filter(t => !!t.completion);
   }
 
- markDone(task: TaskWithStatus) {
-  if (!task.assignment) return;
-  const completion = {
-    id: 0,
-    assignmentId: task.assignment.id,
-    completedAt: new Date().toISOString()
-  };
-  this.taskCompletionService.create(completion)
-    .subscribe(() => this.loadData());
-}
+  markDone(task: TaskWithStatus) {
+    if (!task.assignment) return;
+    const completion = {
+      id: 0,
+      assignmentId: task.assignment.id,
+      completedAt: new Date().toISOString()
+    };
+    this.taskCompletionService.create(completion)
+      .subscribe(() => this.loadData());
+  }
 
   markUndone(task: TaskWithStatus) {
     if (!task.completion) return;
@@ -131,9 +135,7 @@ export class RoomViewComponent implements OnInit {
   }
 
   goToCreateTask() {
-    this.router.navigate(['/create-task'], {
-      state: { roomId: this.roomId, roomName: this.roomName }
-    });
+    this.router.navigate(['/create-task', this.householdId, this.roomId]);
   }
 
   goBack() {
@@ -158,5 +160,5 @@ export class RoomViewComponent implements OnInit {
     return d ? labels[d] || '' : '';
   }
 
-  
+
 }

@@ -28,15 +28,16 @@ export class HomeComponent implements OnInit {
     'assets/rooms/room3.png'
   ];
 
-  constructor(private router: Router, private roomService: RoomService) {}
+  constructor(private router: Router, private roomService: RoomService) { }
 
   ngOnInit() {
     this.loadRooms();
   }
 
   loadRooms() {
+    const householdId = Number(localStorage.getItem('householdId'));
     this.roomService.getAll().subscribe(rooms => {
-      this.rooms = rooms.filter(r => r.householdId === 1);
+      this.rooms = rooms.filter(r => r.householdId === householdId);
     });
   }
 
@@ -59,16 +60,17 @@ export class HomeComponent implements OnInit {
 
   createRoom() {
     if (!this.newRoom.name) return;
+    const householdId = Number(localStorage.getItem('householdId'));
 
     const room: Room = {
       id: 0,
-      householdId: 1,
+      householdId: householdId,
       roomName: this.newRoom.name
     };
 
     this.roomService.create(room).subscribe((newId: number) => {
       this.closePopup();
-      this.router.navigate(['/room', newId], {
+      this.router.navigate(['/room', householdId, newId], {
         state: { roomName: this.newRoom.name }
       });
     });
@@ -81,7 +83,7 @@ export class HomeComponent implements OnInit {
   }
 
   openRoom(room: Room) {
-    this.router.navigate(['/room', room.id], {
+    this.router.navigate(['/room', room.householdId, room.id], {
       state: { roomName: room.roomName }
     });
   }
