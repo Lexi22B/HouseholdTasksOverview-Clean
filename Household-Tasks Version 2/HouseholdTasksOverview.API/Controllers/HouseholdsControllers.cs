@@ -34,6 +34,34 @@ public class HouseholdsController : ControllerBase
         return Ok(Repository.GetHouseholds());
     }
 
+    [HttpPost("login")]
+    public ActionResult Login([FromBody] HouseholdLoginRequest request)
+    {
+        if (request == null)
+        {
+            return BadRequest("Login information is missing");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.HouseCode))
+        {
+            return BadRequest("House ID is required");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Password))
+        {
+            return BadRequest("Password is required");
+        }
+
+        Households household = Repository.LoginHousehold(request.HouseCode, request.Password);
+
+        if (household == null)
+        {
+            return Unauthorized("Invalid house ID or password");
+        }
+
+        return Ok(household);
+    }
+
     [HttpPost]
     public ActionResult Post([FromBody] Households household)
     {
@@ -116,4 +144,10 @@ public class HouseholdsController : ControllerBase
 
         return BadRequest($"Unable to delete household with id {id}");
     }
+}
+
+public class HouseholdLoginRequest
+{
+    public string HouseCode { get; set; }
+    public string Password { get; set; }
 }
