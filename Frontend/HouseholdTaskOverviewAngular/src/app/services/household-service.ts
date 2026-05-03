@@ -29,6 +29,12 @@ export class HouseholdService {
     });
   }
 
+  changePassword(id: number, newPassword: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/households/${id}/password`, {
+      newPassword: newPassword
+    });
+  }
+
   update(household: Household): Observable<any> {
     return this.http.put(`${this.baseUrl}/households`, household);
   }

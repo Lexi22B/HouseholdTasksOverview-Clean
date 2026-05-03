@@ -125,6 +125,36 @@ public class HouseholdsController : ControllerBase
         return BadRequest("Something went wrong");
     }
 
+    [HttpPut("{id}/password")]
+    public ActionResult UpdatePassword([FromRoute] int id, [FromBody] ChangePasswordRequest request)
+    {
+        if (request == null || string.IsNullOrWhiteSpace(request.NewPassword))
+        {
+            return BadRequest("New password is required");
+        }
+
+        if (request.NewPassword.Length < 8)
+        {
+            return BadRequest("Password must be at least 8 characters");
+        }
+
+        Households existing = Repository.GetHouseholdById(id);
+
+        if (existing == null)
+        {
+            return NotFound($"Household with id {id} not found");
+        }
+
+        bool status = Repository.UpdateHouseholdPassword(id, request.NewPassword);
+
+        if (status)
+        {
+            return Ok();
+        }
+
+        return BadRequest("Unable to update password");
+    }
+
     [HttpDelete("{id}")]
     public ActionResult DeleteHousehold([FromRoute] int id)
     {
@@ -150,4 +180,9 @@ public class HouseholdLoginRequest
 {
     public string HouseCode { get; set; }
     public string Password { get; set; }
+}
+
+public class ChangePasswordRequest
+{
+    public string NewPassword { get; set; }
 }
