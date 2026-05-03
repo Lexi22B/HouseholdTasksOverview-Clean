@@ -84,71 +84,71 @@ public class HouseholdsRepository : BaseRepository
     }
 
     // Login: checks whether the entered House ID and password exist in the households table
-    public Households LoginHousehold(string houseCode, string password)
+   public Households LoginHousehold(string houseCode, string password)
+{
+    NpgsqlConnection dbConn = null;
+
+    try
     {
-        NpgsqlConnection dbConn = null;
+        dbConn = new NpgsqlConnection(ConnectionString);
+        var cmd = dbConn.CreateCommand();
 
-        try
+        cmd.CommandText = @"
+            select *
+            from households
+            where house_code = @house_code
+            and password_hash = crypt(@password, password_hash)
+        ";
+
+        cmd.Parameters.AddWithValue("@house_code", NpgsqlDbType.Text, houseCode);
+        cmd.Parameters.AddWithValue("@password", NpgsqlDbType.Text, password);
+
+        var data = GetData(dbConn, cmd);
+
+        if (data != null && data.Read())
         {
-            dbConn = new NpgsqlConnection(ConnectionString);
-            var cmd = dbConn.CreateCommand();
-
-            cmd.CommandText = @"
-                select *
-                from households
-                where house_code = @house_code
-                and password_hash = @password_hash
-            ";
-
-            cmd.Parameters.AddWithValue("@house_code", NpgsqlDbType.Text, houseCode);
-            cmd.Parameters.AddWithValue("@password_hash", NpgsqlDbType.Text, password);
-
-            var data = GetData(dbConn, cmd);
-
-            if (data != null && data.Read())
+            return new Households(Convert.ToInt32(data["id"]))
             {
-                return new Households(Convert.ToInt32(data["id"]))
-                {
-                    Address = data["address"].ToString(),
-                    PasswordHash = data["password_hash"].ToString(),
-                    HouseCode = data["house_code"].ToString()
-                };
-            }
+                Address = data["address"].ToString(),
+                PasswordHash = data["password_hash"].ToString(),
+                HouseCode = data["house_code"].ToString()
+            };
+        }
 
-            return null;
-        }
-        finally
-        {
-            dbConn?.Close();
-        }
+        return null;
     }
-
-    public bool InsertHousehold(Households h)
+    finally
     {
-        NpgsqlConnection dbConn = null;
-
-        try
-        {
-            dbConn = new NpgsqlConnection(ConnectionString);
-            var cmd = dbConn.CreateCommand();
-
-            cmd.CommandText = @"
-                insert into households (address, password_hash, house_code)
-                values (@address, @password_hash, @house_code)
-            ";
-
-            cmd.Parameters.AddWithValue("@address", NpgsqlDbType.Text, h.Address);
-            cmd.Parameters.AddWithValue("@password_hash", NpgsqlDbType.Text, h.PasswordHash ?? "");
-            cmd.Parameters.AddWithValue("@house_code", NpgsqlDbType.Text, h.HouseCode);
-
-            bool result = InsertData(dbConn, cmd);
-            return result;
-        }
-        finally
-        {
-            dbConn?.Close();
-        }
+        dbConn?.Close();
     }
+}
+
+  public bool InsertHousehold(Households h)
+{
+    NpgsqlConnection dbConn = null;
+
+    try
+    {
+        dbConn = new NpgsqlConnection(ConnectionString);
+        var cmd = dbConn.CreateCommand();
+
+        cmd.CommandText = @"
+            insert into households (address, password_hash, house_code)
+            values (@address, crypt(@password_hash, gen_salt('bf')), @house_code)
+        ";
+
+        cmd.Parameters.AddWithValue("@address", NpgsqlDbType.Text, h.Address);
+        cmd.Parameters.AddWithValue("@password_hash", NpgsqlDbType.Text, h.PasswordHash ?? "");
+        cmd.Parameters.AddWithValue("@house_code", NpgsqlDbType.Text, h.HouseCode);
+
+        bool result = InsertData(dbConn, cmd);
+        return result;
+    }
+    finally
+    {
+        dbConn?.Close();
+    }
+}
 
     public bool UpdateHousehold(Households h)
     {
