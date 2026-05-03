@@ -205,4 +205,33 @@ public class HouseholdsRepository : BaseRepository
             dbConn?.Close();
         }
     }
+
+       // Updates password - used for home info pop up 
+public bool UpdateHouseholdPassword(int id, string newPassword)
+{
+    NpgsqlConnection dbConn = null;
+
+    try
+    {
+        dbConn = new NpgsqlConnection(ConnectionString);
+        var cmd = dbConn.CreateCommand();
+
+        cmd.CommandText = @"
+            update households
+            set password_hash = crypt(@new_password, gen_salt('bf'))
+            where id = @id
+        ";
+
+        cmd.Parameters.AddWithValue("@new_password", NpgsqlDbType.Text, newPassword);
+        cmd.Parameters.AddWithValue("@id", NpgsqlDbType.Integer, id);
+
+        bool result = UpdateData(dbConn, cmd);
+        return result;
+    }
+    finally
+    {
+        dbConn?.Close();
+    }
+}
+
 }

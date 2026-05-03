@@ -5,10 +5,12 @@
     <div class="header-right">
       <span class="header-label">Home</span>
       <button class="icon-btn" (click)="goBack()">🏠</button>
+
       <span class="header-label">Housemates</span>
       <button class="icon-btn">👥</button>
+
       <span class="header-label">Home Info</span>
-      <button class="icon-btn">🔑</button>
+      <button class="icon-btn" (click)="openHouseProfilePopup()">🔑</button>
     </div>
   </header>
 
@@ -23,6 +25,7 @@
       <h2 class="column-title todo-title">To Do</h2>
       <button class="add-task-btn" (click)="goToCreateTask()">+</button>
     </div>
+
     <h2 class="column-title done-title">Done</h2>
   </div>
 
@@ -34,10 +37,14 @@
       <div class="task-card" *ngFor="let task of todoTasks">
         <div class="card-top">
           <span class="task-title">{{ task.title }}</span>
+
           <div class="card-top-right">
-            <span class="priority-badge" [style.background]="getPriorityColor(task.priority)">
+            <span
+              class="priority-badge"
+              [style.background]="getPriorityColor(task.priority)">
               {{ getPriorityLabel(task.priority) }}
             </span>
+
             <button class="delete-btn" (click)="deleteTask(task)">🗑</button>
           </div>
         </div>
@@ -49,7 +56,10 @@
             <span class="dot medium" *ngIf="(task.difficulty || 0) >= 2"></span>
             <span class="dot filled" *ngIf="(task.difficulty || 0) >= 3"></span>
           </div>
-          <span class="duration-badge">{{ getDurationLabel(task.estimatedDurationMinutes) }}</span>
+
+          <span class="duration-badge">
+            {{ getDurationLabel(task.estimatedDurationMinutes) }}
+          </span>
         </div>
 
         <div class="card-bottom">
@@ -57,7 +67,9 @@
             <div class="housemate-avatar"></div>
             <span class="housemate-name">{{ task.housemate.name }}</span>
           </div>
+
           <div *ngIf="!task.housemate"></div>
+
           <button class="done-btn" (click)="markDone(task)">Done</button>
         </div>
       </div>
@@ -68,10 +80,14 @@
       <div class="task-card done-card" *ngFor="let task of doneTasks">
         <div class="card-top">
           <span class="task-title">{{ task.title }}</span>
+
           <div class="card-top-right">
-            <span class="priority-badge" [style.background]="getPriorityColor(task.priority)">
+            <span
+              class="priority-badge"
+              [style.background]="getPriorityColor(task.priority)">
               {{ getPriorityLabel(task.priority) }}
             </span>
+
             <button class="delete-btn" (click)="deleteTask(task)">🗑</button>
           </div>
         </div>
@@ -83,7 +99,10 @@
             <span class="dot medium" *ngIf="(task.difficulty || 0) >= 2"></span>
             <span class="dot filled" *ngIf="(task.difficulty || 0) >= 3"></span>
           </div>
-          <span class="duration-badge">{{ getDurationLabel(task.estimatedDurationMinutes) }}</span>
+
+          <span class="duration-badge">
+            {{ getDurationLabel(task.estimatedDurationMinutes) }}
+          </span>
         </div>
 
         <div class="card-bottom">
@@ -91,12 +110,96 @@
             <div class="housemate-avatar"></div>
             <span class="housemate-name">{{ task.housemate.name }}</span>
           </div>
+
           <div *ngIf="!task.housemate"></div>
+
           <button class="undo-btn" (click)="markUndone(task)">Undo</button>
         </div>
       </div>
     </div>
 
   </main>
+
+  <!-- HOUSE PROFILE OVERLAY -->
+  <div
+    class="overlay"
+    *ngIf="showHouseProfilePopup"
+    (click)="closeHouseProfilePopup()">
+  </div>
+
+  <!-- HOUSE PROFILE POPUP -->
+  <div class="house-profile-popup" *ngIf="showHouseProfilePopup">
+
+    <!-- CLOSE BUTTON -->
+    <button
+      class="house-profile-close-btn"
+      type="button"
+      (click)="closeHouseProfilePopup()">
+      ×
+    </button>
+
+    <h2 class="house-profile-title">House Profile</h2>
+
+    <p class="house-profile-error" *ngIf="houseProfileError">
+      {{ houseProfileError }}
+    </p>
+
+    <div class="house-profile-content" *ngIf="household">
+
+      <label>House ID</label>
+      <div class="profile-pill">
+        {{ household.houseCode }}
+      </div>
+
+      <button
+        class="change-password-btn"
+        type="button"
+        *ngIf="!showChangePasswordForm"
+        (click)="openChangePasswordForm()">
+        Change Password
+      </button>
+
+      <div class="change-password-form" *ngIf="showChangePasswordForm">
+
+        <label for="newPassword">New Password</label>
+        <input
+          id="newPassword"
+          class="profile-input"
+          type="password"
+          placeholder="Enter new password"
+          [(ngModel)]="newPassword"
+          name="newPassword"
+        />
+
+        <label for="confirmNewPassword">Confirm New Password</label>
+        <input
+          id="confirmNewPassword"
+          class="profile-input"
+          type="password"
+          placeholder="Confirm new password"
+          [(ngModel)]="confirmNewPassword"
+          name="confirmNewPassword"
+        />
+
+        <p class="house-profile-error" *ngIf="passwordChangeError">
+          {{ passwordChangeError }}
+        </p>
+
+        <p class="house-profile-success" *ngIf="passwordChangeSuccess">
+          {{ passwordChangeSuccess }}
+        </p>
+
+        <button
+          class="save-password-btn"
+          type="button"
+          (click)="saveNewPassword()">
+          Save Password
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
