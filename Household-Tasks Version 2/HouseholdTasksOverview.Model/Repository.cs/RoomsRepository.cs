@@ -12,7 +12,7 @@ public class RoomsRepository : BaseRepository
     {
     }
 
-    public Room GetRoomById(int id)
+    public virtual Room GetRoomById(int id)
     {
         NpgsqlConnection dbConn = null;
         try
@@ -30,7 +30,7 @@ public class RoomsRepository : BaseRepository
         finally { dbConn?.Close(); }
     }
 
-    public List<Room> GetRooms()
+    public virtual List<Room> GetRooms()
     {
         NpgsqlConnection dbConn = null;
         var rooms = new List<Room>();
@@ -49,7 +49,7 @@ public class RoomsRepository : BaseRepository
         finally { dbConn?.Close(); }
     }
 
-    public int InsertRoom(Room r)
+    public virtual int InsertRoom(Room r)
     {
         NpgsqlConnection dbConn = null;
         try
@@ -70,7 +70,7 @@ public class RoomsRepository : BaseRepository
         finally { dbConn?.Close(); }
     }
 
-    public bool UpdateRoom(Room r)
+    public virtual bool UpdateRoom(Room r)
     {
         var dbConn = new NpgsqlConnection(ConnectionString);
         var cmd = dbConn.CreateCommand();
@@ -87,7 +87,7 @@ public class RoomsRepository : BaseRepository
         return UpdateData(dbConn, cmd);
     }
 
-    public bool DeleteRoom(int id)
+    public virtual bool DeleteRoom(int id)
     {
         var dbConn = new NpgsqlConnection(ConnectionString);
         var cmd = dbConn.CreateCommand();

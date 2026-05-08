@@ -171,9 +171,9 @@ export class CreateTaskComponent implements OnInit {
     this.http.post<any>(`${this.baseUrl}/Tasks`, newTask).subscribe({
       next: (createdTask) => {
         // Step 2: Assign it
-        console.log('Created task response:', createdTask); // add this
+        console.log('Created task response:', createdTask); 
         const taskId = createdTask?.id ?? createdTask?.Id;
-        console.log('Task ID extracted:', taskId); // add this
+        console.log('Task ID extracted:', taskId); 
         const assignment = {
           id: 0,
           taskId: taskId,
