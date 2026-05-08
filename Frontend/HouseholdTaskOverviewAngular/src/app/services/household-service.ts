@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment.development';
 
 @Injectable({ providedIn: 'root' })
 export class HouseholdService {
-  baseUrl: string = environment.apiUrl; //only this port number is changed, not the other baseURL
+  baseUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +20,19 @@ export class HouseholdService {
 
   create(household: Household): Observable<any> {
     return this.http.post(`${this.baseUrl}/households`, household);
+  }
+
+  login(houseCode: string, password: string): Observable<Household> {
+    return this.http.post<Household>(`${this.baseUrl}/households/login`, {
+      houseCode: houseCode,
+      password: password
+    });
+  }
+
+  changePassword(id: number, newPassword: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/households/${id}/password`, {
+      newPassword: newPassword
+    });
   }
 
   update(household: Household): Observable<any> {

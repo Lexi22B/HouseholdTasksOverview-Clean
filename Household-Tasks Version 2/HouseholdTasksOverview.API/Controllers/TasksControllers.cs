@@ -39,10 +39,11 @@ public class TasksController : ControllerBase
         {
             return BadRequest("Task info not correct");
         }
-        bool status = Repository.InsertTask(task);
-        if (status)
+        int newId = Repository.InsertTask(task);
+        if (newId > 0)
         {
-            return Ok();
+            task.Id = newId;
+            return Ok(task);
         }
         return BadRequest("Failed to create task");
     }

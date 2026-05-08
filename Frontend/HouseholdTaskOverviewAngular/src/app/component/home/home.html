@@ -1,0 +1,158 @@
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-right">
+      <span class="header-label">Housemates</span>
+      <button class="icon-btn" (click)="goToRoommates()">👥</button>
+
+      <span class="header-label">Home Info</span>
+      <button class="icon-btn" (click)="openHouseProfilePopup()">🔑</button>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <main class="body">
+
+    <h1 class="title">Your Home</h1>
+    <p class="subtitle">Click below to add rooms to your house</p>
+
+    <!-- ROOM CARDS -->
+    <div class="rooms-list">
+
+      <!-- ADD ROOM BUTTON -->
+      <button class="add-room-btn" (click)="openPopup()">
+        <span class="plus">+</span>
+      </button>
+
+      <!-- EXISTING ROOMS -->
+      <div class="room-card-wrapper" *ngFor="let room of rooms">
+        <div class="room-card" (click)="openRoom(room)">
+          <span class="room-card-name">{{ room.roomName }}</span>
+        </div>
+
+        <button class="room-delete-btn" (click)="deleteRoom(room)">
+          🗑
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ADD ROOM POPUP OVERLAY -->
+  <div class="overlay" *ngIf="showPopup" (click)="closePopup()"></div>
+
+  <!-- ADD ROOM POPUP -->
+  <div class="popup" *ngIf="showPopup">
+
+    <div class="popup-input-row">
+      <input
+        class="popup-input"
+        placeholder="Add room name..."
+        [(ngModel)]="newRoom.name"
+      />
+      <span class="popup-edit-icon">✏️</span>
+    </div>
+
+    <div class="popup-images">
+      <div
+        class="popup-image-card"
+        *ngFor="let img of roomImageOptions"
+        [class.selected]="newRoom.selectedImage === img"
+        (click)="newRoom.selectedImage = img">
+      </div>
+    </div>
+
+    <button
+      class="popup-create-btn"
+      [disabled]="!newRoom.name"
+      (click)="createRoom()">
+      Create
+    </button>
+
+  </div>
+
+  <!-- HOUSE PROFILE OVERLAY -->
+  <div
+    class="overlay"
+    *ngIf="showHouseProfilePopup"
+    (click)="closeHouseProfilePopup()">
+  </div>
+
+  <!-- HOUSE PROFILE POPUP -->
+  <div class="house-profile-popup" *ngIf="showHouseProfilePopup">
+
+    <!-- CLOSE BUTTON -->
+    <button
+      class="house-profile-close-btn"
+      type="button"
+      (click)="closeHouseProfilePopup()">
+      ×
+    </button>
+
+    <h2 class="house-profile-title">House Profile</h2>
+
+    <p class="house-profile-error" *ngIf="houseProfileError">
+      {{ houseProfileError }}
+    </p>
+
+    <div class="house-profile-content" *ngIf="household">
+
+      <label>House ID</label>
+      <div class="profile-pill">
+        {{ household.houseCode }}
+      </div>
+
+      <button
+        class="change-password-btn"
+        type="button"
+        *ngIf="!showChangePasswordForm"
+        (click)="openChangePasswordForm()">
+        Change Password
+      </button>
+
+      <div class="change-password-form" *ngIf="showChangePasswordForm">
+
+        <label for="newPassword">New Password</label>
+        <input
+          id="newPassword"
+          class="profile-input"
+          type="password"
+          placeholder="Enter new password"
+          [(ngModel)]="newPassword"
+          name="newPassword"
+        />
+
+        <label for="confirmNewPassword">Confirm New Password</label>
+        <input
+          id="confirmNewPassword"
+          class="profile-input"
+          type="password"
+          placeholder="Confirm new password"
+          [(ngModel)]="confirmNewPassword"
+          name="confirmNewPassword"
+        />
+
+        <p class="house-profile-error" *ngIf="passwordChangeError">
+          {{ passwordChangeError }}
+        </p>
+
+        <p class="house-profile-success" *ngIf="passwordChangeSuccess">
+          {{ passwordChangeSuccess }}
+        </p>
+
+        <button
+          class="save-password-btn"
+          type="button"
+          (click)="saveNewPassword()">
+          Save Password
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

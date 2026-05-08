@@ -90,7 +90,7 @@ public bool InsertTaskCompletion(TaskCompletions c)
             ";
 
             cmd.Parameters.AddWithValue("@assignment_id", NpgsqlDbType.Integer,   c.AssignmentId);
-            cmd.Parameters.AddWithValue("@completed_at",  NpgsqlDbType.Timestamp, c.CompletedAt);
+            cmd.Parameters.AddWithValue("@completed_at",  NpgsqlDbType.TimestampTz, c.CompletedAt);
 
             return InsertData(dbConn, cmd);
         }

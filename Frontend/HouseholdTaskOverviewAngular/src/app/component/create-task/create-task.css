@@ -1,0 +1,260 @@
+:host { display: block; min-height: 100vh; }
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #faf6f0;
+  position: relative;
+}
+
+/* ── HEADER ── */
+.header {
+  background-color: #F56E00;
+  padding: 8px 24px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 56px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: white;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #b8d4f0;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.icon-btn:hover { opacity: 0.8; }
+
+/* ── BANNER ── */
+.banner-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 24px 32px 0;
+}
+
+.room-banner {
+  width: 100%;
+  max-width: 796px;
+  height: 150px;
+  background: #b8d4f0;
+  border-radius: 20px;
+}
+
+/* ── FORM WRAPPER ── */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 24px 24px 60px;
+}
+
+.form-card {
+  background: #daeaf7;
+  border-radius: 24px;
+  padding: 28px 32px;
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── TASK INPUT ── */
+.task-input {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 50px;
+  border: none;
+  background: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #2D2C2B;
+  outline: none;
+}
+
+.task-input::placeholder { color: #aaa; }
+
+/* ── OPTIONS CARD ── */
+.options-card {
+  background: #b8d4f0;
+  border-radius: 20px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── OPTION ROW ── */
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.option-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: #2D2C2B;
+  min-width: 140px;
+}
+
+/* ── PRIORITY BUTTONS ── */
+.option-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.priority-btn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+/* ── DURATION / EFFORT BUTTONS ── */
+.duration-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  background: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #2D2C2B;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.duration-btn.selected {
+  background: #F56E00;
+  color: white;
+  font-weight: 600;
+}
+
+/* ── ASSIGN ── */
+.assign-row { align-items: flex-start; }
+.assign-label { margin-top: 10px; font-weight: 700; }
+
+.assign-input-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.assign-input {
+  width: 100%;
+  padding: 10px 44px 10px 16px;
+  border-radius: 50px;
+  border: none;
+  background: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #2D2C2B;
+  outline: none;
+}
+
+.assign-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+/* ── DROPDOWN ── */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #2D2C2B;
+  transition: background 0.1s;
+}
+
+.dropdown-item:hover { background: #f0f0f0; }
+
+/* ── ERROR ── */
+.error-msg {
+  color: #dc2626;
+  font-size: 0.85rem;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+}
+
+/* ── CREATE BUTTON ── */
+.create-btn {
+  align-self: center;
+  padding: 14px 48px;
+  border-radius: 50px;
+  border: none;
+  background: #F56E00;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.create-btn:hover:not(:disabled) { opacity: 0.85; }
+.create-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+/* ── BACK FAB ── */
+.back-fab {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #b8d4f0;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: opacity 0.2s;
+}
+
+.back-fab:hover { opacity: 0.8; }

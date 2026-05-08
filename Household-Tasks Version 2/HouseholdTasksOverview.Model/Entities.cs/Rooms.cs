@@ -8,7 +8,7 @@ public class Room
     public int HouseholdId { get; set; }
     
     // The name of the room (e.g., "Kitchen", "Living Room") (NOT NULL in DB)
-    public string Name { get; set; }
+    public string RoomName { get; set; }
     
     // Optional description of the room (Nullable in DB, so we use ?)
     public string? Description { get; set; }

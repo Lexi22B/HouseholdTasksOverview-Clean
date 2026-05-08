@@ -1,0 +1,59 @@
+<div class="page">
+  <img
+    class="illustration"
+    src="assets/cleaning_picture.png"
+    alt="Registration illustration"
+  />
+
+  <h1 class="title">Register Profile</h1>
+  <p class="subtitle">Fill out your access information</p>
+
+  <form class="form-card" (ngSubmit)="onCreateAccount()">
+
+    <!-- HOUSE CODE -->
+    <div class="form-group">
+      <label for="houseCode">House ID</label>
+      <input
+        id="houseCode"
+        type="text"
+        placeholder="Provide a house name ID"
+        [(ngModel)]="houseCode"
+        name="houseCode"
+      />
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        placeholder="Choose a password"
+        [(ngModel)]="password"
+        name="password"
+      />
+
+      <p class="error" *ngIf="showErrors && password.length < 8">
+        Please include at least 8 characters.
+      </p>
+    </div>
+
+    <!-- CONFIRM PASSWORD -->
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input
+        id="confirmPassword"
+        type="password"
+        placeholder="Confirm your password"
+        [(ngModel)]="confirmPassword"
+        name="confirmPassword"
+      />
+
+      <p class="error" *ngIf="showErrors && password !== confirmPassword">
+        Passwords do not match.
+      </p>
+    </div>
+
+    <button type="submit" class="create-btn">Create Account</button>
+  </form>
+</div>
