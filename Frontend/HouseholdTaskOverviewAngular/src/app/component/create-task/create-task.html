@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <!-- ROOM BANNER (empty blue block like the mockup) -->
+  <!-- ROOM BANNER -->
   <div class="banner-wrapper">
     <div class="room-banner"></div>
   </div>
@@ -20,12 +20,7 @@
     <div class="form-card">
 
       <!-- TASK TITLE INPUT -->
-      <input
-        class="task-input"
-        type="text"
-        placeholder="Add a task..."
-        [(ngModel)]="taskTitle"
-      />
+      <input class="task-input" type="text" placeholder="Add a task..." [(ngModel)]="taskTitle" />
 
       <!-- OPTIONS SECTION -->
       <div class="options-card">
@@ -34,13 +29,10 @@
         <div class="option-row">
           <span class="option-label">Priority</span>
           <div class="option-btns">
-            <button
-              *ngFor="let p of priorityOptions"
-              class="priority-btn"
-              [style.background]="selectedPriority === p.value ? p.color : '#e0e0e0'"
-              [style.color]="selectedPriority === p.value ? 'white' : '#555'"
-              (click)="selectPriority(p.value)"
-            >{{ p.label }}</button>
+            <button *ngFor="let p of priorityOptions" class="priority-btn"
+              [style.background]="selectedPriority === p.id ? getPriorityColor(p.id) : '#e0e0e0'"
+              [style.color]="selectedPriority === p.id ? 'white' : '#555'"
+              (click)="selectPriority(p.id)">{{ p.name }}</button>
           </div>
         </div>
 
@@ -48,12 +40,9 @@
         <div class="option-row">
           <span class="option-label">Effort</span>
           <div class="option-btns">
-            <button
-              *ngFor="let d of difficultyOptions"
-              class="duration-btn"
-              [class.selected]="selectedDifficulty === d.value"
-              (click)="selectDifficulty(d.value)"
-            >{{ d.label }}</button>
+            <button *ngFor="let d of difficultyOptions" class="duration-btn"
+              [class.selected]="selectedDifficulty === d.id"
+              (click)="selectDifficulty(d.id)">{{ d.name }}</button>
           </div>
         </div>
 
@@ -61,12 +50,9 @@
         <div class="option-row">
           <span class="option-label">Estimated duration</span>
           <div class="option-btns">
-            <button
-              *ngFor="let d of durationOptions"
-              class="duration-btn"
-              [class.selected]="selectedDuration === d.value"
-              (click)="selectDuration(d.value)"
-            >{{ d.label }}</button>
+            <button *ngFor="let d of durationOptions" class="duration-btn"
+              [class.selected]="selectedDuration === d.id"
+              (click)="selectDuration(d.id)">{{ d.minutes }} min</button>
           </div>
         </div>
 
@@ -74,21 +60,11 @@
         <div class="option-row assign-row">
           <span class="option-label assign-label">Assign</span>
           <div class="assign-input-wrapper">
-            <input
-              class="assign-input"
-              placeholder="Type a name..."
-              [(ngModel)]="searchName"
-              (input)="filterHousemates()"
-            />
+            <input class="assign-input" placeholder="Type a name..." [(ngModel)]="searchName"
+              (input)="filterHousemates()" />
             <span class="assign-icon">👤</span>
-
-            <!-- Dropdown -->
             <div class="dropdown" *ngIf="filteredHousemates.length > 0 && searchName">
-              <div
-                class="dropdown-item"
-                *ngFor="let h of filteredHousemates"
-                (click)="selectHousemate(h)"
-              >{{ h.name }}</div>
+              <div class="dropdown-item" *ngFor="let h of filteredHousemates" (click)="selectHousemate(h)">{{ h.name }}</div>
             </div>
           </div>
         </div>
@@ -99,11 +75,7 @@
       <p class="error-msg" *ngIf="errorMsg">⚠️ {{ errorMsg }}</p>
 
       <!-- CREATE BUTTON -->
-      <button
-        class="create-btn"
-        [disabled]="!isValid() || submitting"
-        (click)="submit()"
-      >
+      <button class="create-btn" [disabled]="!isValid() || submitting" (click)="submit()">
         {{ submitting ? 'Creating...' : 'Create' }}
       </button>
 
