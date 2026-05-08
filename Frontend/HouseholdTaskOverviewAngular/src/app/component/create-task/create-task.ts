@@ -4,6 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+interface DifficultyLevel {
+  id: number;
+  name: string;
+}
+
+interface PriorityLevel {
+  id: number;
+  name: string;
+}
+
+interface DurationLevel {
+  id: number;
+  minutes: number;
+}
+
 interface Housemate {
   id: number;
   name: string;
@@ -60,23 +75,10 @@ export class CreateTaskComponent implements OnInit {
   submitting = false;
   errorMsg = '';
 
-  priorityOptions = [
-    { value: 1, label: 'Low', color: '#22c55e' },
-    { value: 2, label: 'Medium', color: '#f59e0b' },
-    { value: 3, label: 'High', color: '#ef4444' },
-  ];
+  difficultyOptions: DifficultyLevel[] = [];
+  priorityOptions: PriorityLevel[] = [];
+  durationOptions: DurationLevel[] = [];
 
-  durationOptions = [
-    { value: 1, label: '15 min' },
-    { value: 2, label: '30 min' },
-    { value: 3, label: '60 min' },
-  ];
-
-  difficultyOptions = [
-    { value: 1, label: 'Easy' },
-    { value: 2, label: 'Medium' },
-    { value: 3, label: 'Hard' },
-  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -85,12 +87,26 @@ export class CreateTaskComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Expect route like /create-task/:householdId/:roomId
     this.householdId = Number(this.route.snapshot.paramMap.get('householdId'));
     this.roomId = Number(this.route.snapshot.paramMap.get('roomId'));
 
     this.http.get<Housemate[]>(`${this.baseUrl}/Housemates`).subscribe({
       next: data => this.allHousemates = data,
+      error: () => { }
+    });
+
+    this.http.get<DifficultyLevel[]>(`${this.baseUrl}/DifficultyLevels`).subscribe({
+      next: data => this.difficultyOptions = data,
+      error: () => { }
+    });
+
+    this.http.get<PriorityLevel[]>(`${this.baseUrl}/PriorityLevels`).subscribe({
+      next: data => this.priorityOptions = data,
+      error: () => { }
+    });
+
+    this.http.get<DurationLevel[]>(`${this.baseUrl}/DurationLevels`).subscribe({
+      next: data => this.durationOptions = data,
       error: () => { }
     });
   }
@@ -101,8 +117,12 @@ export class CreateTaskComponent implements OnInit {
   }
 
   getPriorityColor(value: number): string {
-    const opt = this.priorityOptions.find(p => p.value === value);
-    return opt ? opt.color : '#ddd';
+    const colors: { [key: number]: string } = {
+      1: '#ef4444',
+      2: '#f59e0b',
+      3: '#22c55e'
+    };
+    return colors[value] || '#ddd';
   }
 
   // ── Duration ──
@@ -171,9 +191,9 @@ export class CreateTaskComponent implements OnInit {
     this.http.post<any>(`${this.baseUrl}/Tasks`, newTask).subscribe({
       next: (createdTask) => {
         // Step 2: Assign it
-        console.log('Created task response:', createdTask); 
+        console.log('Created task response:', createdTask);
         const taskId = createdTask?.id ?? createdTask?.Id;
-        console.log('Task ID extracted:', taskId); 
+        console.log('Task ID extracted:', taskId);
         const assignment = {
           id: 0,
           taskId: taskId,

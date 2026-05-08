@@ -25,6 +25,9 @@ builder.Services.AddScoped<RoomsRepository, RoomsRepository>();
 builder.Services.AddScoped<TaskAssignmentsRepository, TaskAssignmentsRepository>();
 builder.Services.AddScoped<TaskCompletionsRepository, TaskCompletionsRepository>();
 builder.Services.AddScoped<TasksRepository, TasksRepository>();
+builder.Services.AddScoped<DifficultyLevelsRepository>();
+builder.Services.AddScoped<PriorityLevelsRepository>();
+builder.Services.AddScoped<DurationLevelsRepository>();
 
 var app = builder.Build();
 
