@@ -1,0 +1,52 @@
+<div class="overlay" *ngIf="isVisible" (click)="closePopup()">
+  
+  <div class="popup-box" (click)="$event.stopPropagation()">
+    
+    <!-- Top Right Close Button -->
+    <button class="close-button" (click)="closePopup()" aria-label="Close popup">
+      <iconify-icon icon="simple-line-icons:close" width="48" height="48" style="color: white;"></iconify-icon>
+    </button>
+    
+    <!-- Headers -->
+    <h1 class="header-text">Housemates</h1>
+    <p class="sub-header-text">Manage housemates</p>
+    
+    <!-- Scrollable Menu Container -->
+    <div class="scroll-menu">
+      
+      <!-- Housemate Card (Loops through the array in TS) -->
+      <div class="housemate-card" 
+           *ngFor="let person of housematesList"
+           [class.selected]="selectedCardId === person.id"
+           (click)="selectCard(person)">
+        
+        <!-- Left: Avatar -->
+        <div class="avatar-circle">
+          <iconify-icon icon="ph:user-light" width="28" height="28" style="color: white;"></iconify-icon>
+        </div>
+
+        <!-- Middle: Info -->
+        <div class="user-info">
+          <span class="user-name">{{ person.name }}</span>
+          <span class="user-status" [class.active-status]="person.status === 'Active'">
+            {{ person.status }}
+          </span>
+        </div>
+
+        <!-- Right: Trash Button (Overlapping) -->
+        <button class="trash-button" (click)="deleteHousemate(person.id, $event)">
+          <iconify-icon icon="solar:trash-bin-2-linear" width="24" height="24" style="color: #2D2C2B;"></iconify-icon>
+        </button>
+
+      </div>
+
+    </div>
+    
+    <!-- Bottom Add Button -->
+    <button class="add-button" (click)="onAddHousemate()">
+      <iconify-icon icon="streamline-freehand:add-sign-bold" width="48" height="48" style="color: white;"></iconify-icon>
+    </button>
+
+  </div>
+
+</div>

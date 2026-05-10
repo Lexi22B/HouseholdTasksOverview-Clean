@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,13 +6,16 @@ import { RoomService } from '../../services/room-service';
 import { HouseholdService } from '../../services/household-service';
 import { Room } from '../../model/room';
 import { Household } from '../../model/household';
+import { HousematesPopup } from '../housemates-popup/housemates-popup';
+import { EditProfilePopup } from '../edit-profile-popup/edit-profile-popup';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HousematesPopup, EditProfilePopup],
   templateUrl: './home.html',
-  styleUrl: './home.css'
+  styleUrl: './home.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] // custom icons
 })
 export class HomeComponent implements OnInit {
 
@@ -21,6 +24,16 @@ export class HomeComponent implements OnInit {
   // Add room popup
   showPopup = false;
 
+  // Housemates and Edit Profile Popups
+  isHousematesListOpen: boolean = false;
+  isEditProfileOpen: boolean = false;
+  selectedHousemate: any = null; // <-- function to hold the user data
+  housematesList: any[] = [
+    { id: 1, name: 'Magpunk Bird', status: 'Active', avatarId: 1 },
+    { id: 2, name: 'Miss Catzerina', status: 'Inactive', avatarId: 2 }
+  ];
+
+  
   // House profile popup
   showHouseProfilePopup = false;
   household: Household | null = null;
@@ -192,4 +205,41 @@ saveNewPassword() {
       state: { roomName: room.roomName }
     });
   }
-}
+
+  openHousematesList() {
+    this.isHousematesListOpen = true;
+    this.isEditProfileOpen = false;
+  }
+
+  openEditProfile(housemateData: any = null) {
+    this.selectedHousemate = housemateData;
+    this.isEditProfileOpen = true;
+    this.isHousematesListOpen = false;
+  }
+
+  
+closeAllPopups() {
+    this.isHousematesListOpen = false;
+    this.isEditProfileOpen = false;
+  }
+
+  // Receives data from the Edit Popup when "Done" is clicked
+  saveHousemateData(data: any) {
+    if (data.id) {
+      // Editing an existing person
+      const index = this.housematesList.findIndex(h => h.id === data.id);
+      if (index !== -1) this.housematesList[index] = data;
+    } else {
+      // Adding a brand new person! Give them a random ID.
+      data.id = Math.floor(Math.random() * 10000);
+      this.housematesList.push(data);
+    }
+    this.openHousematesList(); // Go back to the list view
+  }
+
+  // Deletes a user from the list
+  deleteHousemateFromList(id: number) {
+    this.housematesList = this.housematesList.filter(h => h.id !== id);
+  }
+  
+  }

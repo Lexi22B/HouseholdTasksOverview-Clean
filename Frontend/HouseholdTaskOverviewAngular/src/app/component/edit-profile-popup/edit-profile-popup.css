@@ -1,0 +1,265 @@
+/* Grey Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main Popup Container */
+.popup-box {
+  position: relative;
+  width: 594px;
+  height: 617px;
+  background-color: #D6EDFF;
+  border-radius: 24px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 40px;
+}
+
+/* Top Right Close Button */
+.close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.2s;
+}
+
+.close-button:hover { opacity: 0.7; }
+
+/* Headers */
+.header-text {
+  font-family: 'Baloo Chettan', cursive, sans-serif;
+  font-weight: 400;
+  font-size: 50px;
+  color: #F56E00;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.sub-header-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #2D2C2B;
+  margin: 0 0 16px 0;
+}
+
+/* Inner Blue Card */
+.inner-card {
+  width: 402px;
+  height: 327px;
+  background-color: #99D1FF;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* --- AVATAR SECTION & DROPDOWN --- */
+.avatar-section {
+  position: relative; /* This makes the dropdown menu float perfectly below it */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* The Main Avatar (Pink Background) */
+.main-avatar-card {
+  width: 120px;
+  height: 120px;
+  background-color: #FFCAE7;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* The Fluent Edit Icon */
+.edit-avatar-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 36px;
+  height: 36px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.15);
+  transition: transform 0.2s;
+}
+
+.edit-avatar-btn:hover {
+  transform: scale(1.05);
+}
+
+/* The Dropdown Menu Box */
+.avatar-dropdown {
+  position: absolute;
+  top: 130px; /* Positions it just below the main avatar */
+  width: 292px;
+  height: 252px;
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 100; /* Keeps it above the nickname input */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto; /* Makes it scrollable! */
+  padding-bottom: 20px;
+}
+
+/* Custom Scrollbar for the Dropdown */
+.avatar-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.avatar-dropdown::-webkit-scrollbar-thumb {
+  background-color: #CCCCCC;
+  border-radius: 10px;
+}
+
+.dropdown-header {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #2D2C2B;
+  margin: 16px 0;
+}
+
+/* The Grid holding the 6 Avatar options */
+.avatar-grid {
+  display: grid;
+  grid-template-columns: 120px 120px;
+  gap: 10px; /* 10px between the images */
+}
+
+/* The individual pink avatar options inside the dropdown */
+.avatar-option {
+  width: 120px;
+  height: 120px;
+  background-color: #FFCAE7;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 3px solid transparent; /* Hidden border to prevent jumping */
+  transition: border 0.2s;
+}
+
+/* The Orange border when selected */
+.avatar-option.selected {
+  border: 3px solid #F56E00;
+}
+
+/* --- FORM ELEMENTS --- */
+
+/* Nickname Input */
+.nickname-input {
+  width: 256px;
+  height: 60px;
+  background-color: #FFFFFF;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  padding: 0 24px;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #2D2C2B;
+}
+
+.nickname-input::placeholder {
+  color: #2D2C2B;
+  opacity: 0.8;
+}
+
+/* Status Row */
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.status-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #2D2C2B;
+}
+
+.status-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Toggle Buttons */
+.status-btn {
+  height: 39px;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0 20px;
+  background-color: #FFFFFF; 
+  color: #2D2C2B;
+  transition: all 0.2s ease-in-out;
+}
+
+.active-btn.selected {
+  background-color: #03C663;
+  color: #022614;
+}
+
+.inactive-btn.selected {
+  background-color: #FF7777;
+  color: #260202;
+}
+
+/* Done Button */
+.done-button {
+  width: 107px;
+  height: 52px;
+  background-color: #F56E00;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800; /* Extra Bold */
+  font-size: 18px;
+  margin-top: 24px;
+  transition: opacity 0.2s;
+}
+
+.done-button:hover { opacity: 0.85; }

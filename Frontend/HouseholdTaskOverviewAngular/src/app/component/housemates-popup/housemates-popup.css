@@ -1,0 +1,155 @@
+/* Grey Overlay */
+.overlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.45); z-index: 1000;
+  display: flex; justify-content: center; align-items: center;
+}
+
+/* Main Popup Container */
+.popup-box {
+  position: relative;
+  width: 491px;
+  height: 680px;
+  background-color: #D6EDFF;
+  border-radius: 24px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 48px 0; /* Padding top and bottom */
+}
+
+/* Close Button */
+.close-button {
+  position: absolute; top: 16px; right: 16px; background: none;
+  border: none; cursor: pointer; padding: 0; transition: opacity 0.2s;
+}
+.close-button:hover { opacity: 0.7; }
+
+/* Headers */
+.header-text {
+  font-family: 'Baloo Chettan', cursive, sans-serif; font-weight: 400;
+  font-size: 50px; color: #F56E00; margin: 0; line-height: 1.1; text-align: center;
+}
+.sub-header-text {
+  font-family: 'Inter', sans-serif; font-weight: 400; font-size: 18px;
+  color: #2D2C2B; margin: 0 0 24px 0; text-align: center;
+}
+
+/* --- SCROLL MENU CONTAINER --- */
+.scroll-menu {
+  width: 299px;
+  max-height: 296px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Space between cards */
+  overflow-y: auto;
+  padding: 20px 10px; /* A little padding so shadows don't get cut off */
+  margin-bottom: 30px;
+}
+
+/* Custom Scrollbar */
+.scroll-menu::-webkit-scrollbar { width: 6px; }
+.scroll-menu::-webkit-scrollbar-thumb { background-color: #99D1FF; border-radius: 10px; }
+
+/* --- HOUSEMATE CARD --- */
+.housemate-card {
+  position: relative; /* Needed to attach the trash can to the corner */
+  width: 259px;
+  min-height: 89px; /* min-height ensures it stays 89px but allows flex centering */
+  background-color: #FFFBF7;
+  border-radius: 50px; /* Pill shape */
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: 3px solid transparent; /* Hidden border to prevent size jumping */
+  transition: all 0.2s ease-in-out;
+}
+
+.housemate-card:hover {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* Orange border when selected */
+.housemate-card.selected {
+  border: 3px solid #F56E00;
+}
+
+/* Avatar Image (Pink Background) */
+.avatar-circle {
+  width: 48px;
+  height: 48px;
+  background-color: #FFCAE7;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* User Info Text */
+.user-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+}
+
+.user-name {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600; /* Semi Bold / Medium */
+  font-size: 16px;
+  color: #2D2C2B;
+}
+
+.user-status {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2D2C2B; /* Default Inactive Color */
+}
+
+.user-status.active-status {
+  color: #066535; /* Active Green Color */
+}
+
+/* Trash Circle Button */
+.trash-button {
+  position: absolute;
+  top: 10px;
+  right: -5px; /* Overlaps the right edge slightly just like Figma */
+  width: 36px;
+  height: 36px;
+  background-color: #D6EDFF;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.trash-button:hover {
+  transform: scale(1.1);
+}
+
+/* --- ADD BUTTON (Bottom) --- */
+.add-button {
+  width: 286px;
+  height: 114px;
+  background-color: #99D1FF;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.2s;
+}
+
+.add-button:hover { opacity: 0.85; }

@@ -21,36 +21,40 @@
   height: 56px;
 }
 
-.header-right {
+/* --- NEW MENU BAR STYLES --- */
+.menu-container {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 40px; /* Spacing between the buttons */
 }
 
-.header-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: white;
-}
-
-.icon-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: white;
-  border: none;
-  font-size: 1.1rem;
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Spacing between text and circle */
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 8px;
   transition: opacity 0.2s;
 }
 
-.icon-btn:hover {
-  opacity: 0.85;
+.menu-item:hover {
+  opacity: 0.8;
+}
+
+.menu-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #2D2C2B;
+}
+
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ── BODY ── */
@@ -63,8 +67,8 @@
 }
 
 .title {
-  font-family: 'Baloo Chettan 2', cursive;
-  font-weight: 700;
+  font-family: 'Baloo Chettan', cursive, sans-serif;
+  font-weight: 400; /* Regular */
   font-size: 2.8rem;
   color: #F56E00;
   margin: 0 0 6px 0;

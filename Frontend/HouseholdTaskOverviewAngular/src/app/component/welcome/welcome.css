@@ -20,8 +20,8 @@
 }
 
 .title {
-  font-family: 'Baloo Chettan 2', cursive;
-  font-weight: 400;
+  font-family: 'Baloo Chettan', cursive, sans-serif;
+  font-weight: 400; /* Regular */
   font-size: 50px;
   line-height: 100%;
   color: #F56E00;

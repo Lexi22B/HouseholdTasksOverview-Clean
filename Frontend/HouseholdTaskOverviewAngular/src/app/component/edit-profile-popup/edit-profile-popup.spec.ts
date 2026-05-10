@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { EditProfilePopup } from './edit-profile-popup';
+
+describe('EditProfilePopup', () => {
+  let component: EditProfilePopup;
+  let fixture: ComponentFixture<EditProfilePopup>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [EditProfilePopup],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(EditProfilePopup);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

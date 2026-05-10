@@ -1,15 +1,27 @@
 <div class="page">
 
   <!-- HEADER -->
-  <header class="header">
-    <div class="header-right">
-      <span class="header-label">Housemates</span>
-      <button class="icon-btn" (click)="goToRoommates()">👥</button>
-
-      <span class="header-label">Home Info</span>
-      <button class="icon-btn" (click)="openHouseProfilePopup()">🔑</button>
+<header class="header">
+  <div class="menu-container">
+    
+    <!-- Housemates Button (Triggers our new popup!) -->
+    <div class="menu-item" (click)="openHousematesList()">
+      <span class="menu-text">Housemates</span>
+      <div class="icon-circle">
+        <iconify-icon icon="heroicons:user-group-16-solid" width="34" height="34" style="color: #2D2C2B;"></iconify-icon>
+      </div>
     </div>
-  </header>
+
+    <!-- House Info Button (Keeps your teammates' old function for now) -->
+    <div class="menu-item" (click)="openHouseProfilePopup()">
+      <span class="menu-text">House Info</span>
+      <div class="icon-circle">
+        <iconify-icon icon="ion:key-outline" width="34" height="34" style="color: #2D2C2B;"></iconify-icon>
+      </div>
+    </div>
+
+  </div>
+</header>
 
   <!-- BODY -->
   <main class="body">
@@ -42,6 +54,25 @@
 
   <!-- ADD ROOM POPUP OVERLAY -->
   <div class="overlay" *ngIf="showPopup" (click)="closePopup()"></div>
+
+  <!-- ADD HOUSEMATES AND EDIT PROFILE POPUP OVERLAY -->
+ <!-- The List Popup -->
+<app-housemates-popup 
+  [isVisible]="isHousematesListOpen" 
+  [housematesList]="housematesList"
+  (close)="closeAllPopups()"
+  (openAddProfile)="openEditProfile()"
+  (editProfile)="openEditProfile($event)"
+  (deleteProfile)="deleteHousemateFromList($event)"> <!-- Catches the delete! -->
+</app-housemates-popup>
+
+<!-- The Edit Profile Popup -->
+<app-edit-profile-popup 
+  [isVisible]="isEditProfileOpen" 
+  [housemateData]="selectedHousemate" 
+  (close)="openHousematesList()"
+  (save)="saveHousemateData($event)"> <!-- Catches the "Done" button data! -->
+</app-edit-profile-popup>
 
   <!-- ADD ROOM POPUP -->
   <div class="popup" *ngIf="showPopup">
@@ -156,3 +187,4 @@
   </div>
 
 </div>
+

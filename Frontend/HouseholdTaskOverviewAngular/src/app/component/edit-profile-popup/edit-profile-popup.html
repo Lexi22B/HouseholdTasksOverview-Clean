@@ -1,0 +1,73 @@
+<div class="overlay" *ngIf="isVisible" (click)="closePopup()">
+  
+  <div class="popup-box" (click)="$event.stopPropagation()">
+    
+    <button class="close-button" (click)="closePopup()" aria-label="Close popup">
+      <iconify-icon icon="simple-line-icons:close" width="48" height="48" style="color: white;"></iconify-icon>
+    </button>
+    
+    <h1 class="header-text">Housemates</h1>
+    <p class="sub-header-text">Manage housemates</p>
+    
+    <div class="inner-card">
+      
+      <!-- AVATAR SECTION -->
+      <div class="avatar-section">
+        <!-- Main Avatar Display -->
+        <div class="main-avatar-card">
+           <iconify-icon icon="ph:user-light" width="64" height="64" style="color: white;"></iconify-icon>
+           
+           <!-- The New Fluent Edit Icon -->
+           <button class="edit-avatar-btn" (click)="toggleDropdown()">
+             <iconify-icon icon="fluent:edit-28-regular" width="28" height="28" style="color: #2D2C2B;"></iconify-icon>
+           </button>
+        </div>
+
+        <!-- DROPDOWN MENU -->
+        <div class="avatar-dropdown" *ngIf="isDropdownOpen">
+          <p class="dropdown-header">Select an avatar</p>
+          <div class="avatar-grid">
+            <!-- Loops through 6 times to create the pink cards -->
+            <div 
+              class="avatar-option" 
+              *ngFor="let avatar of availableAvatars"
+              [class.selected]="selectedAvatarId === avatar"
+              (click)="selectAvatar(avatar)">
+              <iconify-icon icon="ph:user-light" width="48" height="48" style="color: white;"></iconify-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nickname Input -->
+      <input type="text" class="nickname-input" placeholder="Nickname..." 
+       [value]="nickname" 
+       (input)="onNicknameChange($event)" />
+
+      <!-- Status Row -->
+      <div class="status-row">
+        <span class="status-label">Status</span>
+        
+        <div class="status-buttons">
+          <button 
+            class="status-btn active-btn" 
+            [class.selected]="currentStatus === 'Active'"
+            (click)="setStatus('Active')">
+            Active
+          </button>
+          <button 
+            class="status-btn inactive-btn" 
+            [class.selected]="currentStatus === 'Inactive'"
+            (click)="setStatus('Inactive')">
+            Inactive
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Done Button -->
+    <button class="done-button" (click)="onDone()">Done</button>
+
+  </div>
+</div>

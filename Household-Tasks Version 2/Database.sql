@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict zbErPOkjWm7lzsY3ctmslNYZJ6mRYegQzk2Blh2aLbfryWD1Mi5DouCJxFfFI4t
+\restrict zbErPOkjWm7lzsY3ctmslNYZJ6mRYegQzk2Blh2aLbfryWD1Mi5DouCJxFfFI4t 
 
 -- Dumped from database version 18.3
 -- Dumped by pg_dump version 18.3
@@ -2057,4 +2057,3 @@ ALTER TABLE ONLY public.tasks
 --
 
 \unrestrict zbErPOkjWm7lzsY3ctmslNYZJ6mRYegQzk2Blh2aLbfryWD1Mi5DouCJxFfFI4t
-
