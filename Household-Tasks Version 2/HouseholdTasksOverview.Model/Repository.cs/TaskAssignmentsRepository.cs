@@ -26,8 +26,7 @@ public class TaskAssignmentsRepository : BaseRepository
                 return new TaskAssignments(Convert.ToInt32(data["id"]))
                 {
                     TaskId      = Convert.ToInt32(data["task_id"]),
-                    HousemateId = Convert.ToInt32(data["housemate_id"]),
-                    Status      = data["status"].ToString()
+                    HousemateId = Convert.ToInt32(data["housemate_id"])
                 };
             }
             return null;
@@ -56,8 +55,7 @@ public class TaskAssignmentsRepository : BaseRepository
                     assignments.Add(new TaskAssignments(Convert.ToInt32(data["id"]))
                     {
                         TaskId      = Convert.ToInt32(data["task_id"]),
-                        HousemateId = Convert.ToInt32(data["housemate_id"]),
-                        Status      = data["status"].ToString()
+                        HousemateId = Convert.ToInt32(data["housemate_id"])
                     });
                 }
             }
@@ -77,13 +75,12 @@ public class TaskAssignmentsRepository : BaseRepository
             dbConn = new NpgsqlConnection(ConnectionString);
             var cmd = dbConn.CreateCommand();
             cmd.CommandText = @"
-                insert into task_assignments (task_id, housemate_id, status)
-                values (@task_id, @housemate_id, @status)
+                insert into task_assignments (task_id, housemate_id)
+                values (@task_id, @housemate_id)
             ";
 
             cmd.Parameters.AddWithValue("@task_id",      NpgsqlDbType.Integer, a.TaskId);
             cmd.Parameters.AddWithValue("@housemate_id", NpgsqlDbType.Integer, a.HousemateId);
-            cmd.Parameters.AddWithValue("@status",       NpgsqlDbType.Varchar, a.Status);
 
             return InsertData(dbConn, cmd);
         }
@@ -100,14 +97,12 @@ public class TaskAssignmentsRepository : BaseRepository
         cmd.CommandText = @"
             update task_assignments set
                 task_id      = @task_id,
-                housemate_id = @housemate_id,
-                status       = @status
+                housemate_id = @housemate_id
             where id = @id
         ";
 
         cmd.Parameters.AddWithValue("@task_id",      NpgsqlDbType.Integer, a.TaskId);
         cmd.Parameters.AddWithValue("@housemate_id", NpgsqlDbType.Integer, a.HousemateId);
-        cmd.Parameters.AddWithValue("@status",       NpgsqlDbType.Varchar, a.Status);
         cmd.Parameters.AddWithValue("@id",           NpgsqlDbType.Integer, a.Id);
 
         return UpdateData(dbConn, cmd);

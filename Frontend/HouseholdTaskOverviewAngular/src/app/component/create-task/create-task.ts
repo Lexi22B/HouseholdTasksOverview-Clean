@@ -30,22 +30,15 @@ interface Task {
   householdId: number;
   roomId: number;
   title: string;
-  description: string;
   difficultyLevelId: number;
   priorityLevelId: number;
   durationLevelId: number;
-  taskFrequencyId: number;
-  isActive: boolean;
-  recurrencePattern: string;
-  createdAt: string;
 }
 
 interface TaskAssignment {
   id: number;
   taskId: number;
   housemateId: number;
-  assignedDate: string;
-  dueDate: string;
 }
 
 @Component({
@@ -173,7 +166,6 @@ export class CreateTaskComponent implements OnInit {
     this.submitting = true;
     this.errorMsg = '';
 
-    const now = new Date().toISOString();
 
     const newTask = {
       id: 0,
@@ -182,9 +174,7 @@ export class CreateTaskComponent implements OnInit {
       title: this.taskTitle.trim(),
       difficulty: this.selectedDifficulty!,
       priority: this.selectedPriority!,
-      estimatedDurationMinutes: this.selectedDuration!,
-      isActive: true,
-      createdAt: now
+      estimatedDurationMinutes: this.selectedDuration!
     };
 
     // Step 1: Create the task
@@ -197,8 +187,7 @@ export class CreateTaskComponent implements OnInit {
         const assignment = {
           id: 0,
           taskId: taskId,
-          housemateId: this.selectedHousemate!.id,
-          status: 'pending'
+          housemateId: this.selectedHousemate!.id
         };
 
         this.http.post(`${this.baseUrl}/TaskAssignments`, assignment).subscribe({

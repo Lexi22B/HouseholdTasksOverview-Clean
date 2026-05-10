@@ -18,7 +18,7 @@ export class RegisterComponent {
   password: string = '';
   confirmPassword: string = '';
 
-  // 🔴 needed for showing validation messages
+  //  needed for showing validation messages
   showErrors: boolean = false;
 
   constructor(
@@ -43,7 +43,6 @@ export class RegisterComponent {
 
     // create object to send to backend
     const newHousehold: Household = {
-      address: this.houseCode,
       houseCode: this.houseCode,
       passwordHash: this.password
     };

@@ -31,7 +31,6 @@ public class HouseholdsRepository : BaseRepository
             {
                 return new Households(Convert.ToInt32(data["id"]))
                 {
-                    Address = data["address"].ToString(),
                     PasswordHash = data["password_hash"].ToString(),
                     HouseCode = data["house_code"].ToString()
                 };
@@ -66,7 +65,6 @@ public class HouseholdsRepository : BaseRepository
                 {
                     Households h = new Households(Convert.ToInt32(data["id"]))
                     {
-                        Address = data["address"].ToString(),
                         PasswordHash = data["password_hash"].ToString(),
                         HouseCode = data["house_code"].ToString()
                     };
@@ -109,7 +107,6 @@ public class HouseholdsRepository : BaseRepository
         {
             return new Households(Convert.ToInt32(data["id"]))
             {
-                Address = data["address"].ToString(),
                 PasswordHash = data["password_hash"].ToString(),
                 HouseCode = data["house_code"].ToString()
             };
@@ -133,11 +130,9 @@ public class HouseholdsRepository : BaseRepository
         var cmd = dbConn.CreateCommand();
 
         cmd.CommandText = @"
-            insert into households (address, password_hash, house_code)
-            values (@address, crypt(@password_hash, gen_salt('bf')), @house_code)
+            insert into households (password_hash, house_code)
+            values (crypt(@password_hash, gen_salt('bf')), @house_code)
         ";
-
-        cmd.Parameters.AddWithValue("@address", NpgsqlDbType.Text, h.Address);
         cmd.Parameters.AddWithValue("@password_hash", NpgsqlDbType.Text, h.PasswordHash ?? "");
         cmd.Parameters.AddWithValue("@house_code", NpgsqlDbType.Text, h.HouseCode);
 
@@ -161,13 +156,11 @@ public class HouseholdsRepository : BaseRepository
 
             cmd.CommandText = @"
                 update households
-                set address = @address,
-                    password_hash = @password_hash,
+                set password_hash = @password_hash,
                     house_code = @house_code
                 where id = @id
             ";
 
-            cmd.Parameters.AddWithValue("@address", NpgsqlDbType.Text, h.Address);
             cmd.Parameters.AddWithValue("@password_hash", NpgsqlDbType.Text, h.PasswordHash ?? "");
             cmd.Parameters.AddWithValue("@house_code", NpgsqlDbType.Text, h.HouseCode);
             cmd.Parameters.AddWithValue("@id", NpgsqlDbType.Integer, h.Id);

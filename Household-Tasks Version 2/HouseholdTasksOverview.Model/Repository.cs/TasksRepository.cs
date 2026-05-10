@@ -65,11 +65,11 @@ public class TasksRepository : BaseRepository
             insert into tasks
                 (household_id, room_id,
                  title, difficulty_level_id, priority_level_id,
-                 duration_level_id, is_active)
+                 duration_level_id)
             values
                 (@household_id, @room_id,
                  @title, @difficulty_level_id, @priority_level_id,
-                 @duration_level_id, @is_active)
+                 @duration_level_id)
             RETURNING id
         ";
 
@@ -79,7 +79,6 @@ public class TasksRepository : BaseRepository
             cmd.Parameters.AddWithValue("@difficulty_level_id", NpgsqlDbType.Integer, (object)t.Difficulty ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@priority_level_id", NpgsqlDbType.Integer, (object)t.Priority ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@duration_level_id", NpgsqlDbType.Integer, (object)t.EstimatedDurationMinutes ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@is_active", NpgsqlDbType.Boolean, t.IsActive);
 
             dbConn.Open();
             object result = cmd.ExecuteScalar();
@@ -99,8 +98,7 @@ public class TasksRepository : BaseRepository
                 title               = @title,
                 difficulty_level_id = @difficulty_level_id,
                 priority_level_id   = @priority_level_id,
-                duration_level_id   = @duration_level_id,
-                is_active           = @is_active
+                duration_level_id   = @duration_level_id
             where id = @id
         ";
 
@@ -110,7 +108,6 @@ public class TasksRepository : BaseRepository
         cmd.Parameters.AddWithValue("@difficulty_level_id", NpgsqlDbType.Integer, (object)t.Difficulty ?? DBNull.Value);
         cmd.Parameters.AddWithValue("@priority_level_id", NpgsqlDbType.Integer, (object)t.Priority ?? DBNull.Value);
         cmd.Parameters.AddWithValue("@duration_level_id", NpgsqlDbType.Integer, (object)t.EstimatedDurationMinutes ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@is_active", NpgsqlDbType.Boolean, t.IsActive);
         cmd.Parameters.AddWithValue("@id", NpgsqlDbType.Integer, t.Id);
 
         return UpdateData(dbConn, cmd);
@@ -137,9 +134,7 @@ public class TasksRepository : BaseRepository
             Title = data["title"].ToString(),
             Difficulty = data["difficulty_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["difficulty_level_id"]),
             Priority = data["priority_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["priority_level_id"]),
-            EstimatedDurationMinutes = data["duration_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["duration_level_id"]),
-            IsActive = Convert.ToBoolean(data["is_active"]),
-            CreatedAt = Convert.ToDateTime(data["created_at"])
+            EstimatedDurationMinutes = data["duration_level_id"] == DBNull.Value ? null : Convert.ToInt32(data["duration_level_id"])
         };
     }
 }
