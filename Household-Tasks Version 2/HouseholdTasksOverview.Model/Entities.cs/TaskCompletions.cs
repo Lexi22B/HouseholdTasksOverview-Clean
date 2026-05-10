@@ -9,10 +9,7 @@ public class TaskCompletions
 
     public int Id { get; set; }
     
-    //this refers the the id key of TaskAssigmentId and is just shorter
     public int AssignmentId { get; set; }
-
-    public DateTime CompletedAt { get; set; }
 
 
 }

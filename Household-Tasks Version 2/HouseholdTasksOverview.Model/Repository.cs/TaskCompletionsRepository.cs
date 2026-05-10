@@ -29,8 +29,7 @@ public TaskCompletions GetTaskCompletionById(int id)
                 {
                     return new TaskCompletions(Convert.ToInt32(data["id"]))
                     {
-                        AssignmentId = Convert.ToInt32(data["assignment_id"]),
-                        CompletedAt  = Convert.ToDateTime(data["completed_at"])
+                        AssignmentId = Convert.ToInt32(data["assignment_id"])
                     };
                 }
             }
@@ -60,8 +59,7 @@ public TaskCompletions GetTaskCompletionById(int id)
                 {
                     TaskCompletions c = new TaskCompletions(Convert.ToInt32(data["id"]))
                     {
-                        AssignmentId = Convert.ToInt32(data["assignment_id"]),
-                        CompletedAt  = Convert.ToDateTime(data["completed_at"])
+                        AssignmentId = Convert.ToInt32(data["assignment_id"])
                     };
                     completions.Add(c);
                 }
@@ -84,13 +82,12 @@ public bool InsertTaskCompletion(TaskCompletions c)
             var cmd = dbConn.CreateCommand();
             cmd.CommandText = @"
                 insert into task_completions
-                    (assignment_id, completed_at)
+                    (assignment_id)
                 values
-                    (@assignment_id, @completed_at)
+                    (@assignment_id)
             ";
 
             cmd.Parameters.AddWithValue("@assignment_id", NpgsqlDbType.Integer,   c.AssignmentId);
-            cmd.Parameters.AddWithValue("@completed_at",  NpgsqlDbType.TimestampTz, c.CompletedAt);
 
             return InsertData(dbConn, cmd);
         }
@@ -108,14 +105,12 @@ public bool UpdateTaskCompletion(TaskCompletions c)
         var cmd = dbConn.CreateCommand();
         cmd.CommandText = @"
             update task_completions set
-                assignment_id = @assignment_id,
-                completed_at  = @completed_at
+                assignment_id = @assignment_id
             where
                 id = @id
         ";
 
         cmd.Parameters.AddWithValue("@assignment_id", NpgsqlDbType.Integer,   c.AssignmentId);
-        cmd.Parameters.AddWithValue("@completed_at",  NpgsqlDbType.Timestamp, c.CompletedAt);
         cmd.Parameters.AddWithValue("@id",            NpgsqlDbType.Integer,   c.Id);
 
         return UpdateData(dbConn, cmd);

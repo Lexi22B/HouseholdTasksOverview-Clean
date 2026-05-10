@@ -31,7 +31,6 @@ using NpgsqlTypes;
                     {
                         HouseholdId = (int)data["household_id"],
                         Name = data["name"].ToString(),
-                        Email = data["email"].ToString(),
                         IsActive = (bool)data["is_active"]
                     };
                 }
@@ -65,7 +64,6 @@ using NpgsqlTypes;
                         {
                             HouseholdId = (int)data["household_id"],
                             Name = data["name"].ToString(),
-                            Email = data["email"].ToString(),
                             IsActive = (bool)data["is_active"]
                         };
 
@@ -91,13 +89,12 @@ using NpgsqlTypes;
                 var cmd = dbConn.CreateCommand();
 
                 cmd.CommandText = @"
-                    insert into housemates (household_id, name, email, is_active)
-                    values (@household_id, @name, @email, @is_active)
+                    insert into housemates (household_id, name, is_active)
+                    values (@household_id, @name, @is_active)
                 ";
 
                 cmd.Parameters.AddWithValue("@household_id", NpgsqlDbType.Integer, h.HouseholdId);
                 cmd.Parameters.AddWithValue("@name", NpgsqlDbType.Text, h.Name);
-                cmd.Parameters.AddWithValue("@email", NpgsqlDbType.Text, h.Email);
                 cmd.Parameters.AddWithValue("@is_active", NpgsqlDbType.Boolean, h.IsActive);
 
                 return InsertData(dbConn, cmd);
@@ -121,14 +118,12 @@ using NpgsqlTypes;
                     update housemates set
                         household_id = @household_id,
                         name = @name,
-                        email = @email,
                         is_active = @is_active
                     where id = @id
                 ";
 
                 cmd.Parameters.AddWithValue("@household_id", NpgsqlDbType.Integer, h.HouseholdId);
                 cmd.Parameters.AddWithValue("@name", NpgsqlDbType.Text, h.Name);
-                cmd.Parameters.AddWithValue("@email", NpgsqlDbType.Text, h.Email);
                 cmd.Parameters.AddWithValue("@is_active", NpgsqlDbType.Boolean, h.IsActive);
                 cmd.Parameters.AddWithValue("@id", NpgsqlDbType.Integer, h.Id);
 
