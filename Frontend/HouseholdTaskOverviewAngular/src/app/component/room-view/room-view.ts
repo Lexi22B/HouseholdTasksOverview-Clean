@@ -87,7 +87,7 @@ export class RoomViewComponent implements OnInit {
 
   loadData() {
     this.taskService.getAll().subscribe(allTasks => {
-      const roomTasks = allTasks.filter(t => t.roomId === this.roomId && t.isActive);
+      const roomTasks = allTasks.filter(t => t.roomId === this.roomId);
 
       this.taskAssignmentService.getAll().subscribe(assignments => {
         this.taskCompletionService.getAll().subscribe(completions => {
@@ -206,8 +206,7 @@ export class RoomViewComponent implements OnInit {
 
     const completion = {
       id: 0,
-      assignmentId: task.assignment.id,
-      completedAt: new Date().toISOString()
+      assignmentId: task.assignment.id
     };
 
     this.taskCompletionService.create(completion).subscribe(() => this.loadData());

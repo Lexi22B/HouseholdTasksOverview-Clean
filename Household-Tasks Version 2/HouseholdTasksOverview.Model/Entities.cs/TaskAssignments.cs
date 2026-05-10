@@ -10,5 +10,5 @@ public class TaskAssignments
     public int Id { get; set; }
     public int TaskId { get; set; }
     public int HousemateId { get; set; }
-    public string Status { get; set; }
+
 }

@@ -6,6 +6,4 @@ export interface Task {
   difficulty: number;
   priority: number;
   estimatedDurationMinutes: number;
-  isActive: boolean;
-  createdAt: Date;
 }
