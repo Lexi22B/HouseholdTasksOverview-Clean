@@ -28,13 +28,16 @@ export class EditProfilePopup implements OnChanges {
   selectedAvatarId: number = 1; // Default selected avatar
 
    // This Angular function runs automatically whenever housemateData arrives!
-   ngOnChanges(changes: SimpleChanges) {
-    if (changes['housemateData']) {
+  ngOnChanges(changes: SimpleChanges) {
+    // If the popup is being opened OR data is changing
+    if (changes['housemateData'] || changes['isVisible']) {
       if (this.housemateData) {
+        // We are EDITING
         this.nickname = this.housemateData.name;
-        this.currentStatus = this.housemateData.status;
-        this.selectedAvatarId = this.housemateData.avatarId || 1; // <-- Catch avatar ID!
+        this.currentStatus = this.housemateData.isActive ? 'Active' : 'Inactive';
+        this.selectedAvatarId = this.housemateData.avatarId || 1;
       } else {
+        // We are CREATING NEW - Force everything to empty/default
         this.nickname = '';
         this.currentStatus = 'Active';
         this.selectedAvatarId = 1;
@@ -67,14 +70,18 @@ export class EditProfilePopup implements OnChanges {
   }
 
   onDone() {
-    // Send the packaged data back to home.ts!
-    this.save.emit({
-      id: this.housemateData ? this.housemateData.id : null,
-      name: this.nickname,
-      status: this.currentStatus,
-      avatarId: this.selectedAvatarId
-    });
-    this.closePopup();
-  }
+  // Package the UI input into a data object
+  const dataToSave = {
+    id: this.housemateData ? this.housemateData.id : null,
+    name: this.nickname,
+    status: this.currentStatus,
+    avatarId: this.selectedAvatarId
+  };
+
+  // Emit the data so home.ts can send it to the C# backend
+  this.save.emit(dataToSave); 
   
+  this.closePopup();
+  }
+
 }

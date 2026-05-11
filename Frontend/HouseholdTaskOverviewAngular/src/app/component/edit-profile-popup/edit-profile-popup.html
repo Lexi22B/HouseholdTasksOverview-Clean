@@ -15,7 +15,7 @@
       <div class="avatar-section">
         <!-- Main Avatar Display -->
         <div class="main-avatar-card">
-           <iconify-icon icon="ph:user-light" width="64" height="64" style="color: white;"></iconify-icon>
+           <img *ngIf="selectedAvatarId" [src]="'/assets/avatars/avatar' + selectedAvatarId + '.png'" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />
            
            <!-- The New Fluent Edit Icon -->
            <button class="edit-avatar-btn" (click)="toggleDropdown()">
@@ -33,7 +33,7 @@
               *ngFor="let avatar of availableAvatars"
               [class.selected]="selectedAvatarId === avatar"
               (click)="selectAvatar(avatar)">
-              <iconify-icon icon="ph:user-light" width="48" height="48" style="color: white;"></iconify-icon>
+              <img [src]="'/assets/avatars/avatar' + avatar + '.png'" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />
             </div>
           </div>
         </div>

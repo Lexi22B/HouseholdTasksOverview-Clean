@@ -2,10 +2,18 @@ import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
+// --- Services ---
 import { RoomService } from '../../services/room-service';
 import { HouseholdService } from '../../services/household-service';
+import { HousemateService } from '../../services/housemate-service'; // <-- Added Housemate Service
+
+// --- Models ---
 import { Room } from '../../model/room';
 import { Household } from '../../model/household';
+import { Housemate } from '../../model/housemate'; // <-- Added Housemate Model
+
+// --- Popups ---
 import { HousematesPopup } from '../housemates-popup/housemates-popup';
 import { EditProfilePopup } from '../edit-profile-popup/edit-profile-popup';
 
@@ -24,14 +32,13 @@ export class HomeComponent implements OnInit {
   // Add room popup
   showPopup = false;
 
-  // Housemates and Edit Profile Popups
+  // --- Housemates and Edit Profile Popups ---
   isHousematesListOpen: boolean = false;
   isEditProfileOpen: boolean = false;
   selectedHousemate: any = null; // <-- function to hold the user data
-  housematesList: any[] = [
-    { id: 1, name: 'Magpunk Bird', status: 'Active', avatarId: 1 },
-    { id: 2, name: 'Miss Catzerina', status: 'Inactive', avatarId: 2 }
-  ];
+  
+  // Replaced the dummy data with an empty array. The database fills this now!
+  housematesList: Housemate[] = []; 
 
   
   // House profile popup
@@ -52,20 +59,39 @@ export class HomeComponent implements OnInit {
   };
 
   roomImageOptions = [
-    'assets/rooms/room1.png',
-    'assets/rooms/room2.png',
-    'assets/rooms/room3.png'
+    '/assets/rooms/room1.png',
+    '/assets/rooms/room2.png',
+    '/assets/rooms/room3.png',
+    '/assets/rooms/room4.png', /* Add the rest of your PNG names here! */
+    '/assets/rooms/room5.png',
+    '/assets/rooms/room6.png'
   ];
 
+  // Injected the housemateService into the constructor!
   constructor(
     private router: Router,
     private roomService: RoomService,
-    private householdService: HouseholdService
+    private householdService: HouseholdService,
+    private housemateService: HousemateService 
   ) { }
 
   ngOnInit() {
     this.loadRooms();
     this.loadHousehold();
+    this.loadHousemates(); // <-- Tells Angular to grab housemates when the page loads
+  }
+
+  // --- NEW FUNCTION: Loads housemates from the PostgreSQL Database ---
+  loadHousemates() {
+    const householdId = Number(localStorage.getItem('householdId')); //The ID from login
+
+    this.housemateService.getAll().subscribe({
+      next: (data) => {
+        // Only show housemates that belong to THIS house!
+        this.housematesList = data.filter(h => h.householdId === householdId);
+      },
+      error: (err) => console.error("Failed to load housemates", err)
+    });
   }
 
   loadRooms() {
@@ -123,40 +149,40 @@ export class HomeComponent implements OnInit {
     this.passwordChangeSuccess = '';
   }
 
-saveNewPassword() {
-  this.passwordChangeError = '';
-  this.passwordChangeSuccess = '';
+  saveNewPassword() {
+    this.passwordChangeError = '';
+    this.passwordChangeSuccess = '';
 
-  if (this.newPassword.length < 8) {
-    this.passwordChangeError = 'Please include at least 8 characters.';
-    return;
-  }
-
-  if (this.newPassword !== this.confirmNewPassword) {
-    this.passwordChangeError = 'Passwords do not match.';
-    return;
-  }
-
-  const householdId = Number(localStorage.getItem('householdId'));
-
-  if (!householdId) {
-    this.passwordChangeError = 'No household is currently logged in.';
-    return;
-  }
-
-  this.householdService.changePassword(householdId, this.newPassword).subscribe({
-    next: () => {
-      this.passwordChangeSuccess = 'Password updated successfully.';
-      this.newPassword = '';
-      this.confirmNewPassword = '';
-      this.showChangePasswordForm = false;
-    },
-    error: (err) => {
-      console.error('Password update failed', err);
-      this.passwordChangeError = 'Could not update password. Try again.';
+    if (this.newPassword.length < 8) {
+      this.passwordChangeError = 'Please include at least 8 characters.';
+      return;
     }
-  });
-}
+
+    if (this.newPassword !== this.confirmNewPassword) {
+      this.passwordChangeError = 'Passwords do not match.';
+      return;
+    }
+
+    const householdId = Number(localStorage.getItem('householdId'));
+
+    if (!householdId) {
+      this.passwordChangeError = 'No household is currently logged in.';
+      return;
+    }
+
+    this.householdService.changePassword(householdId, this.newPassword).subscribe({
+      next: () => {
+        this.passwordChangeSuccess = 'Password updated successfully.';
+        this.newPassword = '';
+        this.confirmNewPassword = '';
+        this.showChangePasswordForm = false;
+      },
+      error: (err) => {
+        console.error('Password update failed', err);
+        this.passwordChangeError = 'Could not update password. Try again.';
+      }
+    });
+  }
 
   goToHouseProfile() {
     this.openHouseProfilePopup();
@@ -180,17 +206,17 @@ saveNewPassword() {
 
     const householdId = Number(localStorage.getItem('householdId'));
 
-    const room: Room = {
+    // We use 'as any' here assuming your Room interface in Angular doesn't have imageUrl yet
+    const room: any = {
       id: 0,
       householdId: householdId,
-      roomName: this.newRoom.name
+      roomName: this.newRoom.name,
+      imageUrl: this.newRoom.selectedImage // <-- We are now saving the image path!
     };
 
     this.roomService.create(room).subscribe((newId: number) => {
       this.closePopup();
-      this.router.navigate(['/room', householdId, newId], {
-        state: { roomName: this.newRoom.name }
-      });
+      this.loadRooms(); // Refresh the home page to show the new card!
     });
   }
 
@@ -206,40 +232,62 @@ saveNewPassword() {
     });
   }
 
+  // --- HOUSEMATE POPUP LOGIC ---
+
   openHousematesList() {
     this.isHousematesListOpen = true;
     this.isEditProfileOpen = false;
   }
 
   openEditProfile(housemateData: any = null) {
+    // Convert boolean back to the 'Active'/'Inactive' string the popup UI expects
+    if (housemateData) {
+       housemateData.status = housemateData.isActive ? 'Active' : 'Inactive';
+    }
     this.selectedHousemate = housemateData;
     this.isEditProfileOpen = true;
     this.isHousematesListOpen = false;
   }
 
-  
-closeAllPopups() {
+  closeAllPopups() {
     this.isHousematesListOpen = false;
     this.isEditProfileOpen = false;
   }
 
-  // Receives data from the Edit Popup when "Done" is clicked
+  // Receives data from the Edit Popup when "Done" is clicked, saves to DB
   saveHousemateData(data: any) {
-    if (data.id) {
-      // Editing an existing person
-      const index = this.housematesList.findIndex(h => h.id === data.id);
-      if (index !== -1) this.housematesList[index] = data;
+    const householdId = Number(localStorage.getItem('householdId'));
+
+    const newHousemate: Housemate = {
+      id: data.id ? data.id : 0,
+      householdId: householdId,
+      name: data.name,
+      isActive: data.status === 'Active',
+      avatarId: data.avatarId
+    };
+
+    if (newHousemate.id) {
+      // Editing an existing person (Calls PUT)
+      this.housemateService.update(newHousemate).subscribe({
+        next: () => this.loadHousemates(),
+        error: (err) => console.error("Update failed", err)
+      });
     } else {
-      // Adding a brand new person! Give them a random ID.
-      data.id = Math.floor(Math.random() * 10000);
-      this.housematesList.push(data);
+      // Adding a brand new person (Calls POST)
+      this.housemateService.create(newHousemate).subscribe({
+        next: () => this.loadHousemates(),
+        error: (err) => console.error("Create failed", err)
+      });
     }
+
     this.openHousematesList(); // Go back to the list view
   }
 
-  // Deletes a user from the list
+  // Deletes a user from the DB and the list
   deleteHousemateFromList(id: number) {
-    this.housematesList = this.housematesList.filter(h => h.id !== id);
+    this.housemateService.delete(id).subscribe(() => {
+      this.loadHousemates(); // Refresh the list after deleting
+    });
   }
   
-  }
+}

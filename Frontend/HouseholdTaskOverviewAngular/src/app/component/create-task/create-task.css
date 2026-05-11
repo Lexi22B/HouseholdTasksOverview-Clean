@@ -1,260 +1,319 @@
-:host { display: block; min-height: 100vh; }
-
 .page {
-  display: flex;
-  flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  background-color: #F8F5F2; 
   min-height: 100vh;
-  background-color: #faf6f0;
   position: relative;
 }
 
-/* ── HEADER ── */
+/* --- HEADER --- */
 .header {
-  background-color: #F56E00;
-  padding: 8px 24px;
+  background-color: #F57C00;
+  padding: 15px 40px;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  height: 56px;
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 15px;
 }
 
 .header-label {
   font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: white;
+  font-weight: 400;
+  font-size: 16px;
+  color: #2D2C2B;
 }
 
-.icon-btn {
-  width: 44px;
-  height: 44px;
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  background-color: #FFFFFF;
   border-radius: 50%;
-  background: #b8d4f0;
-  border: none;
-  font-size: 1.1rem;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s;
+  color: #2D2C2B;
 }
 
-.icon-btn:hover { opacity: 0.8; }
+.icon-circle iconify-icon {
+  font-size: 34px; 
+}
 
-/* ── BANNER ── */
+/* --- ROOM BANNER --- */
 .banner-wrapper {
+  padding: 30px 40px 10px 40px;
   display: flex;
   justify-content: center;
-  padding: 24px 32px 0;
 }
 
 .room-banner {
   width: 100%;
   max-width: 796px;
-  height: 150px;
-  background: #b8d4f0;
-  border-radius: 20px;
+  height: 160px; 
+  background-color: #99D1FF;
+  border-radius: 24px;
 }
 
-/* ── FORM WRAPPER ── */
+/* --- FORM WRAPPER & LIGHT BLUE BOX --- */
 .form-wrapper {
   display: flex;
-  justify-content: center;
-  padding: 24px 24px 60px;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 40px 60px 40px;
 }
 
-.form-card {
-  background: #daeaf7;
+.task-selection-menu {
+  background-color: #D6EDFF; /* Outer Light Blue */
   border-radius: 24px;
-  padding: 28px 32px;
+  padding: 40px 60px;
   width: 100%;
-  max-width: 700px;
+  max-width: 796px; 
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center; /* Centers the content inside */
+  gap: 40px; /* Space between title, inner box, and button */
 }
 
-/* ── TASK INPUT ── */
-.task-input {
+/* --- TASK TITLE INPUT --- */
+.task-title-wrapper {
   width: 100%;
-  padding: 14px 20px;
+  max-width: 579px; 
+  height: 44px;
+  background-color: #FFFFFF;
   border-radius: 50px;
-  border: none;
-  background: white;
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  color: #2D2C2B;
-  outline: none;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
-.task-input::placeholder { color: #aaa; }
+.task-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #2D2C2B;
+  flex: 1;
+}
 
-/* ── OPTIONS CARD ── */
-.options-card {
-  background: #b8d4f0;
-  border-radius: 20px;
-  padding: 24px 20px;
+.task-input::placeholder {
+  color: #2D2C2B;
+  opacity: 0.7;
+}
+
+iconify-icon.edit-icon {
+  font-size: 28px; 
+  color: #2D2C2B;
+}
+
+/* --- INNER SETTINGS CARD (Darker Blue) --- */
+.nested-settings-card {
+  background-color: #99D1FF; /* Inner Dark Blue */
+  border-radius: 24px;
+  padding: 32px;
+  width: 100%;
+  max-width: 579px; /* Figma width */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px; /* Spacing between rows */
 }
 
-/* ── OPTION ROW ── */
+/* --- OPTIONS ROWS --- */
 .option-row {
   display: flex;
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .option-label {
   font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
+  font-weight: 500;
+  font-size: 16px;
   color: #2D2C2B;
-  min-width: 140px;
+  width: 160px; 
 }
 
-/* ── PRIORITY BUTTONS ── */
 .option-btns {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.priority-btn {
-  padding: 8px 20px;
-  border-radius: 20px;
-  border: none;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-
-/* ── DURATION / EFFORT BUTTONS ── */
-.duration-btn {
-  padding: 8px 18px;
-  border-radius: 20px;
-  border: none;
-  background: white;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
+/* Generic Button Formatting */
+.base-btn {
+  background-color: #FFFFFF;
   color: #2D2C2B;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-
-.duration-btn.selected {
-  background: #F56E00;
-  color: white;
-  font-weight: 600;
-}
-
-/* ── ASSIGN ── */
-.assign-row { align-items: flex-start; }
-.assign-label { margin-top: 10px; font-weight: 700; }
-
-.assign-input-wrapper {
-  position: relative;
-  flex: 1;
-  min-width: 200px;
-}
-
-.assign-input {
-  width: 100%;
-  padding: 10px 44px 10px 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  border: none;
   border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Priority Button Sizes */
+.p-low { width: 72px; height: 39px; }
+.p-med { width: 102px; height: 39px; }
+.p-high { width: 76px; height: 39px; }
+
+/* Priority Selected States */
+.p-low.selected { background-color: #03C663; color: #022614; }
+.p-med.selected { background-color: #FFBA0A; color: #412F01; }
+.p-high.selected { background-color: #FF7777; color: #260202; }
+
+/* Effort & Duration Sizes */
+.effort-btn, .duration-btn {
+  padding: 0 20px;
+  height: 39px;
+}
+
+/* Effort Monochromatic Blue States */
+.e-easy.selected { background-color: #CBE8FF; color: #2D2C2B } 
+.e-mod.selected { background-color: #4AA9FF; color: #FFFFFF; }  
+.e-diff.selected { background-color: #0077E6; color: #FFFFFF; } 
+
+/* Duration Selected State */
+.duration-btn.selected { background-color: #70BFFF; color: #FFFFFF; }
+
+
+/* --- ASSIGN AUTOCOMPLETE --- */
+.assign-row {
+  position: relative;
+  z-index: 10; 
+}
+
+.autocomplete-wrapper {
+  position: relative;
+}
+
+.input-pill {
+  background-color: #FFFFFF;
+  border-radius: 50px;
+  padding: 0 16px;
+  width: 201px; 
+  height: 39px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.input-pill input {
   border: none;
-  background: white;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  color: #2D2C2B;
   outline: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #2D2C2B;
+  width: 100%;
 }
 
-.assign-icon {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1rem;
-  pointer-events: none;
+iconify-icon.search-icon {
+  font-size: 24px;
+  color: #2D2C2B;
 }
 
-/* ── DROPDOWN ── */
-.dropdown {
+.dropdown-menu {
   position: absolute;
-  top: calc(100% + 4px);
+  top: 110%;
   left: 0;
-  right: 0;
+  width: 100%;
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   z-index: 100;
   overflow: hidden;
 }
 
 .dropdown-item {
-  padding: 10px 16px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
+  font-weight: 500;
   color: #2D2C2B;
-  transition: background 0.1s;
 }
 
-.dropdown-item:hover { background: #f0f0f0; }
-
-/* ── ERROR ── */
-.error-msg {
-  color: #dc2626;
-  font-size: 0.85rem;
-  font-family: 'Inter', sans-serif;
-  text-align: center;
+.dropdown-item:hover {
+  background-color: #f0f0f0;
 }
 
-/* ── CREATE BUTTON ── */
+.tiny-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #FFC1E3; /* The pink background color */
+  object-fit: cover; /* Keeps the PNG properly sized inside the circle */
+}
+
+/* --- CREATE BUTTON --- */
+.create-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .create-btn {
-  align-self: center;
-  padding: 14px 48px;
-  border-radius: 50px;
-  border: none;
-  background: #F56E00;
-  color: white;
+  width: 121px;
+  height: 52px;
+  background-color: #F56E00;
+  color: #FFFBF7;
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
+  font-weight: 800; 
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
   cursor: pointer;
-  transition: opacity 0.2s;
 }
 
-.create-btn:hover:not(:disabled) { opacity: 0.85; }
-.create-btn:disabled { background: #ccc; cursor: not-allowed; }
+.create-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
-/* ── BACK FAB ── */
+.error-msg {
+  color: #e11d48;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* --- FLOATING BACK BUTTON --- */
 .back-fab {
   position: fixed;
-  bottom: 24px;
-  left: 24px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: #b8d4f0;
+  bottom: 40px;
+  left: 40px;
+  width: 72px;
+  height: 72px;
+  background-color: #70BFFF;
+  color: white;
   border: none;
-  font-size: 1.3rem;
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  transition: opacity 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
 }
 
-.back-fab:hover { opacity: 0.8; }
+.back-fab iconify-icon {
+  font-size: 40px; 
+}
+
+.back-fab:hover {
+  transform: scale(1.05);
+}

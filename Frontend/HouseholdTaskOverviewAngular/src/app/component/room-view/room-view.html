@@ -1,31 +1,36 @@
+
 <div class="page">
 
-  <!-- HEADER -->
+<!-- HEADER -->
   <header class="header">
     <div class="header-right">
-      <span class="header-label">Home</span>
-      <button class="icon-btn" (click)="goBack()">🏠</button>
+      <span class="header-label">House</span>
+      <button class="icon-btn" (click)="goBack()">
+        <iconify-icon icon="hugeicons:home-07"></iconify-icon>
+      </button>
 
-      <span class="header-label">Housemates</span>
-      <button class="icon-btn">👥</button>
+     <span class="header-label">Housemates</span>
+      <button class="icon-btn" (click)="openHousematesPopup()">
+        <iconify-icon icon="heroicons:user-group-16-solid"></iconify-icon>
+      </button>
 
-      <span class="header-label">Home Info</span>
-      <button class="icon-btn" (click)="openHouseProfilePopup()">🔑</button>
+      <span class="header-label">House info</span>
+      <button class="icon-btn" (click)="openHouseProfilePopup()">
+        <iconify-icon icon="ion:key-outline"></iconify-icon>
+      </button>
     </div>
   </header>
 
-  <!-- ROOM BANNER -->
+<!-- ROOM BANNER -->
   <div class="banner-wrapper">
-    <div class="room-banner"></div>
+    <div class="room-banner">
+      <img [src]="roomImage" alt="{{ roomName }} banner" class="banner-img">
+    </div>
   </div>
 
-  <!-- COLUMN HEADERS + ADD BUTTON -->
+  <!-- COLUMN HEADERS -->
   <div class="column-headers">
-    <div class="todo-header">
-      <h2 class="column-title todo-title">To Do</h2>
-      <button class="add-task-btn" (click)="goToCreateTask()">+</button>
-    </div>
-
+    <h2 class="column-title todo-title">To Do</h2>
     <h2 class="column-title done-title">Done</h2>
   </div>
 
@@ -201,5 +206,17 @@
     </div>
 
   </div>
+
+ <!-- FLOATING ADD TASK BUTTON (Left Side) -->
+  <button class="fab-add-task" (click)="goToCreateTask()">
+    <iconify-icon icon="streamline-freehand:add-sign-bold"></iconify-icon>
+  </button>
+  
+  <!-- STANDALONE HOUSEMATES POPUP -->
+  <app-housemates-popup
+    [isVisible]="showHousematesPopup"
+    [housematesList]="housematesList"
+    (close)="closeHousematesPopup()">
+  </app-housemates-popup>
 
 </div>

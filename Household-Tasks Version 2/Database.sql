@@ -160,7 +160,6 @@ CREATE TABLE public.housemates (
     id integer NOT NULL,
     household_id integer NOT NULL,
     name character varying(100) NOT NULL,
-    email character varying(150),
     is_active boolean DEFAULT true
 );
 
@@ -239,6 +238,7 @@ CREATE TABLE public.rooms (
     id integer NOT NULL,
     household_id integer NOT NULL,
     room_name character varying(100) NOT NULL
+    "ImageUrl" text 
 );
 
 
@@ -1858,7 +1858,7 @@ ALTER TABLE ONLY public.households
 --
 
 ALTER TABLE ONLY public.housemates
-    ADD CONSTRAINT housemates_email_key UNIQUE (email);
+    avatar_id integer;     
 
 
 --

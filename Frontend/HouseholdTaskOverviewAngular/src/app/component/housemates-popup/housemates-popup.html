@@ -19,11 +19,10 @@
            *ngFor="let person of housematesList"
            [class.selected]="selectedCardId === person.id"
            (click)="selectCard(person)">
-        
+
         <!-- Left: Avatar -->
-        <div class="avatar-circle">
-          <iconify-icon icon="ph:user-light" width="28" height="28" style="color: white;"></iconify-icon>
-        </div>
+        <img [src]="'/assets/avatars/avatar' + person.avatarId + '.png'" class="list-avatar" *ngIf="person.avatarId" />
+        
 
         <!-- Middle: Info -->
         <div class="user-info">

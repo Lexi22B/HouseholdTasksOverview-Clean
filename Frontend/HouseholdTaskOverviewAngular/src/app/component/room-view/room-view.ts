@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,19 +15,23 @@ import { TaskCompletion } from '../../model/task-completion';
 import { Housemate } from '../../model/housemate';
 import { Household } from '../../model/household';
 
+import { HousematesPopup } from '../housemates-popup/housemates-popup'; // Adjust path if needed
+
+
 interface TaskWithStatus extends Task {
   assignment?: TaskAssignment;
   completion?: TaskCompletion;
   housemate?: Housemate;
 }
-
 @Component({
   selector: 'app-room-view',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HousematesPopup],
   templateUrl: './room-view.html',
-  styleUrl: './room-view.css'
+  styleUrl: './room-view.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] /* <-- ADD THIS LINE! */
 })
+
 export class RoomViewComponent implements OnInit {
 
   roomId!: number;
@@ -36,10 +40,15 @@ export class RoomViewComponent implements OnInit {
   roomImage: string = 'assets/rooms/default.png';
   tasks: TaskWithStatus[] = [];
 
+  // Housemates popup
+  showHousematesPopup = false;
+  housematesList: Housemate[] = [];
+
   // House profile popup
   showHouseProfilePopup = false;
   household: Household | null = null;
   houseProfileError: string = '';
+
 
   // Change password form
   showChangePasswordForm = false;
@@ -87,6 +96,10 @@ export class RoomViewComponent implements OnInit {
       this.taskAssignmentService.getAll().subscribe(assignments => {
         this.taskCompletionService.getAll().subscribe(completions => {
           this.housemateService.getAll().subscribe(housemates => {
+            
+            // FILTER: Only keep housemates linked to this specific household ID
+            this.housematesList = housemates.filter(h => h.householdId === this.householdId);
+            
             this.tasks = roomTasks.map(task => {
               const assignment = assignments.find(a => a.taskId === task.id);
 
@@ -145,6 +158,14 @@ export class RoomViewComponent implements OnInit {
     this.confirmNewPassword = '';
     this.passwordChangeError = '';
     this.passwordChangeSuccess = '';
+  }
+
+  openHousematesPopup() {
+    this.showHousematesPopup = true;
+  }
+
+  closeHousematesPopup() {
+    this.showHousematesPopup = false;
   }
 
   openChangePasswordForm() {

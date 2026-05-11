@@ -34,23 +34,23 @@
 
       <!-- ADD ROOM BUTTON -->
       <button class="add-room-btn" (click)="openPopup()">
-        <span class="plus">+</span>
+        <iconify-icon icon="streamline-freehand:add-sign-bold" width="80" height="80" style="color: #FFFFFF;"></iconify-icon>
       </button>
 
       <!-- EXISTING ROOMS -->
       <div class="room-card-wrapper" *ngFor="let room of rooms">
         <div class="room-card" (click)="openRoom(room)">
+          
+          <!-- The New Image Background! -->
+          <img *ngIf="room.imageUrl" [src]="room.imageUrl" class="room-card-img" />
+          
           <span class="room-card-name">{{ room.roomName }}</span>
         </div>
 
         <button class="room-delete-btn" (click)="deleteRoom(room)">
-          🗑
+          <iconify-icon icon="solar:trash-bin-2-linear" width="24" height="24" style="color: #2D2C2B;"></iconify-icon>
         </button>
       </div>
-
-    </div>
-
-  </main>
 
   <!-- ADD ROOM POPUP OVERLAY -->
   <div class="overlay" *ngIf="showPopup" (click)="closePopup()"></div>
@@ -77,24 +77,31 @@
   <!-- ADD ROOM POPUP -->
   <div class="popup" *ngIf="showPopup">
 
+    <!-- Top Input Row -->
     <div class="popup-input-row">
       <input
         class="popup-input"
         placeholder="Add room name..."
         [(ngModel)]="newRoom.name"
       />
-      <span class="popup-edit-icon">✏️</span>
-    </div>
-
-    <div class="popup-images">
-      <div
-        class="popup-image-card"
-        *ngFor="let img of roomImageOptions"
-        [class.selected]="newRoom.selectedImage === img"
-        (click)="newRoom.selectedImage = img">
+      <div class="popup-edit-icon">
+        <iconify-icon icon="fluent:edit-28-regular" width="28" height="28" style="color: #2D2C2B;"></iconify-icon>
       </div>
     </div>
 
+    <!-- The White Scrollable Menu -->
+    <div class="popup-scroll-menu">
+      <div
+        class="popup-banner-card"
+        *ngFor="let img of roomImageOptions"
+        [class.selected]="newRoom.selectedImage === img"
+        (click)="newRoom.selectedImage = img">
+        <!-- Transparent PNG drawn on top of the blue background -->
+        <img [src]="img" class="banner-img" />
+      </div>
+    </div>
+
+    <!-- Create Button -->
     <button
       class="popup-create-btn"
       [disabled]="!newRoom.name"

@@ -1,8 +1,9 @@
 export interface Housemate 
 {
-    id: number;
+  id?: number; 
   householdId: number;
   name: string;
   isActive: boolean;
-
+  avatarId: number;
+  
 }

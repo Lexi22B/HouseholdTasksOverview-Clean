@@ -162,7 +162,6 @@ CREATE TABLE public.housemates (
     id integer NOT NULL,
     household_id integer NOT NULL,
     name character varying(100) NOT NULL,
-    email character varying(150),
     is_active boolean DEFAULT true
 );
 
@@ -1880,8 +1879,7 @@ ALTER TABLE ONLY public.households
 --
 
 ALTER TABLE ONLY public.housemates
-    ADD CONSTRAINT housemates_email_key UNIQUE (email);
-
+   avatar_id integer;
 
 --
 -- TOC entry 4934 (class 2606 OID 16661)

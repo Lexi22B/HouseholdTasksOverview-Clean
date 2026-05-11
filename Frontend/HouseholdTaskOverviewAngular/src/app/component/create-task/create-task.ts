@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,6 +23,7 @@ interface Housemate {
   id: number;
   name: string;
   householdId: number;
+  avatarId?: number;
 }
 
 interface Task {
@@ -41,12 +42,14 @@ interface TaskAssignment {
   housemateId: number;
 }
 
+// Notice how the @Component sits perfectly on top of the export class now!
 @Component({
   standalone: true,
   selector: 'app-create-task',
   templateUrl: './create-task.html',
   styleUrl: './create-task.css',
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
 export class CreateTaskComponent implements OnInit {
   private baseUrl = 'http://localhost:5122/api';
@@ -56,9 +59,9 @@ export class CreateTaskComponent implements OnInit {
 
   // Form state
   taskTitle = '';
-  selectedPriority: number | null = null;   // 1=Low, 2=Medium, 3=High
-  selectedDifficulty: number | null = null; // 1=Easy, 2=Medium, 3=Hard
-  selectedDuration: number | null = null;   // 1=15min, 2=30min, 3=60min
+  selectedPriority: number | null = null;   
+  selectedDifficulty: number | null = null; 
+  selectedDuration: number | null = null;   
   selectedHousemate: Housemate | null = null;
 
   searchName = '';
@@ -72,7 +75,6 @@ export class CreateTaskComponent implements OnInit {
   priorityOptions: PriorityLevel[] = [];
   durationOptions: DurationLevel[] = [];
 
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -84,7 +86,10 @@ export class CreateTaskComponent implements OnInit {
     this.roomId = Number(this.route.snapshot.paramMap.get('roomId'));
 
     this.http.get<Housemate[]>(`${this.baseUrl}/Housemates`).subscribe({
-      next: data => this.allHousemates = data,
+      next: data => {
+        // We catch the data, but ONLY keep the ones matching this householdId!
+        this.allHousemates = data.filter(h => h.householdId === this.householdId);
+      },
       error: () => { }
     });
 
@@ -104,37 +109,26 @@ export class CreateTaskComponent implements OnInit {
     });
   }
 
-  // ── Priority ──
+  // ── Selections ──
   selectPriority(value: number) {
     this.selectedPriority = this.selectedPriority === value ? null : value;
   }
 
-  getPriorityColor(value: number): string {
-    const colors: { [key: number]: string } = {
-      1: '#ef4444',
-      2: '#f59e0b',
-      3: '#22c55e'
-    };
-    return colors[value] || '#ddd';
-  }
-
-  // ── Duration ──
   selectDuration(value: number) {
     this.selectedDuration = this.selectedDuration === value ? null : value;
   }
 
-  // ── Difficulty ──
   selectDifficulty(value: number) {
     this.selectedDifficulty = this.selectedDifficulty === value ? null : value;
   }
 
-  // ── Housemate search ──
+  // ── Housemate search & Autocomplete ──
   filterHousemates() {
     const q = this.searchName.toLowerCase().trim();
     this.filteredHousemates = q
       ? this.allHousemates.filter(h => h.name.toLowerCase().includes(q))
       : [];
-    // Clear selection if text changed
+      
     if (this.selectedHousemate && !this.selectedHousemate.name.toLowerCase().includes(q)) {
       this.selectedHousemate = null;
     }
@@ -144,6 +138,10 @@ export class CreateTaskComponent implements OnInit {
     this.selectedHousemate = h;
     this.searchName = h.name;
     this.filteredHousemates = [];
+  }
+
+  closeDropdown() {
+    setTimeout(() => this.filteredHousemates = [], 200);
   }
 
   // ── Validation ──
@@ -157,33 +155,27 @@ export class CreateTaskComponent implements OnInit {
     );
   }
 
-
-
-  // ── Submit: POST Task → POST TaskAssignment ──
+  // ── Submit ──
   submit() {
     if (!this.isValid() || this.submitting) return;
 
     this.submitting = true;
     this.errorMsg = '';
 
-
+    // FIXED: The database expects 'LevelId' at the end of these names!
     const newTask = {
       id: 0,
       householdId: this.householdId,
       roomId: this.roomId,
       title: this.taskTitle.trim(),
-      difficulty: this.selectedDifficulty!,
-      priority: this.selectedPriority!,
-      estimatedDurationMinutes: this.selectedDuration!
+      difficultyLevelId: this.selectedDifficulty!,
+      priorityLevelId: this.selectedPriority!,
+      durationLevelId: this.selectedDuration!
     };
 
-    // Step 1: Create the task
     this.http.post<any>(`${this.baseUrl}/Tasks`, newTask).subscribe({
       next: (createdTask) => {
-        // Step 2: Assign it
-        console.log('Created task response:', createdTask);
         const taskId = createdTask?.id ?? createdTask?.Id;
-        console.log('Task ID extracted:', taskId);
         const assignment = {
           id: 0,
           taskId: taskId,
@@ -193,7 +185,7 @@ export class CreateTaskComponent implements OnInit {
         this.http.post(`${this.baseUrl}/TaskAssignments`, assignment).subscribe({
           next: () => {
             this.submitting = false;
-            this.goBack();
+            this.goBack(); // Redirects you back to the room upon success!
           },
           error: (err) => {
             this.submitting = false;

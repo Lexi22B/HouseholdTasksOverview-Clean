@@ -263,3 +263,14 @@
 }
 
 .done-button:hover { opacity: 0.85; }
+
+/* --- AVATAR IMAGES --- */
+/* Makes sure the transparent PNGs perfectly fill the pink background boxes */
+.main-avatar-card img,
+.avatar-option img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit; /* This automatically copies the 16px rounded corners from the pink box! */
+}
+

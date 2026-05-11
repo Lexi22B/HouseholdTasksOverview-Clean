@@ -91,6 +91,15 @@
   flex-shrink: 0;
 }
 
+/* New code for avatar images*/
+.list-avatar { 
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #FFC1E3; 
+  object-fit: cover;
+}
+
 /* User Info Text */
 .user-info {
   display: flex;

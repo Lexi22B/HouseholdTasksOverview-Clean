@@ -51,40 +51,45 @@ public class RoomsRepository : BaseRepository
 
     public virtual int InsertRoom(Room r)
     {
-        NpgsqlConnection dbConn = null;
-        try
-        {
-            dbConn = new NpgsqlConnection(ConnectionString);
-            var cmd = dbConn.CreateCommand();
-            cmd.CommandText = @"
-            INSERT INTO rooms (household_id, room_name) 
-            VALUES (@household_id, @room_name)
-            RETURNING id";
+    NpgsqlConnection dbConn = null;
+    try
+    {
+        dbConn = new NpgsqlConnection(ConnectionString);
+        var cmd = dbConn.CreateCommand();
+        cmd.CommandText = @"
+        INSERT INTO rooms (household_id, room_name, image_url) 
+        VALUES (@household_id, @room_name, @image_url)
+        RETURNING id";
 
-            cmd.Parameters.AddWithValue("@household_id", NpgsqlDbType.Integer, r.HouseholdId);
-            cmd.Parameters.AddWithValue("@room_name", NpgsqlDbType.Varchar, r.RoomName);
+        cmd.Parameters.AddWithValue("@household_id", NpgsqlDbType.Integer, r.HouseholdId);
+        cmd.Parameters.AddWithValue("@room_name", NpgsqlDbType.Varchar, r.RoomName);
+        // Add this line for the image:
+        cmd.Parameters.AddWithValue("@image_url", NpgsqlDbType.Varchar, (object)r.ImageUrl ?? DBNull.Value);
 
-            dbConn.Open();
-            return Convert.ToInt32(cmd.ExecuteScalar());
-        }
-        finally { dbConn?.Close(); }
+        dbConn.Open();
+        return Convert.ToInt32(cmd.ExecuteScalar());
+    }
+    finally { dbConn?.Close(); }
     }
 
     public virtual bool UpdateRoom(Room r)
     {
-        var dbConn = new NpgsqlConnection(ConnectionString);
-        var cmd = dbConn.CreateCommand();
-        cmd.CommandText = @"
-            UPDATE rooms 
-            SET household_id = @household_id, 
-                room_name = @room_name
-            WHERE id = @id";
+    var dbConn = new NpgsqlConnection(ConnectionString);
+    var cmd = dbConn.CreateCommand();
+    cmd.CommandText = @"
+        UPDATE rooms 
+        SET household_id = @household_id, 
+            room_name = @room_name,
+            image_url = @image_url
+        WHERE id = @id";
 
-        cmd.Parameters.AddWithValue("@household_id", NpgsqlDbType.Integer, r.HouseholdId);
-        cmd.Parameters.AddWithValue("@room_name", NpgsqlDbType.Varchar, r.RoomName);
-        cmd.Parameters.AddWithValue("@id", NpgsqlDbType.Integer, r.Id);
+    cmd.Parameters.AddWithValue("@household_id", NpgsqlDbType.Integer, r.HouseholdId);
+    cmd.Parameters.AddWithValue("@room_name", NpgsqlDbType.Varchar, r.RoomName);
+    // Add this line:
+    cmd.Parameters.AddWithValue("@image_url", NpgsqlDbType.Varchar, (object)r.ImageUrl ?? DBNull.Value);
+    cmd.Parameters.AddWithValue("@id", NpgsqlDbType.Integer, r.Id);
 
-        return UpdateData(dbConn, cmd);
+    return UpdateData(dbConn, cmd);
     }
 
     public virtual bool DeleteRoom(int id)
@@ -97,12 +102,14 @@ public class RoomsRepository : BaseRepository
     }
 
     private Room MapDataReaderToRoom(NpgsqlDataReader data)
+{
+    return new Room
     {
-        return new Room
-        {
-            Id = Convert.ToInt32(data["id"]),
-            HouseholdId = Convert.ToInt32(data["household_id"]),
-            RoomName = data["room_name"].ToString()
-        };
-    }
+        Id = Convert.ToInt32(data["id"]),
+        HouseholdId = Convert.ToInt32(data["household_id"]),
+        RoomName = data["room_name"].ToString(),
+        // Add this line to read the image_url from the database:
+        ImageUrl = data["image_url"] == DBNull.Value ? null : data["image_url"].ToString()
+    };
+}
 }
