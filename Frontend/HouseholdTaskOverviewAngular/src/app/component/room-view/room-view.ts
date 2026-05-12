@@ -60,10 +60,10 @@ export class RoomViewComponent implements OnInit {
   passwordChangeSuccess: string = '';
 
   priorityLabels: { [key: number]: string } = {
-    1: 'High', 2: 'Medium', 3: 'Low'
+    1: 'Low', 2: 'Medium', 3: 'High'
   };
   priorityColors: { [key: number]: string } = {
-    1: '#e03000', 2: '#f0a500', 3: '#1A6552'
+    1: '#1A6552', 2: '#f0a500', 3: '#e03000'
   };
 
   constructor(
