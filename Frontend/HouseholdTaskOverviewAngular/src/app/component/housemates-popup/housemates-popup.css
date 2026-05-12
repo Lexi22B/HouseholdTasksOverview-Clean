@@ -9,7 +9,9 @@
 .popup-box {
   position: relative;
   width: 491px;
-  height: 680px;
+  height: auto;           /* REMOVE fixed 680px, use auto */
+  min-height: 350px;      /* Ensures a nice base size when list is empty */
+  max-height: 90vh;       /* Prevents the popup from going off-screen */
   background-color: #D6EDFF;
   border-radius: 24px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
@@ -17,7 +19,8 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  padding: 48px 0; /* Padding top and bottom */
+  padding: 48px 0; 
+  overflow-y: auto;       /* Adds scrolling to the whole box if needed */
 }
 
 /* Close Button */
@@ -40,7 +43,7 @@
 /* --- SCROLL MENU CONTAINER --- */
 .scroll-menu {
   width: 299px;
-  max-height: 296px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,15 +113,15 @@
 .user-name {
   font-family: 'Inter', sans-serif;
   font-weight: 600; /* Semi Bold / Medium */
-  font-size: 16px;
+  font-size: 18px;
   color: #2D2C2B;
 }
 
 .user-status {
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 14px;
-  color: #2D2C2B; /* Default Inactive Color */
+  font-size: 16px;
+  color: #260202; /* Default Inactive Color */
 }
 
 .user-status.active-status {

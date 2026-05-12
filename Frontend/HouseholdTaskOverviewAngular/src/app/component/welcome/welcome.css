@@ -14,8 +14,11 @@
 }
 
 .illustration {
-  width: 280px;
-  margin-bottom: 36px;
+  width: 100%;
+  max-width: 400px; /* Sets your new maximum width */
+  height: auto;     /* Allows the 338px height to scale naturally */
+  margin-bottom: 32px;
+  margin-top: 40px;
   animation: floatY 4s ease-in-out infinite;
 }
 
@@ -25,14 +28,15 @@
   font-size: 50px;
   line-height: 100%;
   color: #F56E00;
-  letter-spacing: 0;
-  margin-bottom: 10px;
+  margin-top: 0; 
+  margin-bottom: -5px;
+  text-align: center;
 }
 
 .subtitle {
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  color: #888a8f;
+  color: #2D2C2B;
   font-weight: 400;
   margin-bottom: 40px;
 }
