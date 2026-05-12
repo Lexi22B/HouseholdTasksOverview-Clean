@@ -82,17 +82,22 @@ export class HomeComponent implements OnInit {
   }
 
   // --- NEW FUNCTION: Loads housemates from the PostgreSQL Database ---
-  loadHousemates() {
-    const householdId = Number(localStorage.getItem('householdId')); //The ID from login
+ loadHousemates() {
+  const householdId = Number(localStorage.getItem('householdId'));
 
-    this.housemateService.getAll().subscribe({
-      next: (data) => {
-        // Only show housemates that belong to THIS house!
-        this.housematesList = data.filter(h => h.householdId === householdId);
-      },
-      error: (err) => console.error("Failed to load housemates", err)
-    });
-  }
+  this.housemateService.getAll().subscribe({
+    next: (data) => {
+      // Map through the data to add the 'status' string based on 'isActive'
+      this.housematesList = data
+        .filter(h => h.householdId === householdId)
+        .map(h => ({
+          ...h,
+          status: h.isActive ? 'Active' : 'Inactive'
+        }));
+    },
+    error: (err) => console.error("Failed to load housemates", err)
+  });
+}
 
   loadRooms() {
     const householdId = Number(localStorage.getItem('householdId'));
