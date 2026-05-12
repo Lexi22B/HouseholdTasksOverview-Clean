@@ -25,6 +25,7 @@
   <div class="banner-wrapper">
     <div class="room-banner">
       <img [src]="roomImage" alt="{{ roomName }} banner" class="banner-img">
+      <h1 class="room-main-title">{{ roomName }}</h1>
     </div>
   </div>
 
@@ -42,83 +43,75 @@
       <div class="task-card" *ngFor="let task of todoTasks">
         <div class="card-top">
           <span class="task-title">{{ task.title }}</span>
-
-          <div class="card-top-right">
-            <span
-              class="priority-badge"
-              [style.background]="getPriorityColor(task.priority)">
-              {{ getPriorityLabel(task.priority) }}
-            </span>
-
-            <button class="delete-btn" (click)="deleteTask(task)">🗑</button>
-          </div>
+          
+          <button class="delete-btn" (click)="deleteTask(task)">
+            <iconify-icon icon="solar:trash-bin-2-linear" width="24" height="24" ></iconify-icon>
+          </button>
         </div>
 
         <div class="card-middle">
-          <div class="difficulty-row">
-            <span class="meta-label">{{ getEffortLabel(task.difficulty) }}</span>
-            <span class="dot faded"></span>
-            <span class="dot medium" *ngIf="(task.difficulty || 0) >= 2"></span>
-            <span class="dot filled" *ngIf="(task.difficulty || 0) >= 3"></span>
-          </div>
-
-          <span class="duration-badge">
-            {{ getDurationLabel(task.estimatedDurationMinutes) }}
-          </span>
-        </div>
+  <span class="badge priority-badge" [style.background]="getPriorityColor(task.priority)">
+    {{ getPriorityLabel(task.priority) }}
+  </span>
+  <span class="badge effort-badge">
+    {{ getEffortLabel(task.difficulty) }}
+  </span>
+  <span class="badge duration-badge" *ngIf="getDurationLabel(task.estimatedDurationMinutes)">
+    {{ getDurationLabel(task.estimatedDurationMinutes) }}
+  </span>
+</div>
 
         <div class="card-bottom">
-          <div class="housemate-row" *ngIf="task.housemate">
-            <div class="housemate-avatar"></div>
-            <span class="housemate-name">{{ task.housemate.name }}</span>
+          <div class="assigned-user-pill" *ngIf="task.housemate">
+            <div class="avatar-circle">
+              <img *ngIf="task.housemate.avatarId" [src]="'/assets/avatars/avatar' + task.housemate.avatarId + '.png'" />
+            </div>
+            <span class="user-name">{{ task.housemate.name }}</span>
+          </div>
+          <div class="assigned-user-pill empty" *ngIf="!task.housemate">
+            <span class="user-name">Unassigned</span>
           </div>
 
-          <div *ngIf="!task.housemate"></div>
-
-          <button class="done-btn" (click)="markDone(task)">Done</button>
+          <button class="action-btn done-btn" (click)="markDone(task)">Done</button>
         </div>
       </div>
     </div>
 
     <!-- DONE COLUMN -->
-    <div class="column">
+<div class="column">
       <div class="task-card done-card" *ngFor="let task of doneTasks">
         <div class="card-top">
           <span class="task-title">{{ task.title }}</span>
 
-          <div class="card-top-right">
-            <span
-              class="priority-badge"
-              [style.background]="getPriorityColor(task.priority)">
-              {{ getPriorityLabel(task.priority) }}
-            </span>
-
-            <button class="delete-btn" (click)="deleteTask(task)">🗑</button>
-          </div>
+          <button class="delete-btn" (click)="deleteTask(task)">
+            <iconify-icon icon="solar:trash-bin-2-linear" width="24" height="24"></iconify-icon>
+          </button>
         </div>
 
         <div class="card-middle">
-          <div class="difficulty-row">
-            <span class="meta-label">{{ getEffortLabel(task.difficulty) }}</span>
-            <span class="dot faded"></span>
-            <span class="dot medium" *ngIf="(task.difficulty || 0) >= 2"></span>
-            <span class="dot filled" *ngIf="(task.difficulty || 0) >= 3"></span>
-          </div>
-
-          <span class="duration-badge">
-            {{ getDurationLabel(task.estimatedDurationMinutes) }}
-          </span>
-        </div>
+  <span class="badge priority-badge dimmed" [style.background]="getPriorityColor(task.priority)">
+    {{ getPriorityLabel(task.priority) }}
+  </span>
+  <span class="badge effort-badge dimmed">
+    {{ getEffortLabel(task.difficulty) }}
+  </span>
+  <span class="badge duration-badge dimmed" *ngIf="getDurationLabel(task.estimatedDurationMinutes)">
+    {{ getDurationLabel(task.estimatedDurationMinutes) }}
+  </span>
+</div>
 
         <div class="card-bottom">
-          <div class="housemate-row" *ngIf="task.housemate">
-            <div class="housemate-avatar"></div>
-            <span class="housemate-name">{{ task.housemate.name }}</span>
+          <div class="assigned-user-pill dimmed" *ngIf="task.housemate">
+            <div class="avatar-circle">
+              <img *ngIf="task.housemate.avatarId" [src]="'/assets/avatars/avatar' + task.housemate.avatarId + '.png'" />
+            </div>
+            <span class="user-name">{{ task.housemate.name }}</span>
+          </div>
+          <div class="assigned-user-pill empty dimmed" *ngIf="!task.housemate">
+            <span class="user-name">Unassigned</span>
           </div>
 
-          <div *ngIf="!task.housemate"></div>
-
-          <button class="undo-btn" (click)="markUndone(task)">Undo</button>
+          <button class="action-btn undo-btn" (click)="markUndone(task)">Undo</button>
         </div>
       </div>
     </div>

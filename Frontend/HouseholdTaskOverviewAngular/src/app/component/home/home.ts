@@ -226,9 +226,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  openRoom(room: Room) {
+ openRoom(room: Room) {
     this.router.navigate(['/room', room.householdId, room.id], {
-      state: { roomName: room.roomName }
+      state: { 
+        roomName: room.roomName,
+        roomImage: (room as any).imageUrl // <-- ADD THIS LINE!
+      }
     });
   }
 

@@ -16,6 +16,8 @@ import { Housemate } from '../../model/housemate';
 import { Household } from '../../model/household';
 
 import { HousematesPopup } from '../housemates-popup/housemates-popup'; // Adjust path if needed
+import { RoomService } from '../../services/room-service'; // <-- import room service for image 
+import { Room } from '../../model/room';
 
 
 interface TaskWithStatus extends Task {
@@ -71,7 +73,8 @@ export class RoomViewComponent implements OnInit {
     private taskAssignmentService: TaskAssignmentService,
     private taskCompletionService: TaskCompletionService,
     private housemateService: HousemateService,
-    private householdService: HouseholdService
+    private householdService: HouseholdService,
+    private roomService: RoomService // <-- Ensure "private" is here
   ) { }
 
   ngOnInit() {
@@ -84,6 +87,14 @@ export class RoomViewComponent implements OnInit {
 
     this.roomName = history.state?.roomName || 'Room';
     this.roomImage = history.state?.roomImage || 'assets/rooms/default.png';
+
+    // 2. If missing, fetch from database using the roomId
+    if (!this.roomImage || !this.roomName || this.roomName === 'Room') {
+    this.roomService.getById(this.roomId).subscribe((room: Room) => {
+      this.roomName = room.roomName;
+      this.roomImage = room.imageUrl || 'assets/rooms/default.png';
+    });
+  }
 
     this.loadData();
     this.loadHousehold();
@@ -262,15 +273,21 @@ export class RoomViewComponent implements OnInit {
     }
   }
 
-  goToCreateTask() {
-    this.router.navigate(['/create-task', this.householdId, this.roomId]);
+ goToCreateTask() {
+    this.router.navigate(['/create-task', this.householdId, this.roomId], {
+      state: { 
+        roomName: this.roomName, 
+        roomImage: this.roomImage 
+      }
+    });
   }
 
   goBack() {
     this.router.navigate(['/home']);
   }
 
-  getPriorityLabel(p?: number): string {
+// Functions to display task features 
+ getPriorityLabel(p?: number): string {
     return p ? this.priorityLabels[p] || 'Low' : 'Low';
   }
 
@@ -284,7 +301,6 @@ export class RoomViewComponent implements OnInit {
       2: 'Moderate',
       3: 'Difficult'
     };
-
     return d ? labels[d] || 'Easy' : 'Easy';
   }
 
@@ -294,7 +310,6 @@ export class RoomViewComponent implements OnInit {
       2: '30 min',
       3: '60 min'
     };
-
     return d ? labels[d] || '' : '';
   }
 }

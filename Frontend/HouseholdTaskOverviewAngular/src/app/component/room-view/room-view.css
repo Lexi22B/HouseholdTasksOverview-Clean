@@ -53,7 +53,7 @@
   color: #2D2C2B; /* Optional: Sets the icon color to match your theme */
 }
 
-/* ── ROOM BANNER ── */
+/* <-- ROOM BANNER AND TITLE --> */
 .banner-wrapper {
   display: flex;
   justify-content: center;
@@ -66,173 +66,230 @@
   background-color: #99D1FF;
   border-radius: 20px;
   overflow: hidden;
+  position: relative; /* Required to layer items inside */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .banner-img {
+  position: absolute; /* Keeps the image in the background */
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 0; /* Puts image behind the text */
+}
+
+.room-main-title {
+  font-family: 'Baloo Chettan', cursive;
+  font-size: 50px; /* Updated to 50px */
+  font-weight: 400;
+  color: #F56E00; /* Updated to Orange */
+  position: relative;
+  z-index: 1; /* Puts text on top of the image */
+  margin: 0;
+  text-align: center;
+  /* Added a subtle white glow so it's readable over the sketch lines, just like the home view */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 /* ── COLUMN HEADERS ── */
 .column-headers {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 24px 32px 0;
-  max-width: 860px;
-  margin: 0 auto;
-  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  width: 796px; /* Matches the banner width perfectly */
+  margin: 40px auto 0;
 }
 
 .column-title {
   font-family: 'Baloo Chettan', cursive;
-  font-weight: 400; /* Regular */
-  font-size: 40px;
-  text-align: center;
+  font-weight: 400;
+  font-size: 32px;
   color: #F56E00;
+  width: 344px; /* Matches the card width to center the title over it */
+  text-align: center;
+  margin: 0;
 }
 
 /* ── TASK GRID ── */
 .task-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  padding: 16px 32px 40px;
-  max-width: 860px;
+  display: flex;
+  justify-content: space-between; /* Pushes columns to the edges */
+  width: 796px; /* Matches the banner width perfectly */
   margin: 0 auto;
-  width: 100%;
-  align-items: start;
+  padding: 16px 0 40px; /* Removed side padding so it touches the edges */
 }
 
 .column {
+  width: 344px; /* Fixed width to match the card */
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 /* ── TASK CARD ── */
 .task-card {
-  background: #c8dff0;
-  border-radius: 16px;
-  padding: 16px;
+  background: #99D1FF;
+  border-radius: 24px;
+  width: 344px;
+  height: 228px;
+  padding: 24px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  justify-content: space-between;
+}
+
+/* Darker styling for Done cards */
+.task-card.done-card {
+  background: #556B7D; 
 }
 
 .card-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 8px;
 }
 
 .task-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 0.95rem;
+  font-family: 'Baloo Chettan', cursive;
+  font-weight: 400;
+  font-size: 20px;
   color: #2D2C2B;
+}
+
+.task-card.done-card .task-title {
+  color: #2D2C2B; /* Keeps text dark on the done card */
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  color: #2D2C2B; /* Dark trash icon for the To Do card */
+}
+
+.task-card.done-card .delete-btn {
+  color: #FFFFFF; /* White trash icon for the Done card contrast */
+}
+
+.delete-btn:hover { opacity: 1; }
+
+/* ── BADGES ── */
+.card-middle {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.badge {
+  border-radius: 50px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: fit-content; /* Stops the stretching */
 }
 
 .priority-badge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: white;
-  white-space: nowrap;
+  padding: 0 16px;
+  color: #FFFFFF;
 }
 
-.card-middle {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.difficulty-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.meta-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
+.effort-badge, .duration-badge {
+  padding: 0 16px;
+  background: #FFFFFF;
   color: #2D2C2B;
 }
 
-.dot {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-}
-.dot.faded  { background: #c8a882; }
-.dot.medium { background: #b07840; }
-.dot.filled { background: #F56E00; }
-
-.duration-badge {
-  background: white;
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #2D2C2B;
+.dimmed {
+  opacity: 0.6; /* Dims elements in the Done column to match Figma */
 }
 
+/* ── ASSIGNED USER & BUTTONS ── */
 .card-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.housemate-row {
+.assigned-user-pill {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  background: #FFFFFF;
+  padding: 4px 16px 4px 4px;
+  border-radius: 50px;
+  height: 48px;
+  box-sizing: border-box;
 }
 
-.housemate-avatar {
-  width: 36px;
-  height: 36px;
+.assigned-user-pill.empty {
+  padding: 0 16px;
+}
+
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #FFC1E3;
   border-radius: 50%;
-  background: #FFD485;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.housemate-name {
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-name {
   font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
+  font-size: 16px;
+  font-weight: 400;
   color: #2D2C2B;
+}
+
+/* ── ACTION BUTTONS ── */
+.action-btn {
+  width: 87px;
+  height: 42px;
+  border-radius: 50px;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800; /* Extra Bold */
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .done-btn {
-  background: #1A6552;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 6px 16px;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
+  background-color: #F56E00;
+  color: #FFFFFF;
 }
-.done-btn:hover { opacity: 0.85; }
 
 .undo-btn {
-  background: white;
+  background-color: #FFFFFF;
   color: #2D2C2B;
-  border: 1.5px solid #ccc;
-  border-radius: 20px;
-  padding: 6px 16px;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
 }
-.undo-btn:hover { opacity: 0.75; }
+
+.action-btn:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
 
 /* ── ADD TASK BUTTON ── */
 .add-task-btn {

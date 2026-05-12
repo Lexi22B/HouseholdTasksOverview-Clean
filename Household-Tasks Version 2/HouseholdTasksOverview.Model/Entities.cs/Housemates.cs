@@ -15,5 +15,5 @@ public class Housemates
     public int HouseholdId { get; set; }
     public string Name { get; set; }
     public bool IsActive { get; set; }
-    public int AvatarId { get; set; }
+    public int? AvatarId { get; set; }
 }

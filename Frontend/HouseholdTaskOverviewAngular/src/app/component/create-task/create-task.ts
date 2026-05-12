@@ -31,9 +31,9 @@ interface Task {
   householdId: number;
   roomId: number;
   title: string;
-  difficultyLevelId: number;
-  priorityLevelId: number;
-  durationLevelId: number;
+  difficulty: number; // Updated
+  priority: number;   // Updated
+  estimatedDurationMinutes: number; // Updated
 }
 
 interface TaskAssignment {
@@ -56,6 +56,10 @@ export class CreateTaskComponent implements OnInit {
 
   roomId!: number;
   householdId!: number;
+
+  // <-- For fetching room image -->
+  roomName: string = '';
+  roomImage: string = '';
 
   // Form state
   taskTitle = '';
@@ -84,6 +88,10 @@ export class CreateTaskComponent implements OnInit {
   ngOnInit(): void {
     this.householdId = Number(this.route.snapshot.paramMap.get('householdId'));
     this.roomId = Number(this.route.snapshot.paramMap.get('roomId'));
+
+    // <-- ADD THESE TWO LINES HERE to capture the room data -->
+    this.roomName = history.state?.roomName || 'Room';
+    this.roomImage = history.state?.roomImage || 'assets/rooms/default.png';
 
     this.http.get<Housemate[]>(`${this.baseUrl}/Housemates`).subscribe({
       next: data => {
@@ -162,16 +170,18 @@ export class CreateTaskComponent implements OnInit {
     this.submitting = true;
     this.errorMsg = '';
 
-    // FIXED: The database expects 'LevelId' at the end of these names!
+    // Create the task object using the EXACT names the database expects
     const newTask = {
       id: 0,
       householdId: this.householdId,
       roomId: this.roomId,
       title: this.taskTitle.trim(),
-      difficultyLevelId: this.selectedDifficulty!,
-      priorityLevelId: this.selectedPriority!,
-      durationLevelId: this.selectedDuration!
+      difficulty: this.selectedDifficulty!,
+      priority: this.selectedPriority!,
+      estimatedDurationMinutes: this.selectedDuration!
     };
+
+    // ... keep the rest of your HTTP POST logic exactly the same ...
 
     this.http.post<any>(`${this.baseUrl}/Tasks`, newTask).subscribe({
       next: (createdTask) => {
@@ -202,7 +212,13 @@ export class CreateTaskComponent implements OnInit {
     });
   }
 
-  goBack() {
-    this.router.navigate(['/room', this.householdId, this.roomId]);
+ // In create-task.ts
+goBack() {
+  this.router.navigate(['/room', this.householdId, this.roomId], {
+    state: { 
+      roomName: this.roomName, 
+      roomImage: this.roomImage 
+    }
+  });
   }
 }
