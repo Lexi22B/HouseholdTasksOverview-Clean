@@ -49,11 +49,13 @@ export class RegisterComponent {
 
     this.householdService.create(newHousehold).subscribe({
       next: () => {
-  console.log('Household created successfully');
-
-  localStorage.setItem('houseCode', this.houseCode);
-
-  this.router.navigate(['/home']);
+    this.householdService.login(this.houseCode, this.password).subscribe({
+    next: (household) => {
+      localStorage.setItem('householdId', household.id!.toString());
+      localStorage.setItem('houseCode', household.houseCode);
+      this.router.navigate(['/home']);
+    }
+  });
 },
       error: (err) => {
         console.error('Error creating household', err);
